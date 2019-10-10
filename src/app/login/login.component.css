@@ -1,0 +1,71 @@
+.container {
+  box-sizing: border-box;
+  text-align: center;
+  height: calc(100vh - 40px);
+  background-color: white;
+  width: calc(100vw - 40px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  /*box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);*/
+}
+
+.top-tile {
+  background-color: white;
+}
+
+.top-tile div {
+  padding: 20px;
+}
+
+.top-tile form  button {
+  margin-bottom: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  background-color: #0070c0;
+  color: white;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+}
+.top-tile form button:hover {
+  background-color: rgb(30,136,229);
+}
+.top-tile form button:disabled {
+  background-color: rgba(0,0,0,0.12);
+  color: rgba(0,0,0,0.38);
+  cursor: default;
+}
+
+.top-tile .forgot-password {
+
+  color: #0070c0;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 10px;
+}
+
+.bottom-tile {
+  background-color: #0070c0;
+}
+.bottom-tile img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+h2 {
+  font-size: 1.85rem;
+}
+
+@media only screen and (min-width: 568px) {
+  .container {
+  height: calc(100vh - 200px);
+  width: calc(100vw - 200px);
+  }
+}
