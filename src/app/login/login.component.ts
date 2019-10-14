@@ -1,5 +1,7 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import { LoginAPIService } from '../loginAPI.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -8,14 +10,12 @@ import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-  breakpoint;
-  rowspanForm;
-  rowspanLogo;
-  innerWidth;
-  innerHeight;
+  breakpoint; rowspanForm; rowspanLogo; innerWidth; innerHeight;
+  hide = true;
 
+  apiKey;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private loginAPIService: LoginAPIService) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -24,12 +24,29 @@ export class LoginComponent implements OnInit {
     });
 
     this.breakpoint = (window.innerWidth > window.innerHeight) ? 2 : 1;
-    this.rowspanForm = (window.innerWidth > window.innerHeight) ? 1 : 7;
-    this.rowspanLogo = (window.innerWidth > window.innerHeight) ? 1 : 3;
+    this.rowspanForm = (window.innerWidth > window.innerHeight) ? 1 : 1;
+    this.rowspanLogo = (window.innerWidth > window.innerHeight) ? 1 : 1;
   }
 
-  onSubmit(value: any) {
-    console.log('submitted');
+  onSubmit(formData: any) {
+    this.authenticate(formData);
+  }
+
+  authenticate(formData) {
+    this.loginAPIService.login(formData).subscribe(
+            (data: any) => {
+      this.apiKey = data.accessToken.id;
+      // this.ttl = data.accessToken.ttl;
+      console.log(this.apiKey);
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log('Client-side error occured.');
+      } else {
+        console.log('Server-side error occured.');
+      }
+    }
+    );
   }
 
   @HostListener('window:resize', ['$event'])
