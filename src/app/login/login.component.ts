@@ -4,13 +4,13 @@ import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-  breakpoint = 1;
-  rowspanForm = 7;
-  rowspanLogo = 3;
+  breakpoint;
+  rowspanForm;
+  rowspanLogo;
   innerWidth;
   innerHeight;
 
@@ -24,6 +24,8 @@ export class LoginComponent implements OnInit {
     });
 
     this.breakpoint = (window.innerWidth > window.innerHeight) ? 2 : 1;
+    this.rowspanForm = (window.innerWidth > window.innerHeight) ? 1 : 7;
+    this.rowspanLogo = (window.innerWidth > window.innerHeight) ? 1 : 3;
   }
 
   onSubmit(value: any) {
@@ -41,8 +43,8 @@ export class LoginComponent implements OnInit {
       this.rowspanLogo = 1;
     } else {
       this.breakpoint = 1;
-      this.rowspanForm = 7;
-      this.rowspanLogo = 3;
+      this.rowspanForm = 1;
+      this.rowspanLogo = 1;
     }
   }
 }

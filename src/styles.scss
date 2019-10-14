@@ -10,20 +10,16 @@ html, body {
   height: 100vh;
   width: 100vw;
   font-family: 'Open Sans',sans-serif;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 body {
-  background: url("~src/assets/kvs-back.jpg") center no-repeat;
+  background: url("assets/kvs-back.jpg") center no-repeat;
   background-size: cover;
-  /*display: flex;*/
-  /*flex-direction: column;*/
+
 }
 
 @media (min-width: 768px) {
   body {
-    /*flex-direction: row;*/
-    /*flex: 1;*/
-    color:red;
   }
 }
