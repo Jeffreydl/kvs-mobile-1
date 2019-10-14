@@ -8,7 +8,7 @@ import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-  columns = 1;
+  breakpoint = 1;
   rowspanForm = 7;
   rowspanLogo = 3;
   innerWidth;
@@ -22,6 +22,8 @@ export class LoginComponent implements OnInit {
       username: this.formBuilder.control('', Validators.compose([Validators.required])),
       password: this.formBuilder.control('', Validators.compose([Validators.required]))
     });
+
+    this.breakpoint = (window.innerWidth > window.innerHeight) ? 2 : 1;
   }
 
   onSubmit(value: any) {
@@ -34,11 +36,11 @@ export class LoginComponent implements OnInit {
     this.innerHeight = window.innerHeight;
 
     if (this.innerWidth > this.innerHeight) {
-      this.columns = 2;
+      this.breakpoint = 2;
       this.rowspanForm = 1;
-      this.rowspanForm = 1;
+      this.rowspanLogo = 1;
     } else {
-      this.columns = 1;
+      this.breakpoint = 1;
       this.rowspanForm = 7;
       this.rowspanLogo = 3;
     }

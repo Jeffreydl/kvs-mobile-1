@@ -65,7 +65,7 @@ h2 {
 
 @media only screen and (min-width: 568px) {
   .container {
-  height: calc(100vh - 200px);
-  width: calc(100vw - 200px);
+  height: calc(100vh - 100px);
+  width: calc(100vw - 100px);
   }
 }
