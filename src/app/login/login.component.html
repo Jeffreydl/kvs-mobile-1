@@ -2,7 +2,7 @@
   <mat-grid-list [cols]="breakpoint" rowHeight="fit" class="container">
     <mat-grid-tile [rowspan]="rowspanForm" class="top-tile">
       <div>
-        <h2>Welkom! {{apiKey}}</h2>
+        <h2>Welkom!</h2>
 
         <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
           <mat-form-field>
@@ -11,7 +11,7 @@
 
           <mat-form-field>
             <input matInput placeholder="Wachtwoord" name="passwordVield" formControlName="password" [type]="hide ? 'password' : 'text'">
-            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" class="hidePassword">
+            <button mat-icon-button matSuffix (click)="hide = !hide" class="hidePassword">
               <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
           </mat-form-field>
