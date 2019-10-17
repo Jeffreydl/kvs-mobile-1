@@ -11,9 +11,9 @@
 
           <mat-form-field>
             <input matInput placeholder="Wachtwoord" name="passwordVield" formControlName="password" [type]="hide ? 'password' : 'text'">
-            <button mat-icon-button matSuffix (click)="hide = !hide" class="hidePassword">
+            <span mat-icon-button matSuffix (click)="hide = !hide" class="hidePassword">
               <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
+            </span>
           </mat-form-field>
 
           <button type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple login"
