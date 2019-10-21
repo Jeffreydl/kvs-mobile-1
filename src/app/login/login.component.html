@@ -6,69 +6,25 @@
 
         <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
           <mat-form-field>
-            <input matInput placeholder="Gebruikersnaam" name="usernameVield" formControlName="username">
+            <input matInput placeholder="Gebruikersnaam" name="usernameVield" formControlName="username" type="text">
           </mat-form-field>
 
           <mat-form-field>
-            <input matInput placeholder="Wachtwoord" name="passwordVield" formControlName="password">
+            <input matInput placeholder="Wachtwoord" name="passwordVield" formControlName="password" [type]="hide ? 'password' : 'text'">
+            <span mat-icon-button matSuffix (click)="hide = !hide" class="hidePassword">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </span>
           </mat-form-field>
-          <button type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple"
-                  [disabled]="!form.valid">Inloggen</button>
+
+          <button type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple login"
+            [disabled]="!form.valid">Inloggen</button>
         </form>
 
         <a href="#" class="forgot-password">Wachtwoord vergeten?</a>
       </div>
     </mat-grid-tile>
+
     <mat-grid-tile [rowspan]="rowspanLogo" class="bottom-tile">
-      <div>
         <img src="/assets/zig-logo.svg" alt="Zig KVS" height="100">
-      </div>
     </mat-grid-tile>
   </mat-grid-list>
-
-
-<!--<md-content class="form-container _md md-default-theme-theme layout-align-center-center layout-column flex" flex=""-->
-<!--            layout="column" layout-align="center center"><h2 class="ng-binding">Welkom!</h2>-->
-<!--  <md-content class="form-content _md md-default-theme-theme layout-align-start-center layout-row" layout="row"-->
-<!--              layout-align="start center">-->
-<!--    <form name="authenticationForm" ng-submit="login(authenticationForm)"-->
-<!--          class="bg-white ng-pristine ng-invalid ng-invalid-required ng-valid-minlength ng-valid-maxlength">-->
-<!--      <md-content layout="column" class="padding-m _md md-default-theme-theme layout-column">-->
-<!--        <md-input-container ng-show="!twoFactorInfoNeeded" class="md-default-theme-theme" aria-hidden="false"><input-->
-<!--          autofocus="" autocomplete="off" ng-disabled="authenticationForm.proccess.$state.busy"-->
-<!--          ng-model="credentials.username" required=""-->
-<!--          class="ng-pristine ng-untouched md-input ng-empty ng-invalid ng-invalid-required" id="input_56"-->
-<!--          aria-invalid="true">-->
-<!--          <div class="md-errors-spacer"></div>-->
-<!--          <label translate="" class="ng-scope" for="input_56">gebruikersnaam</label></md-input-container>-->
-<!--        <md-input-container ng-show="!twoFactorInfoNeeded" class="md-default-theme-theme" aria-hidden="false"><input-->
-<!--          type="password" ng-disabled="authenticationForm.proccess.$state.busy" ng-model="credentials.password"-->
-<!--          required="" class="ng-pristine ng-untouched md-input ng-empty ng-invalid ng-invalid-required" id="input_57"-->
-<!--          aria-invalid="true">-->
-<!--          <div class="md-errors-spacer"></div>-->
-<!--          <label translate="" class="ng-scope" for="input_57">wachtwoord</label></md-input-container>-->
-<!--        <md-input-container ng-show="twoFactorInfoNeeded" class="md-default-theme-theme ng-hide" aria-hidden="true">-->
-<!--          <input id="loginTwoFactorCode" type="number" ng-disabled="authenticationForm.proccess.$state.busy"-->
-<!--                 ng-model="credentials.twoFactorCode" ng-minlength="6" ng-maxlength="6"-->
-<!--                 ng-required="twoFactorInfoNeeded"-->
-<!--                 class="ng-pristine ng-untouched md-input ng-empty ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required"-->
-<!--                 aria-invalid="false">-->
-<!--          <div class="md-errors-spacer"></div>-->
-<!--          <label translate="" class="ng-scope" for="loginTwoFactorCode">Code uit de authenticatie app</label>-->
-<!--        </md-input-container>-->
-<!--        <div layout="row" layout-align="end center" class="layout-align-end-center layout-row">-->
-<!--          <button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple" type="submit"-->
-<!--                  ng-transclude="" ng-disabled="authenticationForm.$invalid || authenticationForm.proccess.$state.busy"-->
-<!--                  disabled="disabled">INLOGGEN-->
-<!--          </button>-->
-<!--        </div>-->
-<!--        <div class="error ng-binding ng-hide" ng-show="errorMessage" ng-click="clearErrorMessage()" role="button"-->
-<!--             tabindex="0" aria-hidden="true"></div>-->
-<!--      </md-content>-->
-<!--    </form>-->
-<!--  </md-content>-->
-<!--  <customerfirst-password-forgotten-widget>-->
-<!--    <div layout="row" layout-align="center" class="layout-align-center-stretch layout-row"><a-->
-<!--      ng-click="showPaswordForgottenDialog()" class="ng-binding md-default-theme-theme">Wachtwoord vergeten?</a></div>-->
-<!--  </customerfirst-password-forgotten-widget>-->
-<!--</md-content>-->

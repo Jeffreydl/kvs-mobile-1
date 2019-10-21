@@ -1,5 +1,6 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,9 +14,10 @@ export class LoginComponent implements OnInit {
   rowspanLogo;
   innerWidth;
   innerHeight;
+  hide = true;
 
-
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private auth: AuthService) {
+  }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -24,12 +26,8 @@ export class LoginComponent implements OnInit {
     });
 
     this.breakpoint = (window.innerWidth > window.innerHeight) ? 2 : 1;
-    this.rowspanForm = (window.innerWidth > window.innerHeight) ? 1 : 7;
-    this.rowspanLogo = (window.innerWidth > window.innerHeight) ? 1 : 3;
-  }
-
-  onSubmit(value: any) {
-    console.log('submitted');
+    this.rowspanForm = (window.innerWidth > window.innerHeight) ? 1 : 1;
+    this.rowspanLogo = (window.innerWidth > window.innerHeight) ? 1 : 1;
   }
 
   @HostListener('window:resize', ['$event'])
@@ -46,5 +44,9 @@ export class LoginComponent implements OnInit {
       this.rowspanForm = 1;
       this.rowspanLogo = 1;
     }
+  }
+
+  onSubmit(formData: any) {
+    this.auth.login(formData);
   }
 }

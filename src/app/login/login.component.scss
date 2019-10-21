@@ -9,75 +9,73 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
 
-.top-tile {
-  background-color: white;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
-  font-size: 1.2rem;
-}
+  .top-tile {
+    background-color: white;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
+    font-size: 1.2rem;
 
-.top-tile div {
-  box-sizing: border-box;
-  padding: 20px;
-  height: 100%;
-  width: 100%;
-}
+    div {
+      box-sizing: border-box;
+      padding: 20px;
+      height: 100%;
+      width: 100%;
 
-.top-tile div h2 {
-  margin-bottom: 10px;
-  font-size: 1.5rem;
-}
+      h2 {
+        margin-bottom: 10px;
+        font-size: 1.7rem;
+      }
+      form {
+        font-size: 1.2rem;
 
-.top-tile form {
-  font-size: 1.2rem;
-}
+        .mat-form-field {
+          width: 100%;
+        }
 
-.top-tile form button {
-  margin-bottom: 20px;
-  font-weight: 700;
-  text-transform: uppercase;
-  background-color: #0070c0;
-  color: white;
-  font-size: 1.2rem;
-}
+        .hidePassword {
+          color: #0070c0;
+        }
 
-.top-tile form button:hover {
-  background-color: rgb(30, 136, 229);
-}
+        .login {
+          margin-bottom: 20px;
+          font-weight: 700;
+          text-transform: uppercase;
+          background-color: #0070c0;
+          color: white;
+          font-size: 1.2rem;
 
-.top-tile form button:disabled {
-  background-color: rgba(0, 0, 0, 0.12);
-  color: rgba(0, 0, 0, 0.38);
-  cursor: default;
-}
+          &:hover {
+            background-color: rgb(30, 136, 229);
+          }
+          &:disabled {
+            background-color: rgba(0, 0, 0, 0.12);
+            color: rgba(0, 0, 0, 0.38);
+            cursor: default;
+          }
+        }
+      }
 
-.top-tile .forgot-password {
-  font-size: 1.2rem;
-  color: #0070c0;
-  cursor: pointer;
-  text-decoration: underline;
-  margin-top: 10px;
-}
+      .forgot-password {
+        font-size: 1.2rem;
+        color: #0070c0;
+        cursor: pointer;
+        text-decoration: underline;
+        margin-top: 10px;
+      }
+    }
+  }
 
-.bottom-tile {
-  background-color: #0070c0;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
-}
+  .bottom-tile {
+    background-color: #0070c0;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
 
-.bottom-tile img {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.mat-form-field {
-  width: 100%;
-}
-
-h2 {
-  font-size: 1.85rem;
+    img {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
 }
 
 @media only screen and (min-width: 568px) and (min-height: 450px) {
