@@ -4,25 +4,16 @@ import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
 @Injectable()
-export class I1 implements HttpInterceptor {
-
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const modified = req.clone({setHeaders: {'Content-Type': 'application/json', Accept: 'application/json'}});
-
-        return next.handle(modified);
-    }
-}
-
-@Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
     constructor(private authService: AuthService) {}
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        const modified = req.clone({setHeaders: {Authorization: this.authService.getToken()}});
-        // const modified = req.clone({setHeaders: {Authorization: 'SqylSwvoT5FUBWmH1dJLkyLy7pmigpXHcyUtnGk8uSWkxbLIc5N2CydEQFgWkU0z'}});
+        // Add Authorization token to every request
+        // const modifiedHeader = request.clone({setHeaders: {Authorization: this.authService.getToken()}});
+        const modifiedHeader = request.clone({setHeaders: {'Content-Type': 'application/json', Accept: 'application/json', Authorization: 'iC4hv82GvdeqYfiQ4BV39PWXa65B3PcryGc02RK09IECVHRKo8fIDItYCUNrhw5Z'}});
 
-        return next.handle(modified);
+        return next.handle(modifiedHeader);
     }
 }

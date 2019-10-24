@@ -10,7 +10,7 @@ const authUrl = 'https://kvsapi-demo.hexia.io/api/Employees/secureLogin';
 export class AuthService {
   token: string;
   ttl: number;
-  hasPermission = false;
+  hasPermission = true;
 
   constructor(private http: HttpClient, handler: HttpBackend) {
     // Service is not intercepted so Authorization token does not get added
@@ -27,9 +27,9 @@ export class AuthService {
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
-            console.log('Client-side error occured.');
+            console.log('Client-side error occurred.');
           } else {
-            console.log('Server-side error occured.');
+            console.log('Server-side error occurred.');
           }
         }
     );
@@ -46,7 +46,7 @@ export class AuthService {
       if (this.ttl < 71970) {
         this.token = '';
         this.ttl = 0;
-        this.hasPermission = false;
+        this.hasPermission = true;
         console.log('Token ' + tempToken + ' is no longer valid.');
         abc.unsubscribe();
       }
