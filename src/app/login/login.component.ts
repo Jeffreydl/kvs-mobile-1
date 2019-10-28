@@ -8,13 +8,13 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  form: FormGroup;
-  breakpoint;
-  rowspanForm;
-  rowspanLogo;
-  innerWidth;
-  innerHeight;
-  hide = true;
+  public form: FormGroup;
+  public breakpoint: number;
+  public rowspanForm: number;
+  public rowspanLogo: number;
+  public innerWidth: number;
+  public innerHeight: number;
+  public hide = true;
 
   constructor(private formBuilder: FormBuilder, private auth: AuthService) {
   }

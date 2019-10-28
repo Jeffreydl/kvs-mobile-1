@@ -1,19 +1,19 @@
 import {Component, OnInit} from '@angular/core';
-import {KennisbankService} from './kennisbank.service';
+import {KennisbankService} from '../kennisbank.service';
 import {FormControl} from '@angular/forms';
-import { KennisbankItem } from './kennisbank.model';
+import { KennisbankItem } from '../kennisbank.model';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 
 @Component({
     selector: 'app-kennisbank-searchbar',
     templateUrl: './kennisbank-searchbar.component.html',
-    styleUrls: ['./kennisbank-searchbar.component.css']
+    styleUrls: ['./kennisbank-searchbar.component.scss']
 })
 export class KennisbankSearchbarComponent implements OnInit {
-    kennisbankItems$;
-    id;
-    title;
-    content;
+    public kennisbankItems$;
+    public id;
+    public title;
+    public content;
 
     autoCompletFormControl = new FormControl();
 

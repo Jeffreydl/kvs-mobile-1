@@ -2,19 +2,17 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {KennisbankItemServer} from '../kennisbank-searchbar/kennisbank.model';
+import {KennisbankItemServer} from '../../kennisbank/kennisbank.model';
 
-// const baseUrl = 'https://kvsapi-demo.hexia.io/api/Messages?filter=%7B%22where%22%3A%7B%22and%22%3A%5B%7B%22state%22%3A%22open%22%7D%2C%7B%22direction%22%3A%22inbound%22%7D%2C%7B%22or%22%3A%5B%7B%22messageCategoryId%22%3A%7B%22inq%22%3A%5B2%2C3%2C7%2C8%2C4%2C1%5D%7D%7D%2C%7B%22assigneeId%22%3A13%7D%5D%7D%5D%7D%2C%22order%22%3A%5B%22slaDateTime%20%20ASC%22%2C%22createdDateTime%20%20ASC%22%5D%2C%22limit%22%3A15%7D';
-const baseUrl = 'https://kvsapi-demo.hexia.io/api/Messages?filter=';
 export class TaskFilter {
   state: string;
-  maildirection: string;
+  mailDirection: string;
   direction: string;
   property: string;
   messageCategoryId: number[];
   order: [];
   limit: number;
-  relatieId: number;
+  relationId: number;
   createdById: number;
   isDraft: boolean;
   closedById: number;
@@ -30,8 +28,8 @@ export class TaskFilter {
     return this;
   }
 
-  public forRelation(relatieId: number) {
-    this.relatieId = relatieId;
+  public forRelation(relationId: number) {
+    this.relationId = relationId;
     return this;
   }
 
@@ -45,13 +43,13 @@ export class TaskFilter {
     return this;
   }
 
-  public descending() {
-    this.maildirection = 'desc';
+  public ascending() {
+    this.mailDirection = 'ASC';
     return this;
   }
 
-  public ascending() {
-    this.maildirection = 'asc';
+  public descending() {
+    this.mailDirection = 'DESC';
     return this;
   }
 
@@ -117,9 +115,9 @@ export class TaskFilter {
         state: this.state
       });
     }
-    if (this.relatieId) {
+    if (this.relationId) {
       filter.where.and.push({
-        relatieId: this.relatieId
+        relationId: this.relationId
       });
     }
     if (this.createdById) {
@@ -161,26 +159,48 @@ export class TaskFilter {
           }
       );
     }
-    if (this.property && this.maildirection) {
-      filter.order.push(this.property + ' ' + this.maildirection);
+    if (this.property && this.mailDirection) {
+      filter.order.push(this.property + ' ' + this.mailDirection);
     }
     return JSON.stringify(filter);
   }
 }
 
-
+const baseUrl = 'https://kvsapi-demo.hexia.io/api/';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TasksService {
-  filter = {where: {state: 'open', isDraft: false}, order: 'slaDateTime ASC'};
+  // filter = {where: {state: 'open', isDraft: false}, order: 'slaDateTime ASC'};
+  categories;
 
   constructor(private http: HttpClient) {
   }
 
-  getAll(): Observable<any> {
-    return this.http.get(baseUrl + JSON.stringify(this.filter));
+  getAll(filter: TaskFilter): Observable<any> {
+
+
+    return this.http.get(baseUrl + 'Messages?filter=' + filter);
+  }
+
+  new() {
+  }
+
+  getCategories() {
+    return this.http.get(baseUrl + 'Categories');
+  }
+  getMessageChannels() {
+    return this.http.get(baseUrl + 'MessageChannels');
+  }
+  getTypes() {
+    return this.http.get(baseUrl + 'Types');
+  }
+  getContactReasons() {
+    return this.http.get(baseUrl + 'ContactReasons');
+  }
+  getDossierCategories() {
+    return this.http.get(baseUrl + 'Dossiercategories');
   }
 
 }

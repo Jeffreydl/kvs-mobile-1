@@ -1,0 +1,49 @@
+$nav_items: 3;
+
+.container {
+  position: fixed;
+  bottom: 0;
+  height: 80px;
+  width: 100vw;
+  background-color: lightgray;
+
+  .nav-item {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    height: inherit;
+    width: calc(100% / #{$nav_items});
+
+    a {
+      position: relative;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: inline-block;
+
+      .nav-icon {
+        color: rgba(0,0,0,0.54);
+        font-size: 50px;
+        height: 50px;
+        width: 50px;
+        padding: 5px;
+
+      }
+      .add-icon {
+        background-color: rgba(0, 0, 0, 0.54);
+        color: white;
+        border-radius: 100px;
+      }
+    }
+    a.active-route {
+      .nav-icon {
+        color: #0070c0;
+      }
+      .add-icon {
+        background-color: #0070c0;
+        color: white;
+      }
+    }
+  }
+}
+

@@ -8,9 +8,9 @@ const authUrl = 'https://kvsapi-demo.hexia.io/api/Employees/secureLogin';
   providedIn: 'root'
 })
 export class AuthService {
-  token: string;
-  ttl: number;
-  hasPermission = true;
+  public token: string;
+  public ttl: number;
+  public hasPermission = true;
 
   constructor(private http: HttpClient, handler: HttpBackend) {
     // Service is not intercepted so Authorization token does not get added
@@ -55,6 +55,10 @@ export class AuthService {
 
   getToken() {
     return this.token;
+  }
+
+  isLoggedIn() {
+    return this.hasPermission;
   }
 }
 

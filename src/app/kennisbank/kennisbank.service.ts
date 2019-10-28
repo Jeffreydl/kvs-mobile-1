@@ -11,9 +11,9 @@ const baseUrl = 'https://kvsapi-demo.hexia.io/search/';
 })
 
 export class KennisbankService implements KennisbankItem {
-    id: string;
-    title: string;
-    content: string;
+    public id: string;
+    public title: string;
+    public content: string;
 
     constructor(private http: HttpClient) {
     }
