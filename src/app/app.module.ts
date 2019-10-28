@@ -10,10 +10,13 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
-import { KennisbankSearchbarComponent } from './dashboard/kennisbank-searchbar/kennisbank-searchbar.component';
+import { KennisbankSearchbarComponent } from './kennisbank/kennisbank-searchbar/kennisbank-searchbar.component';
 
 import { HttpErrorInterceptor } from './auth/http-error-interceptor';
 import { TasksComponent } from './dashboard/tasks/tasks.component';
+import { NavigationComponent } from './dashboard/navigation/navigation.component';
+import { KennisbankComponent } from './kennisbank/kennisbank.component';
+import { AddTaskComponent } from './dashboard/tasks/add-task/add-task.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { TasksComponent } from './dashboard/tasks/tasks.component';
     LoginComponent,
     DashboardComponent,
     KennisbankSearchbarComponent,
-    TasksComponent
+    TasksComponent,
+    NavigationComponent,
+    KennisbankComponent,
+    AddTaskComponent
   ],
   imports: [
     BrowserModule,
