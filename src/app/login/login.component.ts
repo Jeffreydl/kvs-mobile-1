@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   public innerWidth: number;
   public innerHeight: number;
   public hide = true;
+  public sessionExpiredMessage: string;
 
   constructor(private formBuilder: FormBuilder, private auth: AuthService) {
   }
@@ -28,6 +29,8 @@ export class LoginComponent implements OnInit {
     this.breakpoint = (window.innerWidth > window.innerHeight) ? 2 : 1;
     this.rowspanForm = (window.innerWidth > window.innerHeight) ? 1 : 1;
     this.rowspanLogo = (window.innerWidth > window.innerHeight) ? 1 : 1;
+
+    this.sessionExpiredMessage = this.auth.getSessionExpiredMessage();
   }
 
   @HostListener('window:resize', ['$event'])

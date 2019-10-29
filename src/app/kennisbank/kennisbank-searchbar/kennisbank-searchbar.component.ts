@@ -15,13 +15,13 @@ export class KennisbankSearchbarComponent implements OnInit {
     public title;
     public content;
 
-    autoCompletFormControl = new FormControl();
+    autoCompleteFormControl = new FormControl();
 
     constructor(private kennisbankService: KennisbankService) {
     }
 
     ngOnInit() {
-        this.autoCompletFormControl.valueChanges.pipe(
+        this.autoCompleteFormControl.valueChanges.pipe(
             debounceTime(500),
             distinctUntilChanged()
         ).subscribe((value) => {

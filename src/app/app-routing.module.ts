@@ -6,7 +6,7 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 
 import {AuthGuardService} from './auth/auth-guard.service';
 import {KennisbankComponent} from './kennisbank/kennisbank.component';
-import {AddTaskComponent} from './dashboard/tasks/add-task/add-task.component';
+import {AddTaskComponent} from './tasks/add-task/add-task.component';
 
 const routes: Routes = [
     {path: 'login', component: LoginComponent},

@@ -1,18 +1,14 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {KennisbankItemServer} from '../../kennisbank/kennisbank.model';
+import {baseUrl} from '../base-api.service';
 
 export class TaskFilter {
   state: string;
   mailDirection: string;
   direction: string;
-  property: string;
-  messageCategoryId: number[];
-  order: [];
+  order: string;
   limit: number;
-  relationId: number;
   createdById: number;
   isDraft: boolean;
   closedById: number;
@@ -25,11 +21,6 @@ export class TaskFilter {
 
   public closedTasks() {
     this.state = 'archived';
-    return this;
-  }
-
-  public forRelation(relationId: number) {
-    this.relationId = relationId;
     return this;
   }
 
@@ -54,17 +45,12 @@ export class TaskFilter {
   }
 
   public orderbyCreatedDate() {
-    this.property = 'createdDateTime';
+    this.order = 'createdDateTime';
     return this;
   }
 
   public orderbySla() {
-    this.property = 'slaDateTime';
-    return this;
-  }
-
-  public forMessageCategoryId(categoryId: number[]) {
-    this.messageCategoryId = categoryId;
+    this.order = 'slaDateTime';
     return this;
   }
 
@@ -102,27 +88,17 @@ export class TaskFilter {
       limit: this.limit
     };
     if (this.limit == null) {
-      this.limit = 50;
+      this.limit = 20;
     }
-    if (!this.property) {
-      this.property = 'createdDateTime';
+    if (!this.order) {
+      this.order = 'createdDateTime';
     }
     if (!this.direction) {
-      this.direction = 'asc';
+      this.direction = 'ASC';
     }
     if (this.state) {
       filter.where.and.push({
         state: this.state
-      });
-    }
-    if (this.relationId) {
-      filter.where.and.push({
-        relationId: this.relationId
-      });
-    }
-    if (this.createdById) {
-      filter.where.and.push({
-        createdById: this.createdById
       });
     }
     if (this.direction) {
@@ -130,13 +106,6 @@ export class TaskFilter {
         direction: this.direction
       });
     }
-
-    if (this.closedById) {
-      filter.where.and.push({
-        closedById: this.closedById
-      });
-    }
-
     if (this.endDate) {
       filter.where.and.push({
         endDate: this.endDate
@@ -147,26 +116,14 @@ export class TaskFilter {
       isDraft: this.isDraft
     });
 
-    if (this.messageCategoryId) {
-      filter.where.and.push({
-            or: [
-              {
-                messageCategoryId: {
-                  inq: this.messageCategoryId
-                }
-              }
-            ]
-          }
-      );
-    }
-    if (this.property && this.mailDirection) {
-      filter.order.push(this.property + ' ' + this.mailDirection);
+    if (this.order && this.mailDirection) {
+      filter.order.push(this.order + ' ' + this.mailDirection);
     }
     return JSON.stringify(filter);
   }
 }
 
-const baseUrl = 'https://kvsapi-demo.hexia.io/api/';
+const url = baseUrl + 'api/';
 
 @Injectable({
   providedIn: 'root'
@@ -179,28 +136,26 @@ export class TasksService {
   }
 
   getAll(filter: TaskFilter): Observable<any> {
-
-
-    return this.http.get(baseUrl + 'Messages?filter=' + filter);
+    return this.http.get(url + 'Messages?filter=' + filter);
   }
 
   new() {
   }
 
   getCategories() {
-    return this.http.get(baseUrl + 'Categories');
+    return this.http.get(url + 'Categories');
   }
   getMessageChannels() {
-    return this.http.get(baseUrl + 'MessageChannels');
+    return this.http.get(url + 'MessageChannels');
   }
   getTypes() {
-    return this.http.get(baseUrl + 'Types');
+    return this.http.get(url + 'Types');
   }
   getContactReasons() {
-    return this.http.get(baseUrl + 'ContactReasons');
+    return this.http.get(url + 'ContactReasons');
   }
   getDossierCategories() {
-    return this.http.get(baseUrl + 'Dossiercategories');
+    return this.http.get(url + 'Dossiercategories');
   }
 
 }

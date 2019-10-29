@@ -1,0 +1,87 @@
+<div class="container">
+
+    <mat-tab-group animationDuration="0ms">
+        <mat-tab label="Taak">
+            <input [formControl]="autoCompleteFormControl" type="text"  placeholder="Kennisbank zoeken" class="kennisbankSearchbar"/>
+
+            <mat-expansion-panel *ngFor="let item of customerDetails">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{ item.initials }} ({{ item.firstname }}) {{ item.lastname }} <br>
+                        {{ item.personsnumber }} |
+                        {{ item.gender }} |
+                        {{ item.dateofbirth | date: 'dd-MM-yyyy' }} |
+                        ({{ age }} jaar)
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <div class="address" *ngFor="let address of item.address">
+                        <span>{{ address.street }} </span>
+                        <span *ngIf="address.housenumberaddition;else noAddition"> {{ address.housenumber }}{{ address.housenumberaddition }}, </span>
+                        <ng-template #noAddition>
+                            <span>{{ address.housenumber }}, </span>
+                        </ng-template>
+                        <span>{{ address.postalcode }} </span>
+                        <span>{{ address.city }}</span>
+                    </div>
+                </ng-template>
+            </mat-expansion-panel>
+
+
+            <mat-form-field floatLabel="always" class="form-field" *ngIf="messageChannels">
+                <mat-label>Kanaal*</mat-label>
+                <mat-select [(value)]="messageChannels[0].name">
+                    <mat-option *ngFor="let messageChannel of messageChannels" [value]="messageChannel.name">
+                        {{messageChannel.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field floatLabel="always" class="form-field" *ngIf="categories">
+                <mat-label>Categorie*</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let category of categories" [value]="category.name">
+                        {{category.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field floatLabel="always" class="form-field" *ngIf="types">
+                <mat-label>Type*</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let type of types" [value]="type.name">
+                        {{type.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="form-field" *ngIf="contactReasons">
+                <mat-label>Contactreden*</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let contactReason of contactReasons" [value]="contactReason.name">
+                        {{contactReason.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            jfhfkjffkjsfkjkjsk
+
+            <mat-form-field class="form-field" *ngIf="dossierCategories">
+                <mat-label>Dossier Categorie*</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let dossierCategory of dossierCategories" [value]="dossierCategory.name">
+                        {{dossierCategory.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </mat-tab>
+
+        <mat-tab label="Beantwoorden">
+            rhfkjewkjdfskjdfsakjdfdsdfshjddfashjl
+        </mat-tab>
+    </mat-tab-group>
+
+
+</div>
+
+<app-navigation></app-navigation>

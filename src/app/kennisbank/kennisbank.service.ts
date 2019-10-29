@@ -3,8 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {KennisbankItem, KennisbankItemServer} from './kennisbank.model';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {baseUrl} from '../base-api.service';
 
-const baseUrl = 'https://kvsapi-demo.hexia.io/search/';
 
 @Injectable({
     providedIn: 'root'
@@ -19,8 +19,7 @@ export class KennisbankService implements KennisbankItem {
     }
 
     search(keyword: string): Observable<any> {
-        const url = baseUrl + keyword;
-        return this.http.get(url).pipe(
+        return this.http.get(baseUrl + 'search/' + keyword).pipe(
             map((data: KennisbankItemServer) => data.KbaseItems)
         );
     }
