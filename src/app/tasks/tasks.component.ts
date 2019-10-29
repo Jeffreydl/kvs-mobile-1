@@ -22,8 +22,8 @@ export class TasksComponent implements OnInit {
       this.tasksService.getAll(new TaskFilter()
           .openTasks()
           .inboundTasks()
-          .forMessageCategoryId([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
-          .limitTo(10).descending()
+          .limitTo(10)
+          .descending()
           .includeDrafts(false))
           .subscribe(tasks => {
               this.tasks = tasks;

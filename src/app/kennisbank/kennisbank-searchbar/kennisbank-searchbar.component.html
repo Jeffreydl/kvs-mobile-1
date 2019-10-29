@@ -1,5 +1,5 @@
 <div class="container">
-    <input [formControl]="autoCompletFormControl" type="text"  placeholder="Kennisbank zoeken" class="kennisbankSearchbar"/>
+    <input [formControl]="autoCompleteFormControl" type="text"  placeholder="Kennisbank zoeken" class="kennisbankSearchbar"/>
 
     <mat-expansion-panel *ngFor="let item of kennisbankItems$ | async">
         <mat-expansion-panel-header>

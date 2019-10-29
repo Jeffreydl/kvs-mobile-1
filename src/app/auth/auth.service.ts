@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpBackend, HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, Subscription, timer} from 'rxjs';
-
-const authUrl = 'https://kvsapi-demo.hexia.io/api/Employees/secureLogin';
+import {Router} from '@angular/router';
+import {baseUrl} from '../base-api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,19 +11,21 @@ export class AuthService {
   public token: string;
   public ttl: number;
   public hasPermission = true;
+  public sessionExpiredMessage: string;
 
-  constructor(private http: HttpClient, handler: HttpBackend) {
+  constructor(private http: HttpClient, handler: HttpBackend, private router: Router) {
     // Service is not intercepted so Authorization token does not get added
     this.http = new HttpClient(handler);
   }
 
   login(formData) {
-    return this.http.post(authUrl, formData).subscribe(
+    return this.http.post(baseUrl + 'api/Employees/securelogin', formData).subscribe(
         (data: any) => {
           this.token = data.accessToken.id;
           this.ttl = data.accessToken.ttl;
           this.hasPermission = true;
           this.tokenTtlTimer(this.token, this.ttl);
+          this.router.navigate(['dashboard']);
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -43,11 +45,13 @@ export class AuthService {
       if (this.ttl % 10 === 0) {
         console.log(tempToken + ' expires in: ' + this.ttl);
       }
-      if (this.ttl < 71970) {
+      if (this.ttl < 71980) {
         this.token = '';
         this.ttl = 0;
-        this.hasPermission = true;
+        this.hasPermission = false;
         console.log('Token ' + tempToken + ' is no longer valid.');
+        this.router.navigate(['login']);
+        this.sessionExpiredMessage = 'Session expired';
         abc.unsubscribe();
       }
     });
@@ -59,6 +63,10 @@ export class AuthService {
 
   isLoggedIn() {
     return this.hasPermission;
+  }
+
+  getSessionExpiredMessage() {
+    return this.sessionExpiredMessage;
   }
 }
 
