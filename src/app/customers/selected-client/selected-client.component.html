@@ -1,0 +1,30 @@
+    <input [formControl]="autoCompleteFormControl"
+           type="text"
+           placeholder="Zoek klantkaart"
+           class="searchClient"
+    />
+
+    <div class="clients" *ngFor="let client of clients" (click)="selectClient(client.id)">
+        {{ client.initials }} ({{ client.firstname }}) {{ client.lastname }} <br>
+        {{ client.personsnumber }} |
+        {{ client.gender }} |
+        {{ client.dateofbirth | date: 'dd-MM-yyyy' }} |
+        ({{ age }} jaar)
+    </div>
+
+    <div class="currentClient" *ngIf="currentClient">
+        {{currentClient.initials}}
+        {{currentClient.firstname}}
+        {{currentClient.lastname}}
+        <div *ngFor="let email of currentClient.emailaddress">
+            {{email.address}}
+        </div>
+        <div *ngFor="let phone of currentClientPhoneNumber">{{phone.number}}</div>
+        <div *ngFor="let addr of currentClientAddress">
+            {{addr.street }}
+            {{addr.housenumber}} <span *ngIf="addr.housenumberaddition">{{addr.housenumberaddition}}</span>
+            {{addr.postalcode }}
+            {{addr.city }}
+        </div>
+
+    </div>

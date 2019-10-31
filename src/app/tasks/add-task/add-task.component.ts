@@ -1,79 +1,92 @@
-import { Component, OnInit } from '@angular/core';
-import { TasksService } from '../tasks.service';
-import {FormControl} from '@angular/forms';
-import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {TasksService} from '../tasks.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CustomersService} from '../../customers/customers.service';
+import {Subscription} from 'rxjs';
 
 
 @Component({
-  selector: 'app-add-task',
-  templateUrl: './add-task.component.html',
-  styleUrls: ['./add-task.component.scss']
+    selector: 'app-add-task',
+    templateUrl: './add-task.component.html',
+    styleUrls: ['./add-task.component.scss']
 })
-export class AddTaskComponent implements OnInit {
-  public categories: object;
-  public contactReasons: object;
-  public dossierCategories: object;
-  public messageChannels: object;
-  public types: object;
+export class AddTaskComponent implements OnInit, OnDestroy {
+    public categories: any;
+    public contactReasons: any;
+    public dossierCategories: any;
+    public messageChannels: any;
+    public types: any;
 
-  public customerDetails;
-  autoCompleteFormControl = new FormControl();
-  public age: number;
+    public form: FormGroup;
+    public contactReason = '';
+    public isChecked = true;
+    public taskSubject = '';
 
-  constructor(private taskService: TasksService, private customersService: CustomersService) { }
+    categorySubscription$: Subscription;
+    contactReasonsSubscription$: Subscription;
+    dossierCategoriesSubscription$: Subscription;
+    messageChannelsSubscription$: Subscription;
+    typesSubscription$: Subscription;
 
-  ngOnInit() {
-    this.taskService.getCategories().subscribe((data) => { this.categories = data; });
-    this.taskService.getContactReasons().subscribe((data) => { this.contactReasons = data; });
-    this.taskService.getDossierCategories().subscribe((data) => { this.dossierCategories = data; });
-    this.taskService.getMessageChannels().subscribe( (data) => { this.messageChannels = data; });
-    this.taskService.getTypes().subscribe((data) => { this.types = data; });
 
-    this.autoCompleteFormControl.valueChanges.pipe(
-        debounceTime(500),
-        distinctUntilChanged()
-    ).subscribe((value) => {
-      this.searchCustomers(value);
-    });
-  }
-
-  searchCustomers(value: string) {
-    if (value.length > 0) {
-      this.customersService.search(value).subscribe(
-          (data) => {
-            this.customerDetails = data;
-            console.log(this.customerDetails);
-            for (const i of data) {
-              this.getAge(i.dateofbirth);
-              // console.log(i);
-            }
-          }
-      );
-    } else {
-      this.customerDetails = null;
+    constructor(private taskService: TasksService, private customersService: CustomersService, private formBuilder: FormBuilder) {
     }
-  }
 
-  // getAge(birthDate: string) {
-  //   const doei = new Date(birthDate);
-  //   const hi = new Date();
-  //   this.years = hi.getTime() - doei.getTime();
-  //   console.log(this.years);
-  // }
+    ngOnInit() {
+        this.messageChannelsSubscription$ = this.taskService.getMessageChannels().subscribe((data) => {
+            this.messageChannels = data;
+        });
+        this.categorySubscription$ = this.taskService.getCategories().subscribe((data) => {
+            this.categories = data;
+        });
+        this.typesSubscription$ = this.taskService.getTypes().subscribe((data) => {
+            this.types = data;
+        });
+        this.contactReasonsSubscription$ = this.taskService.getContactReasons().subscribe((data) => {
+            this.contactReasons = data;
+        });
+        this.dossierCategoriesSubscription$ = this.taskService.getDossierCategories().subscribe((data) => {
+            this.dossierCategories = data;
+        });
 
-   getAge(value: string) {
-    const today = new Date();
-    const birthDate = new Date(value);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const months = today.getMonth() - birthDate.getMonth();
-    if (months < 0 || (months === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
+
+        this.form = this.formBuilder.group({
+           messageChannel: this.formBuilder.control('', Validators.compose([Validators.required])),
+           category: this.formBuilder.control('', Validators.compose([Validators.required])),
+           type: this.formBuilder.control('', Validators.compose([Validators.required])),
+           contactReason: this.formBuilder.control('', Validators.compose([Validators.required])),
+           dossierCategory: this.formBuilder.control('', Validators.compose([Validators.required])),
+           subject: this.formBuilder.control('', Validators.compose([Validators.required])),
+           body: this.formBuilder.control(''),
+        });
+        this.form.valueChanges.subscribe(data => this.onFormValueChange(data));
+
     }
-    this.age = age;
-  }
 
-  addTask() {
-  }
+    ngOnDestroy(): void {
+        this.categorySubscription$.unsubscribe();
+        this.contactReasonsSubscription$.unsubscribe();
+        this.dossierCategoriesSubscription$.unsubscribe();
+        this.messageChannelsSubscription$.unsubscribe();
+        this.typesSubscription$.unsubscribe();
+    }
+
+    // getAge(birthDate: string) {
+    //   const doei = new Date(birthDate);
+    //   const hi = new Date();
+    //   this.years = hi.getTime() - doei.getTime();
+    //   console.log(this.years);
+    // }
+
+    addTask() {
+    }
+
+    onSubmit(value: any) {
+        // POST request to create a new task
+    }
+
+    private onFormValueChange(data: any) {
+        this.contactReason = data.contactReason;
+    }
 
 }

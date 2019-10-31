@@ -16,6 +16,8 @@ import { TasksComponent } from './tasks/tasks.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { KennisbankComponent } from './kennisbank/kennisbank.component';
 import { AddTaskComponent } from './tasks/add-task/add-task.component';
+import { OrderByPipe } from './order-by.pipe';
+import { SelectedClientComponent } from './customers/selected-client/selected-client.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { AddTaskComponent } from './tasks/add-task/add-task.component';
     TasksComponent,
     NavigationComponent,
     KennisbankComponent,
-    AddTaskComponent
+    AddTaskComponent,
+    OrderByPipe,
+    SelectedClientComponent,
   ],
   imports: [
     BrowserModule,

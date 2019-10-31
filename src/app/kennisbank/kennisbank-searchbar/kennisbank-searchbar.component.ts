@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {KennisbankService} from '../kennisbank.service';
 import {FormControl} from '@angular/forms';
-import { KennisbankItem } from '../kennisbank.model';
+import { IKennisbankItem } from '../IKennisbank';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 
 @Component({
@@ -10,10 +10,7 @@ import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
     styleUrls: ['./kennisbank-searchbar.component.scss']
 })
 export class KennisbankSearchbarComponent implements OnInit {
-    public kennisbankItems$;
-    public id;
-    public title;
-    public content;
+    public kennisbankItems$: IKennisbankItem[];
 
     autoCompleteFormControl = new FormControl();
 
@@ -32,6 +29,7 @@ export class KennisbankSearchbarComponent implements OnInit {
     searchKennisbank(value: string) {
         if (value.length > 0) {
             this.kennisbankItems$ = this.kennisbankService.search(value);
+            console.log(this.kennisbankItems$);
         } else {
             this.kennisbankItems$ = null;
         }
