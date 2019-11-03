@@ -20,11 +20,11 @@
             {{email.address}}
         </div>
         <div *ngFor="let phone of currentClientPhoneNumber">{{phone.number}}</div>
-        <div *ngFor="let addr of currentClientAddress">
-            {{addr.street }}
-            {{addr.housenumber}} <span *ngIf="addr.housenumberaddition">{{addr.housenumberaddition}}</span>
-            {{addr.postalcode }}
-            {{addr.city }}
+        <div *ngFor="let address of currentClientAddress">
+            {{address.street }}
+            {{address.housenumber}} <span *ngIf="address.housenumberaddition">{{address.housenumberaddition}}</span>
+            {{address.postalcode }}
+            {{address.city }}
         </div>
 
     </div>

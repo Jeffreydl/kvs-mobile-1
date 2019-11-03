@@ -14,7 +14,7 @@ export class CustomersService {
     }
 
     search(keyword: string): Observable<ICustomer[]> {
-        return this.http.get(baseUrl + 'search/' + keyword).pipe(
+        return this.http.get<ICustomer[]>(baseUrl + 'search/' + keyword).pipe(
             map((data: any) => data.Relations)
         );
     }

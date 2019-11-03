@@ -3,6 +3,7 @@ import {KennisbankService} from '../kennisbank.service';
 import {FormControl} from '@angular/forms';
 import { IKennisbankItem } from '../IKennisbank';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Component({
     selector: 'app-kennisbank-searchbar',
@@ -10,7 +11,7 @@ import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
     styleUrls: ['./kennisbank-searchbar.component.scss']
 })
 export class KennisbankSearchbarComponent implements OnInit {
-    public kennisbankItems$: IKennisbankItem[];
+    public kennisbankItems$: Observable<IKennisbankItem>;
 
     autoCompleteFormControl = new FormControl();
 
