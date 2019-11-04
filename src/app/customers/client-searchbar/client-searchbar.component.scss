@@ -1,0 +1,24 @@
+.searchClient {
+  height: 40px;
+  width: 100vw;
+  font-size: 16px;
+  margin: 10px 0 10px 0;
+  box-sizing: border-box;
+}
+
+.clients {
+  min-height: 40px;
+  width: 100%;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  box-sizing: border-box;
+
+  &:hover {
+    background-color: rgba(158,158,158,0.18);
+  }
+  &:nth-last-of-type(1) {
+    border-bottom: 1px solid black;
+  }
+
+}

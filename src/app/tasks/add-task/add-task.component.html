@@ -69,66 +69,66 @@
 <!--            </mat-expansion-panel>-->
 
 
-<!--            <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">-->
+            <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
 
-<!--                <mat-form-field floatLabel="always" class="form-field" *ngIf="messageChannels">-->
-<!--                    <mat-label>Kanaal*</mat-label>-->
-<!--                    <mat-select formControlName="messageChannel">-->
-<!--                        <mat-option *ngFor="let messageChannel of messageChannels" [value]="messageChannel.name">-->
-<!--                            {{messageChannel.name }}-->
-<!--                        </mat-option>-->
-<!--                    </mat-select>-->
-<!--                </mat-form-field>-->
+                <mat-form-field floatLabel="always" class="form-field" *ngIf="messageChannels">
+                    <mat-label>Kanaal*</mat-label>
+                    <mat-select formControlName="messageChannel">
+                        <mat-option *ngFor="let messageChannel of messageChannels" [value]="messageChannel.name">
+                            {{messageChannel.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-<!--                <mat-form-field floatLabel="always" class="form-field" *ngIf="categories">-->
-<!--                    <mat-label>Categorie*</mat-label>-->
-<!--                    <mat-select formControlName="category">-->
-<!--                        <mat-option *ngFor="let category of categories" [value]="category.name">-->
-<!--                            {{category.name}}-->
-<!--                        </mat-option>-->
-<!--                    </mat-select>-->
-<!--                </mat-form-field>-->
+                <mat-form-field floatLabel="always" class="form-field" *ngIf="categories">
+                    <mat-label>Categorie*</mat-label>
+                    <mat-select formControlName="category">
+                        <mat-option *ngFor="let category of categories" [value]="category.name">
+                            {{category.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-<!--                <mat-form-field floatLabel="always" class="form-field" *ngIf="types">-->
-<!--                    <mat-label>Type*</mat-label>-->
-<!--                    <mat-select formControlName="types">-->
-<!--                        <mat-option *ngFor="let type of types" [value]="type.name">-->
-<!--                            {{type.name}}-->
-<!--                        </mat-option>-->
-<!--                    </mat-select>-->
-<!--                </mat-form-field>-->
+                <mat-form-field floatLabel="always" class="form-field" *ngIf="types">
+                    <mat-label>Type*</mat-label>
+                    <mat-select formControlName="types">
+                        <mat-option *ngFor="let type of types" [value]="type.name">
+                            {{type.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-<!--                <mat-form-field class="form-field" *ngIf="contactReasons">-->
-<!--                    <mat-label>Hoofdcontactreden*</mat-label>-->
-<!--                    <mat-select formControlName="contactReason">-->
-<!--                        <mat-option *ngFor="let contactReason of contactReasons" [value]="contactReason.name">-->
-<!--                            {{contactReason.name}}-->
-<!--                        </mat-option>-->
-<!--                    </mat-select>-->
-<!--                </mat-form-field>-->
+                <mat-form-field class="form-field" *ngIf="contactReasons">
+                    <mat-label>Hoofdcontactreden*</mat-label>
+                    <mat-select formControlName="contactReason">
+                        <mat-option *ngFor="let contactReason of contactReasons" [value]="contactReason.name">
+                            {{contactReason.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-<!--                <mat-checkbox [checked]="isChecked"-->
-<!--                              class="example-margin"-->
-<!--                              (change)="isChecked = !isChecked">-->
-<!--                    Gebruik contactreden als onderwerp-->
-<!--                </mat-checkbox>-->
+                <mat-checkbox [checked]="isChecked"
+                              class="example-margin"
+                              (change)="isChecked = !isChecked">
+                    Gebruik contactreden als onderwerp
+                </mat-checkbox>
 
-<!--                <mat-form-field class="form-field">-->
-<!--                    <input formControlName="subject"-->
-<!--                           matInput-->
-<!--                           placeholder="Onderwerp / Vraag"-->
-<!--                           [value]="isChecked ? contactReason : taskSubject">-->
-<!--                </mat-form-field>-->
+                <mat-form-field class="form-field">
+                    <input formControlName="subject"
+                           matInput
+                           placeholder="Onderwerp / Vraag"
+                           [value]="isChecked ? contactReason : taskSubject">
+                </mat-form-field>
 
-<!--                <mat-form-field>-->
-<!--                    <textarea formControlName="body"-->
-<!--                              class="message-body"-->
-<!--                              placeholder="Bericht (optioneel)"-->
-<!--                              matInput matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5>-->
-<!--                    </textarea>-->
-<!--                </mat-form-field>-->
+                <mat-form-field>
+                    <textarea formControlName="body"
+                              class="message-body"
+                              placeholder="Bericht (optioneel)"
+                              matInput matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5>
+                    </textarea>
+                </mat-form-field>
 
-<!--            </form>-->
+            </form>
 
         </mat-tab>
 

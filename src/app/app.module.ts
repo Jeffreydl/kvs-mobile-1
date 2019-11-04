@@ -18,6 +18,7 @@ import { KennisbankComponent } from './kennisbank/kennisbank.component';
 import { AddTaskComponent } from './tasks/add-task/add-task.component';
 import { OrderByPipe } from './order-by.pipe';
 import { SelectedClientComponent } from './customers/selected-client/selected-client.component';
+import { ClientSearchbarComponent } from './customers/client-searchbar/client-searchbar.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { SelectedClientComponent } from './customers/selected-client/selected-cl
     AddTaskComponent,
     OrderByPipe,
     SelectedClientComponent,
+    ClientSearchbarComponent,
   ],
   imports: [
     BrowserModule,

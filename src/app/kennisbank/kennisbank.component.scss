@@ -1,0 +1,27 @@
+.container {
+  background-color: white;
+  height: calc(100% - 40px - 80px);
+  overflow: auto;
+
+  .items {
+
+    .panel {
+      margin: 0;
+    }
+
+    .title {
+      font-weight: 500;
+    }
+
+    .sub-title {
+      text-decoration: underline;
+    }
+
+    h3 {
+      background-color: #eeeeee;
+      padding: 7px 0;
+      text-align: center;
+    }
+  }
+}
+

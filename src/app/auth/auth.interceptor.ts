@@ -12,7 +12,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
         // Add Authorization token to every request
         // const modifiedHeader = request.clone({setHeaders: {Authorization: this.authService.getToken()}});
-        const modifiedHeader = request.clone({setHeaders: {'Content-Type': 'application/json', Accept: 'application/json', Authorization: '0FWdjXxzkVo43A6HGDnF7KC4rhRlzvH1YQM4oua1gqGBb1T6c3rSOWEua0HM44jW '}});
+        const modifiedHeader = request.clone({setHeaders: {'Content-Type': 'application/json', Accept: 'application/json', Authorization: 'Vsi2P2P0dGxtqEWgBY9zCfrbMAn4TYxm8F5QSOus1GkoGHOUb2SR3i5Tm1Nzr28d'}});
 
         return next.handle(modifiedHeader);
     }
