@@ -1,26 +1,35 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {KennisbankItem, KennisbankItemServer} from './kennisbank.model';
-import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {baseUrl} from '../base-api.service';
+import {IKennisbankItems, IkennisbankItemsChildren, IKennisbankSearchItem} from './IKennisbank';
+import {map} from 'rxjs/operators';
 
 
 @Injectable({
     providedIn: 'root'
 })
 
-export class KennisbankService implements KennisbankItem {
-    public id: string;
-    public title: string;
-    public content: string;
+export class KennisbankService {
 
     constructor(private http: HttpClient) {
     }
 
-    search(keyword: string): Observable<any> {
-        return this.http.get(baseUrl + 'search/' + keyword).pipe(
-            map((data: KennisbankItemServer) => data.KbaseItems)
+    getAll(): Observable<IKennisbankItems[]> {
+        return this.http.get<IKennisbankItems[]>(baseUrl + 'api/Nodes/nodes/getNodes/nl/0/1').pipe(
+            map((data: any) => data.items)
+        );
+    }
+
+    getById(id: string): Observable<IkennisbankItemsChildren[]> {
+        return this.http.get<IkennisbankItemsChildren[]>(baseUrl + 'api/Nodes/nodes/getNodes/nl/' + id + '/0').pipe(
+            map((data: any) => data.items)
+        );
+    }
+
+    search(keyword: string): Observable<IKennisbankSearchItem[]> {
+        return this.http.get<IKennisbankSearchItem[]>(baseUrl + 'search/' + keyword).pipe(
+           map((data: any) => data.KbaseItems)
         );
     }
 }

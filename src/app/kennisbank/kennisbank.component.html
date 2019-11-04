@@ -1,2 +1,34 @@
-<app-kennisbank-searchbar></app-kennisbank-searchbar>
-<app-navigation></app-navigation>
+<app-kennisbank-searchbar (isActive)="searchBarStatus($event)"></app-kennisbank-searchbar>
+
+    <div class="container" *ngIf="!searching">
+
+        <mat-accordion multi="false">
+            <div class="items" *ngFor="let header of kennisbankItems">
+                <h3>{{header.title}}</h3>
+                <mat-expansion-panel *ngFor="let subject of header.children"
+                                     (click)="expandItem(subject.id)"
+                                     hideToggle
+                                     class="panel">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title class="title">
+                            {{subject.title}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div>
+                        <span [innerHTML]="subject.descriptionExternal"></span>
+                        <div *ngFor="let item of kennisbankItem">
+                            <p class="sub-title" (click)="show = !show">{{item.title}}</p>
+                            <p *ngIf="show" [innerHTML]="item.descriptionExternal"></p>
+                        </div>
+                    </div>
+
+                </mat-expansion-panel>
+            </div>
+        </mat-accordion>
+</div>
+    <app-navigation></app-navigation>
+
+
+
+

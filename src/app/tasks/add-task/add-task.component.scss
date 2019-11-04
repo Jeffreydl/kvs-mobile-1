@@ -1,8 +1,18 @@
-.form-field {
-  width: 50%;
-}
+.container {
+  background-color: white;
 
-.name {
-  font-weight: 700;
-  font-size: 1.2rem;
+  .form-field {
+    width: 40%;
+    margin-right: 15px;
+
+    .message-body {
+      min-height: 40px !important;
+      max-height: 90px !important;
+    }
+  }
+
+  .name {
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
 }
