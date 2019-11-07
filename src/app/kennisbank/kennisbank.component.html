@@ -3,31 +3,31 @@
     <div class="container" *ngIf="!searching">
 
         <mat-accordion multi="false">
-            <div class="items" *ngFor="let header of kennisbankItems">
-                <h3>{{header.title}}</h3>
-                <mat-expansion-panel *ngFor="let subject of header.children"
-                                     (click)="expandItem(subject.id)"
-                                     hideToggle
+            <div class="items" *ngFor="let category of kennisbankItems">
+                <h3>{{category.title}}</h3>
+                <mat-expansion-panel *ngFor="let subject of category.children"
                                      class="panel">
                     <mat-expansion-panel-header>
-                        <mat-panel-title class="title">
+                        <mat-panel-title class="title" (click)="toggleContent(subject.id)">
                             {{subject.title}}
                         </mat-panel-title>
                     </mat-expansion-panel-header>
 
-                    <div>
+                    <div *ngIf="contentId === subject.id">
                         <span [innerHTML]="subject.descriptionExternal"></span>
                         <div *ngFor="let item of kennisbankItem">
-                            <p class="sub-title" (click)="show = !show">{{item.title}}</p>
-                            <p *ngIf="show" [innerHTML]="item.descriptionExternal"></p>
+                            <p class="sub-title" (click)="toggleSubContent(item.id, item.websiteLink)">{{item.title}}</p>
+                            <p *ngIf="subTitleId == item.id && item.websiteLink" [innerHTML]="kennisbankWebsiteItem?.descriptionExternal"></p>
+                            <p *ngIf="subTitleId == item.id && !item.websiteLink" [innerHTML]="item?.descriptionExternal"></p>
                         </div>
                     </div>
 
                 </mat-expansion-panel>
             </div>
         </mat-accordion>
-</div>
-    <app-navigation></app-navigation>
+    </div>
+
+<app-navigation></app-navigation>
 
 
 

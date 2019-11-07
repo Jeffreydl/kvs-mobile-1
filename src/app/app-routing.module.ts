@@ -7,12 +7,14 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {AuthGuardService} from './auth/auth-guard.service';
 import {KennisbankComponent} from './kennisbank/kennisbank.component';
 import {AddTaskComponent} from './tasks/add-task/add-task.component';
+import {ClientCardComponent} from './customers/client-card/client-card.component';
 
 const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService]},
     {path: 'kennisbank', component: KennisbankComponent, canActivate: [AuthGuardService]},
     {path: 'add-task', component: AddTaskComponent, canActivate: [AuthGuardService]},
+    {path: 'klantkaart/:id', component: ClientCardComponent, canActivate: [AuthGuardService]},
     {path: '', pathMatch: 'full', redirectTo: 'login'}
 ];
 

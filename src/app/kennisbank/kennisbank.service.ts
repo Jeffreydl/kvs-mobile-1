@@ -27,6 +27,12 @@ export class KennisbankService {
         );
     }
 
+    getByWebsiteId(id: string): Observable<IkennisbankItemsChildren[]> {
+        return this.http.get<IkennisbankItemsChildren[]>(baseUrl + 'api/Nodes/nodes/getNode/nl/' + id).pipe(
+            map((data: any) => data.items)
+        );
+    }
+
     search(keyword: string): Observable<IKennisbankSearchItem[]> {
         return this.http.get<IKennisbankSearchItem[]>(baseUrl + 'search/' + keyword).pipe(
            map((data: any) => data.KbaseItems)

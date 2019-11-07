@@ -19,6 +19,8 @@ import { AddTaskComponent } from './tasks/add-task/add-task.component';
 import { OrderByPipe } from './order-by.pipe';
 import { SelectedClientComponent } from './customers/selected-client/selected-client.component';
 import { ClientSearchbarComponent } from './customers/client-searchbar/client-searchbar.component';
+import { ClientCardComponent } from './customers/client-card/client-card.component';
+import { HousesComponent } from './houses/houses.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { ClientSearchbarComponent } from './customers/client-searchbar/client-se
     OrderByPipe,
     SelectedClientComponent,
     ClientSearchbarComponent,
+    ClientCardComponent,
+    HousesComponent,
   ],
   imports: [
     BrowserModule,
