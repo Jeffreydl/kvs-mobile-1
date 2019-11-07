@@ -5,8 +5,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material-module/material.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { HttpErrorInterceptor } from './auth/http-error-interceptor';
+
+import { OrderByPipe } from './order-by.pipe';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -16,11 +19,11 @@ import { TasksComponent } from './tasks/tasks.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { KennisbankComponent } from './kennisbank/kennisbank.component';
 import { AddTaskComponent } from './tasks/add-task/add-task.component';
-import { OrderByPipe } from './order-by.pipe';
 import { SelectedClientComponent } from './customers/selected-client/selected-client.component';
 import { ClientSearchbarComponent } from './customers/client-searchbar/client-searchbar.component';
 import { ClientCardComponent } from './customers/client-card/client-card.component';
 import { HousesComponent } from './houses/houses.component';
+import { DossiersComponent } from './dossiers/dossiers.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,7 @@ import { HousesComponent } from './houses/houses.component';
     ClientSearchbarComponent,
     ClientCardComponent,
     HousesComponent,
+    DossiersComponent,
   ],
   imports: [
     BrowserModule,

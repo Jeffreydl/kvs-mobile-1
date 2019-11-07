@@ -2,17 +2,20 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {baseUrl} from '../base-api.service';
+import {ITask} from './itask';
 
 export class TaskFilter {
-  state: string;
-  mailDirection: string;
-  direction: string;
-  order: string;
-  limit: number;
-  createdById: number;
-  isDraft: boolean;
-  closedById: number;
-  endDate: string;
+ public state: string;
+ public mailDirection: string;
+ public direction: string;
+ public order: string;
+ public limit: number;
+ public createdById: number;
+ public isDraft: boolean;
+ public closedById: number;
+ public assigneeId: number;
+ public endDate: string;
+ public relatieId: number;
 
   public openTasks() {
     this.state = 'open';
@@ -69,13 +72,23 @@ export class TaskFilter {
     return this;
   }
 
-  public includeDrafts(isDraft) {
+  public includeDrafts(isDraft: boolean) {
     this.isDraft = isDraft;
+    return this;
+  }
+
+  public assignedTo(id: number) {
+    this.assigneeId = id;
     return this;
   }
 
   public hasEndDate(endDate: string) {
     this.endDate = endDate;
+    return this;
+  }
+
+  public forClient(relationId: number) {
+    this.relatieId = relationId;
     return this;
   }
 
@@ -106,9 +119,19 @@ export class TaskFilter {
         direction: this.direction
       });
     }
+    if (this.assigneeId) {
+      filter.where.and.push({
+        assigneeId: this.assigneeId
+      });
+    }
     if (this.endDate) {
       filter.where.and.push({
         endDate: this.endDate
+      });
+    }
+    if (this.relatieId) {
+      filter.where.and.push({
+        relatieId: this.relatieId
       });
     }
 
@@ -135,8 +158,8 @@ export class TasksService {
   constructor(private http: HttpClient) {
   }
 
-  getAll(filter: TaskFilter): Observable<any> {
-    return this.http.get(url + 'Messages?filter=' + filter);
+  getAll(filter: TaskFilter): Observable<ITask[]> {
+    return this.http.get<ITask[]>(url + 'Messages?filter=' + filter);
   }
 
   new() {

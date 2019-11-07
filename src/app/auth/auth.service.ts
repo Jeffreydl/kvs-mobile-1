@@ -10,6 +10,7 @@ import {baseUrl} from '../base-api.service';
 export class AuthService {
   public token: string;
   public ttl: number;
+  public userId: number;
   public hasPermission = true;
   public sessionExpiredMessage: string;
 
@@ -23,6 +24,7 @@ export class AuthService {
         (data: any) => {
           this.token = data.accessToken.id;
           this.ttl = data.accessToken.ttl;
+          this.userId = data.accessToken.userId;
           this.hasPermission = true;
           this.tokenTtlTimer(this.token, this.ttl);
           this.router.navigate(['dashboard']);
@@ -63,6 +65,10 @@ export class AuthService {
 
   isLoggedIn() {
     return this.hasPermission;
+  }
+
+  getUserId() {
+    return this.userId;
   }
 
   getSessionExpiredMessage() {

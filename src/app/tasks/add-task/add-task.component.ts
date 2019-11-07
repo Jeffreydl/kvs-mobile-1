@@ -70,14 +70,6 @@ export class AddTaskComponent implements OnInit, OnDestroy {
         this.messageChannelsSubscription$.unsubscribe();
         this.typesSubscription$.unsubscribe();
     }
-
-    // getAge(birthDate: string) {
-    //   const doei = new Date(birthDate);
-    //   const hi = new Date();
-    //   this.years = hi.getTime() - doei.getTime();
-    //   console.log(this.years);
-    // }
-
     addTask() {
     }
 

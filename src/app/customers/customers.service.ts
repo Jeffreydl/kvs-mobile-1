@@ -19,7 +19,7 @@ export class CustomersService {
         );
     }
 
-    getClient(id: number): Observable<ICustomer> {
+    getById(id: number): Observable<ICustomer> {
         return this.http.get<ICustomer>(baseUrl + 'api/relaties/' + id);
     }
 }
