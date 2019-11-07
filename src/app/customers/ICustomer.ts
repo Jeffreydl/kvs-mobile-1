@@ -16,7 +16,7 @@ export interface ICustomer {
     score: number;
     address: IAddress[];
     emailaddress: IEmailAddress[];
-    phoneNumber: IPhoneNumber[];
+    phonenumber: IPhoneNumber[];
     relatiecluster: IRelatieCluster[];
 }
 
