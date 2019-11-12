@@ -1,0 +1,131 @@
+<div class="container">
+
+    <mat-tab-group animationDuration="0ms">
+        <mat-tab label="Personalia">
+            <div class="personalia">
+            <div class="name"><h3>{{currentClient?.title}} {{currentClient?.fullname}}</h3></div>
+                <li>ID {{currentClient?.id}}</li>
+                <li>Geboortedatum {{currentClient?.dateofbirth | date: 'dd-MM-yyyy' }} ({{currentClient?.age}} jaar)</li>
+                Telefoonnummer <li *ngFor="let phone of currentClient?.phonenumber">{{phone.number}}</li>
+                E-mailadres <li *ngFor="let email of currentClient?.emailaddress">{{email.address}}</li>
+                Adres <li *ngFor="let address of currentClient?.address">{{address.fullAddress}}</li>
+            </div>
+
+            <div class="links">
+                Direct naar:
+                <li>Aangeboden woning</li>
+                <li>Betalingsregeling treffen</li>
+                <li>Huur opzeggen</li>
+                <li>Inloggen als huurder</li>
+                <li>Overlast melden</li>
+                <li>Persoonlijke gegevens wijzigen</li>
+                <li>Reparatieverzoek indienen</li>
+                <li>Woningzoekende gegevens | WBS</li>
+            </div>
+        </mat-tab>
+
+        <mat-tab label="Taken">
+            <div class="tasks">
+                <mat-form-field class="searchbar">
+                    <input matInput (keyup)="applyFilterTasks($event.target.value)" placeholder="Zoeken in taken">
+                </mat-form-field>
+
+                <table mat-table [dataSource]="dataSourceTasks" class="mat-elevation-z8 table">
+
+                    <ng-container matColumnDef="category">
+                        <th mat-header-cell *matHeaderCellDef> Categorie </th>
+                        <td mat-cell *matCellDef="let element"> {{element.messageCategory.name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="subject">
+                        <th mat-header-cell *matHeaderCellDef> Onderwerp </th>
+                        <td mat-cell *matCellDef="let element"> {{element.subject}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="sla">
+                        <th mat-header-cell *matHeaderCellDef> SLA-datum </th>
+                        <td mat-cell *matCellDef="let element"> {{element.slaDateTime | date:'dd-MM-yyy'}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsTasks"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnsTasks;"></tr>
+                </table>
+            </div>
+        </mat-tab>
+
+        <mat-tab label="Lopende Dossiers">
+            <div class="dossiers">
+                <mat-form-field class="searchbar">
+                    <input matInput (keyup)="applyFilterOpenDossiers($event.target.value)" placeholder="Zoeken in lopende dossiers">
+                </mat-form-field>
+
+                <table mat-table [dataSource]="dataSourceOpenDossiers" class="mat-elevation-z8 table">
+
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef>Id</th>
+                        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="category">
+                        <th mat-header-cell *matHeaderCellDef>Categorie</th>
+                        <td mat-cell *matCellDef="let element"> {{element.dossierCategory.name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="subject">
+                        <th mat-header-cell *matHeaderCellDef> Onderwerp </th>
+                        <td mat-cell *matCellDef="let element"> {{element.subject}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="sla">
+                        <th mat-header-cell *matHeaderCellDef> SLA-datum </th>
+                        <td mat-cell *matCellDef="let element"> {{element.slaDate | date:'dd-MM-yyy'}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsOpenDossiers"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnsOpenDossiers;"></tr>
+                </table>
+            </div>
+        </mat-tab>
+
+        <mat-tab label="Gesloten Dossiers">
+            <div class="dossiers">
+                <mat-form-field class="searchbar">
+                    <input matInput (keyup)="applyFilterClosedDossiers($event.target.value)" placeholder="Zoeken in gesloten dossiers">
+                </mat-form-field>
+
+                <table mat-table [dataSource]="dataSourceClosedDossiers" class="mat-elevation-z8 table">
+
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef>Id</th>
+                        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="category">
+                        <th mat-header-cell *matHeaderCellDef> Categorie </th>
+                        <td mat-cell *matCellDef="let element"> {{element.dossierCategory.name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="subject">
+                        <th mat-header-cell *matHeaderCellDef> Onderwerp </th>
+                        <td mat-cell *matCellDef="let element"> {{element.subject}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="sla">
+                        <th mat-header-cell *matHeaderCellDef> SLA-datum </th>
+                        <td mat-cell *matCellDef="let element"> {{element.slaDate | date:'dd-MM-yyy'}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsClosedDossiers"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnsClosedDossiers;"></tr>
+                </table>
+            </div>
+        </mat-tab>
+
+
+    </mat-tab-group>
+
+
+</div>
+
+
+<app-navigation></app-navigation>

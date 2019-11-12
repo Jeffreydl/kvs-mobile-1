@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {TaskFilter, TasksService} from './tasks.service';
-import {map} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {AuthService} from '../auth/auth.service';
+import {ITask} from './itask';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-tasks',
@@ -9,25 +10,33 @@ import {Observable} from 'rxjs';
   styleUrls: ['./tasks.component.scss']
 })
 export class TasksComponent implements OnInit {
-  public tasks: Observable<any>;
+  public tasks: ITask[];
+  public displayedColumnsTasks: string[] = ['category', 'subject', 'sla'];
+  public dataSourceTasks: MatTableDataSource<ITask>;
   public datee;
+  public userId: number;
 
-  constructor(private tasksService: TasksService) { }
+  constructor(private tasksService: TasksService, private authService: AuthService) { }
 
   ngOnInit() {
-    this.getTasks();
+      // this.userId = this.authService.getUserId();
+      this.getTasks();
   }
 
   getTasks() {
       this.tasksService.getAll(new TaskFilter()
-          .openTasks()
+      // See TasksService.ts for all filter methods
+          // .openTasks()
           .inboundTasks()
+          .assignedTo(13)
+          // .assignedTo(this.userId)
           .limitTo(10)
           .descending()
           .includeDrafts(false))
           .subscribe(tasks => {
               this.tasks = tasks;
               console.log(this.tasks);
+              this.dataSourceTasks = new MatTableDataSource(this.tasks);
           });
   }
 

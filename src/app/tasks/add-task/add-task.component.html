@@ -4,131 +4,66 @@
         <mat-tab label="TAAK">
             <app-selected-client></app-selected-client>
 
+            <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
 
-<!--            <mat-vertical-stepper [linear]="true" #stepper>-->
-<!--                <mat-step>-->
-<!--                        <ng-template matStepLabel>Fill out your name</ng-template>-->
-<!--                    <mat-radio-group-->
-<!--                            aria-labelledby="example-radio-group-label"-->
-<!--                            class="example-radio-group"-->
-<!--                            [(ngModel)]="favoriteSeason">-->
-<!--                        <mat-radio-button class="example-radio-button" *ngFor="let category of categories" [value]="category.name">-->
-<!--                            {{category.name}}-->
-<!--                        </mat-radio-button>-->
-<!--                    </mat-radio-group>-->
+                <mat-form-field floatLabel="always" class="form-field" *ngIf="messageChannels">
+                    <mat-label>Kanaal*</mat-label>
+                    <mat-select formControlName="messageChannel">
+                        <mat-option *ngFor="let messageChannel of messageChannels" [value]="messageChannel.name">
+                            {{messageChannel.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-<!--                        <div>-->
-<!--                            <button mat-button matStepperNext>Next</button>-->
-<!--                        </div>-->
+                <mat-form-field floatLabel="always" class="form-field" *ngIf="categories">
+                    <mat-label>Categorie*</mat-label>
+                    <mat-select formControlName="category">
+                        <mat-option *ngFor="let category of categories" [value]="category.name">
+                            {{category.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-<!--                </mat-step>-->
-<!--                <mat-step>-->
-<!--                        <ng-template matStepLabel>Fill out your address</ng-template>-->
-<!--                        <mat-form-field>-->
-<!--                            <input matInput placeholder="Address" formControlName="secondCtrl" required>-->
-<!--                        </mat-form-field>-->
-<!--                        <div>-->
-<!--                            <button mat-button matStepperPrevious>Back</button>-->
-<!--                            <button mat-button matStepperNext>Next</button>-->
-<!--                        </div>-->
-<!--                </mat-step>-->
-<!--                <mat-step>-->
-<!--                    <ng-template matStepLabel>Done</ng-template>-->
-<!--                    You are now done.-->
-<!--                    <div>-->
-<!--                        <button mat-button matStepperPrevious>Back</button>-->
-<!--                        <button mat-button (click)="stepper.reset()">Reset</button>-->
-<!--                    </div>-->
-<!--                </mat-step>-->
-<!--            </mat-vertical-stepper>-->
+                <mat-form-field floatLabel="always" class="form-field" *ngIf="types">
+                    <mat-label>Type*</mat-label>
+                    <mat-select formControlName="types">
+                        <mat-option *ngFor="let type of types" [value]="type.name">
+                            {{type.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
 
+                <mat-form-field class="form-field" *ngIf="contactReasons">
+                    <mat-label>Hoofdcontactreden*</mat-label>
+                    <mat-select formControlName="contactReason">
+                        <mat-option *ngFor="let contactReason of contactReasons" [value]="contactReason.name">
+                            {{contactReason.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
 
+                <mat-checkbox [checked]="isChecked"
+                              class="example-margin"
+                              (change)="isChecked = !isChecked">
+                    Gebruik contactreden als onderwerp
+                </mat-checkbox>
 
-<!--            <mat-expansion-panel *ngFor="let client of clients">-->
-<!--                <mat-expansion-panel-header>-->
-<!--                    <mat-panel-title>-->
-<!--                        {{ client.initials }} ({{ client.firstname }}) {{ client.lastname }} <br>-->
-<!--                        {{ client.personsnumber }} |-->
-<!--                        {{ client.gender }} |-->
-<!--                        {{ client.dateofbirth | date: 'dd-MM-yyyy' }} |-->
-<!--                        ({{ age }} jaar)-->
-<!--                    </mat-panel-title>-->
-<!--                </mat-expansion-panel-header>-->
-<!--                <ng-template matExpansionPanelContent>-->
-<!--                    <div class="address" *ngFor="let address of client.address">-->
-<!--                        <span>{{ address.street }} </span>-->
-<!--                        <span *ngIf="address.housenumberaddition;else noAddition"> {{ address.housenumber }}{{ address.housenumberaddition }}-->
-<!--                            , </span>-->
-<!--                        <ng-template #noAddition>-->
-<!--                            <span>{{ address.housenumber }}, </span>-->
-<!--                        </ng-template>-->
-<!--                        <span>{{ address.postalcode }} </span>-->
-<!--                        <span>{{ address.city }}</span>-->
-<!--                    </div>-->
-<!--                </ng-template>-->
-<!--            </mat-expansion-panel>-->
+                <mat-form-field class="form-field">
+                    <input formControlName="subject"
+                           matInput
+                           placeholder="Onderwerp / Vraag"
+                           [value]="isChecked ? contactReason : taskSubject">
+                </mat-form-field>
 
+                <mat-form-field>
+                    <textarea formControlName="body"
+                              class="message-body"
+                              placeholder="Bericht (optioneel)"
+                              matInput matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5>
+                    </textarea>
+                </mat-form-field>
 
-<!--            <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">-->
-
-<!--                <mat-form-field floatLabel="always" class="form-field" *ngIf="messageChannels">-->
-<!--                    <mat-label>Kanaal*</mat-label>-->
-<!--                    <mat-select formControlName="messageChannel">-->
-<!--                        <mat-option *ngFor="let messageChannel of messageChannels" [value]="messageChannel.name">-->
-<!--                            {{messageChannel.name }}-->
-<!--                        </mat-option>-->
-<!--                    </mat-select>-->
-<!--                </mat-form-field>-->
-
-<!--                <mat-form-field floatLabel="always" class="form-field" *ngIf="categories">-->
-<!--                    <mat-label>Categorie*</mat-label>-->
-<!--                    <mat-select formControlName="category">-->
-<!--                        <mat-option *ngFor="let category of categories" [value]="category.name">-->
-<!--                            {{category.name}}-->
-<!--                        </mat-option>-->
-<!--                    </mat-select>-->
-<!--                </mat-form-field>-->
-
-<!--                <mat-form-field floatLabel="always" class="form-field" *ngIf="types">-->
-<!--                    <mat-label>Type*</mat-label>-->
-<!--                    <mat-select formControlName="types">-->
-<!--                        <mat-option *ngFor="let type of types" [value]="type.name">-->
-<!--                            {{type.name}}-->
-<!--                        </mat-option>-->
-<!--                    </mat-select>-->
-<!--                </mat-form-field>-->
-
-<!--                <mat-form-field class="form-field" *ngIf="contactReasons">-->
-<!--                    <mat-label>Hoofdcontactreden*</mat-label>-->
-<!--                    <mat-select formControlName="contactReason">-->
-<!--                        <mat-option *ngFor="let contactReason of contactReasons" [value]="contactReason.name">-->
-<!--                            {{contactReason.name}}-->
-<!--                        </mat-option>-->
-<!--                    </mat-select>-->
-<!--                </mat-form-field>-->
-
-<!--                <mat-checkbox [checked]="isChecked"-->
-<!--                              class="example-margin"-->
-<!--                              (change)="isChecked = !isChecked">-->
-<!--                    Gebruik contactreden als onderwerp-->
-<!--                </mat-checkbox>-->
-
-<!--                <mat-form-field class="form-field">-->
-<!--                    <input formControlName="subject"-->
-<!--                           matInput-->
-<!--                           placeholder="Onderwerp / Vraag"-->
-<!--                           [value]="isChecked ? contactReason : taskSubject">-->
-<!--                </mat-form-field>-->
-
-<!--                <mat-form-field>-->
-<!--                    <textarea formControlName="body"-->
-<!--                              class="message-body"-->
-<!--                              placeholder="Bericht (optioneel)"-->
-<!--                              matInput matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5>-->
-<!--                    </textarea>-->
-<!--                </mat-form-field>-->
-
-<!--            </form>-->
+            </form>
 
         </mat-tab>
 
@@ -148,7 +83,6 @@
             rhfkjewkjdfskjdfsakjdfdsdfshjddfashjl
         </mat-tab>
     </mat-tab-group>
-
 
 </div>
 

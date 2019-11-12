@@ -1,12 +1,34 @@
 <div class="container">
-    <mat-list>
-        <mat-list-item *ngFor="let task of tasks">
-<!--            <mat-icon class="material-module-icons icon-image-preview">assignment</mat-icon>-->
-            <p>{{ task.messageCategory.name }}</p>
-            <mat-icon class="md-default-theme-theme material-icons" role="img">email</mat-icon>
-            <p>{{ task.subject }}</p>
-        <!--        <p>{{datee}}</p>-->
-        <!--        <p>getsla{{getSla()}}</p>-->
-        </mat-list-item>
-    </mat-list>
+
+<!--    <mat-list>-->
+<!--        <mat-list-item *ngFor="let task of tasks">-->
+<!--            <p>{{ task.messageCategory.name }}</p>-->
+<!--            <mat-icon class="md-default-theme-theme material-icons" role="img">email</mat-icon>-->
+<!--            <p>{{ task.subject }}</p>-->
+<!--        </mat-list-item>-->
+<!--    </mat-list>-->
+
+
+    <table mat-table [dataSource]="dataSourceTasks" class="mat-elevation-z8 table">
+        <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef> Categorie </th>
+            <td mat-cell *matCellDef="let element"> {{element.messageCategory.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="subject">
+            <th mat-header-cell *matHeaderCellDef> Onderwerp </th>
+            <td mat-cell *matCellDef="let element"> {{element.subject}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="sla">
+            <th mat-header-cell *matHeaderCellDef> SLA-datum </th>
+            <td mat-cell *matCellDef="let element"> {{element.slaDateTime | date:'dd-MM-yyy'}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsTasks"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsTasks;"></tr>
+    </table>
+
+
+
 </div>

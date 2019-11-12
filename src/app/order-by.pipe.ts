@@ -17,7 +17,7 @@ export class OrderByPipe implements PipeTransform {
         return 0;
     }
 
-    transform(input: any[], config?: string | string[]): any {
+    public transform(input: any[], config?: string | string[]): any {
         if (!input) {
             return input;
         }
