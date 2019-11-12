@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {baseUrl} from '../base-api.service';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class HousesService {
 

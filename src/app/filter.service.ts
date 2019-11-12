@@ -1,32 +1,33 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {MatTableDataSource} from '@angular/material';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class FilterService {
 
-  constructor() { }
+    constructor() {
+    }
 
-  filterNestedObjects(datasource: MatTableDataSource<any>) {
-    datasource.filterPredicate = (order: any, filter: string) => {
-      const transformedFilter = filter.trim().toLowerCase();
+    public filterNestedObjects(datasource: MatTableDataSource<any>) {
+        datasource.filterPredicate = (order: any, filter: string) => {
+            const transformedFilter = filter.trim().toLowerCase();
 
-      const listAsFlatString = (obj): string => {
-        let returnVal = '';
+            const listAsFlatString = (obj): string => {
+                let returnVal = '';
 
-        Object.values(obj).forEach((val) => {
-          if (typeof val !== 'object') {
-            returnVal = returnVal + ' ' + val;
-          } else if (val) {
-            returnVal = returnVal + ' ' + listAsFlatString(val);
-          }
-        });
+                Object.values(obj).forEach((val) => {
+                    if (typeof val !== 'object') {
+                        returnVal = returnVal + ' ' + val;
+                    } else if (val) {
+                        returnVal = returnVal + ' ' + listAsFlatString(val);
+                    }
+                });
 
-        return returnVal.trim().toLowerCase();
-      };
+                return returnVal.trim().toLowerCase();
+            };
 
-      return listAsFlatString(order).includes(transformedFilter);
-    };
-  }
+            return listAsFlatString(order).includes(transformedFilter);
+        };
+    }
 }

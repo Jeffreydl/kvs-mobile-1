@@ -3,12 +3,12 @@
     <mat-tab-group animationDuration="0ms">
         <mat-tab label="Personalia">
             <div class="personalia">
-            <div class="name"><h3>{{fullName}}</h3></div>
+            <div class="name"><h3>{{currentClient?.title}} {{currentClient?.fullname}}</h3></div>
                 <li>ID {{currentClient?.id}}</li>
-                <li>Geboortedatum {{currentClient?.dateofbirth | date: 'dd-MM-yyyy' }} ({{age}} jaar)</li>
+                <li>Geboortedatum {{currentClient?.dateofbirth | date: 'dd-MM-yyyy' }} ({{currentClient?.age}} jaar)</li>
                 Telefoonnummer <li *ngFor="let phone of currentClient?.phonenumber">{{phone.number}}</li>
                 E-mailadres <li *ngFor="let email of currentClient?.emailaddress">{{email.address}}</li>
-                Adres <li *ngFor="let fullAddress of fullAddresses">{{fullAddress}}</li>
+                Adres <li *ngFor="let address of currentClient?.address">{{address.fullAddress}}</li>
             </div>
 
             <div class="links">

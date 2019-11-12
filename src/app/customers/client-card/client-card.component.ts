@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CustomersService} from '../customers.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {IAddress, ICustomer} from '../ICustomer';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {TaskFilter, TasksService} from '../../tasks/tasks.service';
 import {MatTableDataSource} from '@angular/material';
 import {FilterService} from '../../filter.service';
@@ -14,22 +14,19 @@ import {DossierFilter, DossierService} from '../../dossiers/dossier.service';
     styleUrls: ['./client-card.component.scss']
 })
 export class ClientCardComponent implements OnInit {
-    public id: number;
-    public currentClient: ICustomer;
+    private id: number;
+    private currentClient: ICustomer;
     private routeSubscription$: Subscription;
-    public fullName: string;
-    public fullAddresses = [];
-    public age: number;
 
-    public tasks: any;
-    public displayedColumnsTasks: string[] = ['category', 'subject', 'sla'];
-    public dataSourceTasks: MatTableDataSource<any>;
-    public openDossiers: any;
-    public displayedColumnsOpenDossiers: string[] = ['id', 'category', 'subject', 'sla'];
-    public dataSourceOpenDossiers: MatTableDataSource<any>;
-    public closedDossiers: any;
-    public displayedColumnsClosedDossiers: string[] = ['id', 'category', 'subject', 'sla'];
-    public dataSourceClosedDossiers: MatTableDataSource<any>;
+    private tasks: any;
+    private displayedColumnsTasks: string[] = ['category', 'subject', 'sla'];
+    private dataSourceTasks: MatTableDataSource<any>;
+    private openDossiers: any;
+    private displayedColumnsOpenDossiers: string[] = ['id', 'category', 'subject', 'sla'];
+    private dataSourceOpenDossiers: MatTableDataSource<any>;
+    private closedDossiers: any;
+    private displayedColumnsClosedDossiers: string[] = ['id', 'category', 'subject', 'sla'];
+    private dataSourceClosedDossiers: MatTableDataSource<any>;
 
     constructor(
         private router: Router,
@@ -54,40 +51,11 @@ export class ClientCardComponent implements OnInit {
         this.getDossiers();
     }
 
-    getFullName(data: ICustomer) {
-        let prefix = '';
-        if (data.gender === 'Vrouw') {
-            prefix = 'Mevr.';
-        } else if (data.gender === 'Man') {
-            prefix = 'M.';
-        }
-        this.fullName = prefix + ' ' + data.initials + ' (' + data.firstname + ') ' + data.lastname;
-    }
-    getAddress(addresses: IAddress[]) {
+    ngOndestroy() {
 
-        for (const address of addresses) {
-            let houseNumber = address.housenumber.toString();
-
-            if (address.housenumberaddition) {
-                houseNumber = address.housenumber + '-' + address.housenumberaddition;
-            }
-            this.fullAddresses.push(
-                address.street + ' ' + houseNumber + ', ' + address.postalcode + ' ' + address.city + ' (' + address.type + ')'
-            );
-        }
-    }
-    getAge(value: string) {
-        const today = new Date();
-        const birthDate = new Date(value);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        const months = today.getMonth() - birthDate.getMonth();
-        if (months < 0 || (months === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
-        }
-        this.age = age;
     }
 
-    getTasks() {
+    private getTasks() {
         this.tasksService.getAll(new TaskFilter()
             .openTasks()
             .inboundTasks()
@@ -97,14 +65,12 @@ export class ClientCardComponent implements OnInit {
             .includeDrafts(false))
             .subscribe(tasks => {
                 this.tasks = tasks;
-                console.log(this.tasks);
                 this.dataSourceTasks = new MatTableDataSource(this.tasks);
                 this.filterService.filterNestedObjects(this.dataSourceTasks);
             });
     }
 
-    getDossiers() {
-        console.log('dosieers');
+    private getDossiers() {
         this.dossiersService.getAll(new DossierFilter()
             .forRelation(this.id)
             .openDossiers()
@@ -112,7 +78,6 @@ export class ClientCardComponent implements OnInit {
             .descending())
             .subscribe(dossiers => {
                 this.openDossiers = dossiers;
-                console.log(this.openDossiers);
                 this.dataSourceOpenDossiers = new MatTableDataSource(this.openDossiers);
                 this.filterService.filterNestedObjects(this.dataSourceOpenDossiers);
             });
@@ -129,24 +94,24 @@ export class ClientCardComponent implements OnInit {
             });
     }
 
-    getClient() {
+    private getClient() {
+        console.log('one');
         this.customersService.getById(+this.id).subscribe(
             (data) => {
                 this.currentClient = data;
-                this.getFullName(data);
-                this.getAddress(data.address);
-                this.getAge(data.dateofbirth);
             }
         );
     }
 
-    applyFilterTasks(filterValue: string) {
+    private applyFilterTasks(filterValue: string) {
         this.dataSourceTasks.filter = filterValue;
     }
-    applyFilterOpenDossiers(filterValue: string) {
+
+    private applyFilterOpenDossiers(filterValue: string) {
         this.dataSourceOpenDossiers.filter = filterValue;
     }
-    applyFilterClosedDossiers(filterValue: string) {
+
+    private applyFilterClosedDossiers(filterValue: string) {
         this.dataSourceClosedDossiers.filter = filterValue;
     }
 }

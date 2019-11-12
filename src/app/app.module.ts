@@ -24,6 +24,7 @@ import { ClientSearchbarComponent } from './customers/client-searchbar/client-se
 import { ClientCardComponent } from './customers/client-card/client-card.component';
 import { HousesComponent } from './houses/houses.component';
 import { DossiersComponent } from './dossiers/dossiers.component';
+import { ClientListComponent } from './customers/client-list/client-list.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { DossiersComponent } from './dossiers/dossiers.component';
     ClientCardComponent,
     HousesComponent,
     DossiersComponent,
+    ClientListComponent,
   ],
   imports: [
     BrowserModule,

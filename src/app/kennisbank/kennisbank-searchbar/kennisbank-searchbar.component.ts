@@ -11,10 +11,10 @@ import {Observable} from 'rxjs';
     styleUrls: ['./kennisbank-searchbar.component.scss']
 })
 export class KennisbankSearchbarComponent implements OnInit {
-    public kennisbankItems$: Observable<IKennisbankSearchItem[]>;
-    public autoCompleteFormControl = new FormControl();
+    private kennisbankItems$: Observable<IKennisbankSearchItem[]>;
+    private autoCompleteFormControl = new FormControl();
     @Output() public isActive = new EventEmitter<boolean>();
-    iisActive: boolean;
+    private iisActive: boolean;
 
     constructor(private kennisbankService: KennisbankService) {
     }
@@ -28,7 +28,7 @@ export class KennisbankSearchbarComponent implements OnInit {
         });
     }
 
-    searchKennisbank(value: string) {
+    private searchKennisbank(value: string) {
         if (value.length > 0) {
             this.kennisbankItems$ = this.kennisbankService.search(value);
             console.log(this.kennisbankItems$);

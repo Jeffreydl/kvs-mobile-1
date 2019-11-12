@@ -2,6 +2,9 @@ export interface ICustomer {
     firstname: string;
     lastname: string;
     middlename: string;
+    fullname: string;
+    title: string;
+    age: number;
     initials: string;
     salutation: null;
     dateofbirth: string;
@@ -32,6 +35,7 @@ export interface IAddress {
     country: string;
     type: string;
     id: number;
+    fullAddress: string;
 }
 
 export interface IEmailAddress {

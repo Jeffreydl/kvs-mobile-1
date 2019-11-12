@@ -8,13 +8,13 @@ import {IKennisbankItems, IkennisbankItemsChildren} from './IKennisbank';
     styleUrls: ['./kennisbank.component.scss']
 })
 export class KennisbankComponent implements OnInit {
-    public kennisbankItems: IKennisbankItems[];
-    public kennisbankItem: IkennisbankItemsChildren[];
-    public show = false;
-    public searching = false;
-    public subTitleId: string;
-    public contentId: string;
-    public kennisbankWebsiteItem: IkennisbankItemsChildren[];
+    private kennisbankItems: IKennisbankItems[];
+    private kennisbankItem: IkennisbankItemsChildren[];
+    private show = false;
+    private searching = false;
+    private subTitleId: string;
+    private contentId: string;
+    private kennisbankWebsiteItem: IkennisbankItemsChildren[];
 
     constructor(private kennisbankService: KennisbankService) {
     }
@@ -28,11 +28,11 @@ export class KennisbankComponent implements OnInit {
         );
     }
 
-    searchBarStatus($event: boolean) {
+    private searchBarStatus($event: boolean) {
         this.searching = $event;
     }
 
-    toggleContent(id: string) {
+    private toggleContent(id: string) {
         if (this.contentId === id) {
             this.contentId = '';
         } else {
@@ -48,7 +48,7 @@ export class KennisbankComponent implements OnInit {
         );
     }
 
-    toggleSubContent(id: string, websiteId: string) {
+    private toggleSubContent(id: string, websiteId: string) {
         if (this.subTitleId === id) {
             this.subTitleId = '';
             this.show = false;
