@@ -1,14 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HousesService} from './houses.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
+@AutoUnsubscribe()
 @Component({
     selector: 'app-houses',
     templateUrl: './houses.component.html',
     styleUrls: ['./houses.component.css']
 })
-export class HousesComponent implements OnInit {
+export class HousesComponent implements OnInit, OnDestroy {
     private houses: any;
     private routeSubscription$: Subscription;
     private id: number;
@@ -26,6 +28,9 @@ export class HousesComponent implements OnInit {
                 console.log(this.houses);
             }
         );
+    }
+
+    ngOnDestroy(): void {
     }
 
 }

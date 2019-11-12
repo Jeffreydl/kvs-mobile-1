@@ -1,11 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {FormControl} from '@angular/forms';
-import {IAddress, ICustomer, IPhoneNumber} from '../ICustomer';
+import {ICustomer} from '../ICustomer';
 import {CustomersService} from '../customers.service';
 import {Subscription} from 'rxjs';
 import {Router} from '@angular/router';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
+@AutoUnsubscribe()
 @Component({
     selector: 'app-client-searchbar',
     templateUrl: './client-searchbar.component.html',

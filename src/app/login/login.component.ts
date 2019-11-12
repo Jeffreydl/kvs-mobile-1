@@ -1,13 +1,15 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {AuthService} from '../auth/auth.service';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
+@AutoUnsubscribe()
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
     private form: FormGroup;
     private breakpoint: number;
     private rowspanForm: number;
@@ -30,6 +32,9 @@ export class LoginComponent implements OnInit {
         this.rowspanLogo = (window.innerWidth > window.innerHeight) ? 1 : 1;
 
         this.sessionExpiredMessage = this.auth.getSessionExpiredMessage();
+    }
+
+    ngOnDestroy(): void {
     }
 
     @HostListener('window:resize', ['$event'])

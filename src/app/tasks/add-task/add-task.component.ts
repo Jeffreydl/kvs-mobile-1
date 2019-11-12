@@ -3,8 +3,9 @@ import {TasksService} from '../tasks.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CustomersService} from '../../customers/customers.service';
 import {Subscription} from 'rxjs';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
-
+@AutoUnsubscribe()
 @Component({
     selector: 'app-add-task',
     templateUrl: './add-task.component.html',
@@ -51,7 +52,6 @@ export class AddTaskComponent implements OnInit, OnDestroy {
            messageChannel: this.formBuilder.control('', Validators.compose([Validators.required])),
            category: this.formBuilder.control('', Validators.compose([Validators.required])),
            types: this.formBuilder.control('', Validators.compose([Validators.required])),
-           types: this.formBuilder.control('', Validators.compose([Validators.required])),
            contactReason: this.formBuilder.control('', Validators.compose([Validators.required])),
            dossierCategory: this.formBuilder.control('', Validators.compose([Validators.required])),
            subject: this.formBuilder.control('', Validators.compose([Validators.required])),
@@ -62,12 +62,8 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.categorySubscription$.unsubscribe();
-        this.contactReasonsSubscription$.unsubscribe();
-        this.dossierCategoriesSubscription$.unsubscribe();
-        this.messageChannelsSubscription$.unsubscribe();
-        this.typesSubscription$.unsubscribe();
     }
+
     private addTask() {
     }
 

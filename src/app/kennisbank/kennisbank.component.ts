@@ -1,13 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {KennisbankService} from './kennisbank.service';
 import {IKennisbankItems, IkennisbankItemsChildren} from './IKennisbank';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
+@AutoUnsubscribe()
 @Component({
     selector: 'app-kennisbank',
     templateUrl: './kennisbank.component.html',
     styleUrls: ['./kennisbank.component.scss']
 })
-export class KennisbankComponent implements OnInit {
+export class KennisbankComponent implements OnInit, OnDestroy {
     private kennisbankItems: IKennisbankItems[];
     private kennisbankItem: IkennisbankItemsChildren[];
     private show = false;
@@ -26,6 +28,9 @@ export class KennisbankComponent implements OnInit {
                 this.kennisbankItems = data;
             }
         );
+    }
+
+    ngOnDestroy(): void {
     }
 
     private searchBarStatus($event: boolean) {

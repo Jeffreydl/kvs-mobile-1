@@ -38,7 +38,7 @@ export class CustomersService {
                     this.getAge(client);
                 });
                 return clients;
-        })
+            })
         );
     }
 
@@ -77,6 +77,7 @@ export class CustomersService {
         client.title = title;
         return client;
     }
+
     public getFullAddress(client: ICustomer): ICustomer {
         for (const address of client.address) {
             let fullAddress = '';
