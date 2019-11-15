@@ -6,8 +6,7 @@
     </li>
     <li *ngFor="let phone of client.phonenumber">{{phone.number}} <br>
         <a href="tel:{{phone.number}}">Bel klant</a><br>
-        <a [href]="phoneNumber">{{phone.number}}SMS klant</a>
-        <a href="sms:{{phone.number}}">{{phone.number}}SMS klant</a>
+        <a [href]="sendSms(phone.number) | safeUrl">{{phone.number}}SMS klant</a>
         <button (click)="makeSafe(phone.number)">make safe pls</button>
     </li>
     <li *ngFor="let email of client.emailaddress">{{email.address}}

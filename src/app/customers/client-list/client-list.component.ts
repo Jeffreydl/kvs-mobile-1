@@ -42,4 +42,8 @@ export class ClientListComponent implements OnInit, OnDestroy {
     makeSafe(phoneNumber: string) {
         this.phoneNumber = this.domSanitizer.bypassSecurityTrustUrl(`sms:${phoneNumber}`);
     }
+
+    sendSms(phoneNumber: string) {
+        return `sms:${phoneNumber}`;
+    }
 }
