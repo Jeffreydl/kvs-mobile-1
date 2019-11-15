@@ -89,8 +89,7 @@ export class CustomersService {
             fullAddress = address.street + ' '
                         + houseNumber + ', '
                         + address.postalcode + ' '
-                        + address.city + ' ('
-                        + address.type + ')';
+                        + address.city;
             address.fullAddress = fullAddress;
         }
         return client;

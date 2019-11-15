@@ -51,7 +51,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
         this.form = this.formBuilder.group({
            messageChannel: this.formBuilder.control('', Validators.compose([Validators.required])),
            category: this.formBuilder.control('', Validators.compose([Validators.required])),
-           types: this.formBuilder.control('', Validators.compose([Validators.required])),
+           type: this.formBuilder.control('', Validators.compose([Validators.required])),
            contactReason: this.formBuilder.control('', Validators.compose([Validators.required])),
            dossierCategory: this.formBuilder.control('', Validators.compose([Validators.required])),
            subject: this.formBuilder.control('', Validators.compose([Validators.required])),
@@ -59,20 +59,44 @@ export class AddTaskComponent implements OnInit, OnDestroy {
         });
         this.form.valueChanges.subscribe(data => this.onFormValueChange(data));
 
+        console.log(this.isChecked);
     }
 
     ngOnDestroy(): void {
     }
 
+    private updateSubject() {
+        this.isChecked = !this.isChecked;
+        if (this.isChecked) {
+            this.form.patchValue({
+                subject: this.contactReason
+            });
+        } else {
+            this.form.patchValue({
+                subject: this.taskSubject
+            });
+        }
+    }
+
+    private contactReasonToSubject() {
+        if (this.isChecked) {
+            this.form.patchValue({
+                subject: this.contactReason
+            });
+        }
+    }
+
     private addTask() {
     }
 
-    private onSubmit(value: any) {
+    private onSubmit(formData: any) {
         // POST request to create a new task
+        this.taskService.new(formData);
     }
 
     private onFormValueChange(data: any) {
         this.contactReason = data.contactReason;
+        this.taskSubject = data.subject;
     }
 
 }

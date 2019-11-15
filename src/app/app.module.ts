@@ -25,6 +25,8 @@ import { ClientCardComponent } from './customers/client-card/client-card.compone
 import { HousesComponent } from './houses/houses.component';
 import { DossiersComponent } from './dossiers/dossiers.component';
 import { ClientListComponent } from './customers/client-list/client-list.component';
+import { SanitizeHtmlPipe } from './sanitize-html.pipe';
+import { SanitizeUrlPipe } from './sanitize-url.pipe';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { ClientListComponent } from './customers/client-list/client-list.compone
     HousesComponent,
     DossiersComponent,
     ClientListComponent,
+    SanitizeHtmlPipe,
+    SanitizeUrlPipe,
   ],
   imports: [
     BrowserModule,

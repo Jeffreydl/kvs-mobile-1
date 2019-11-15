@@ -1,0 +1,8 @@
+{
+  "name": "KVS Mobile",
+  "short_name": "KVS",
+  "lang": "nl",
+  "start_url": "/",
+  "display": "fullscreen",
+  "theme_color": "#c6acee"
+}
