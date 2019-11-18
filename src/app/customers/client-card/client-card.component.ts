@@ -17,18 +17,18 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 })
 export class ClientCardComponent implements OnInit, OnDestroy {
     private id: number;
-    private currentClient: ICustomer;
+    public currentClient: ICustomer;
     private routeSubscription$: Subscription;
 
     private tasks: any;
-    private displayedColumnsTasks: string[] = ['category', 'subject', 'sla'];
-    private dataSourceTasks: MatTableDataSource<any>;
+    public displayedColumnsTasks: string[] = ['category', 'subject', 'sla'];
+    public dataSourceTasks: MatTableDataSource<any>;
     private openDossiers: any;
-    private displayedColumnsOpenDossiers: string[] = ['id', 'category', 'subject', 'sla'];
-    private dataSourceOpenDossiers: MatTableDataSource<any>;
+    public displayedColumnsOpenDossiers: string[] = ['id', 'category', 'subject', 'sla'];
+    public dataSourceOpenDossiers: MatTableDataSource<any>;
     private closedDossiers: any;
-    private displayedColumnsClosedDossiers: string[] = ['id', 'category', 'subject', 'sla'];
-    private dataSourceClosedDossiers: MatTableDataSource<any>;
+    public displayedColumnsClosedDossiers: string[] = ['id', 'category', 'subject', 'sla'];
+    public dataSourceClosedDossiers: MatTableDataSource<any>;
 
     constructor(
         private router: Router,
@@ -105,15 +105,15 @@ export class ClientCardComponent implements OnInit, OnDestroy {
         );
     }
 
-    private applyFilterTasks(filterValue: string) {
+    public applyFilterTasks(filterValue: string) {
         this.dataSourceTasks.filter = filterValue;
     }
 
-    private applyFilterOpenDossiers(filterValue: string) {
+    public applyFilterOpenDossiers(filterValue: string) {
         this.dataSourceOpenDossiers.filter = filterValue;
     }
 
-    private applyFilterClosedDossiers(filterValue: string) {
+    public applyFilterClosedDossiers(filterValue: string) {
         this.dataSourceClosedDossiers.filter = filterValue;
     }
 }

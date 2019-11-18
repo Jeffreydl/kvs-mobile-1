@@ -14,8 +14,8 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
     styleUrls: ['./client-searchbar.component.scss']
 })
 export class ClientSearchbarComponent implements OnInit, OnDestroy {
-    private autoCompleteFormControl = new FormControl();
-    private clients: ICustomer[];
+    public autoCompleteFormControl = new FormControl();
+    public clients: ICustomer[];
     private currentClient$: Subscription;
 
     constructor(private router: Router, private customersService: CustomersService) {
@@ -48,7 +48,7 @@ export class ClientSearchbarComponent implements OnInit, OnDestroy {
         }
     }
 
-    private selectClient(id: number) {
+    public selectClient(id: number) {
         this.router.navigate(['klantkaart', id]);
         // this.router.navigate(['client-card/', id], {state: { data: id}});
     }

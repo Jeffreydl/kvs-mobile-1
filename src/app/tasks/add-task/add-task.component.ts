@@ -12,16 +12,16 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
     styleUrls: ['./add-task.component.scss']
 })
 export class AddTaskComponent implements OnInit, OnDestroy {
-    private categories: any;
-    private contactReasons: any;
-    private dossierCategories: any;
-    private messageChannels: any;
-    private types: any;
+    public categories: any;
+    public contactReasons: any;
+    public dossierCategories: any;
+    public messageChannels: any;
+    public types: any;
 
-    private form: FormGroup;
-    private contactReason = '';
-    private isChecked = true;
-    private taskSubject = '';
+    public form: FormGroup;
+    public contactReason = '';
+    public isChecked = true;
+    public taskSubject = '';
 
     private categorySubscription$: Subscription;
     private contactReasonsSubscription$: Subscription;
@@ -65,7 +65,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
     }
 
-    private updateSubject() {
+    public updateSubject() {
         this.isChecked = !this.isChecked;
         if (this.isChecked) {
             this.form.patchValue({
@@ -78,7 +78,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
         }
     }
 
-    private contactReasonToSubject() {
+    public contactReasonToSubject() {
         if (this.isChecked) {
             this.form.patchValue({
                 subject: this.contactReason
@@ -89,7 +89,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     private addTask() {
     }
 
-    private onSubmit(formData: any) {
+    public onSubmit(formData: any) {
         // POST request to create a new task
         this.taskService.new(formData);
     }

@@ -13,8 +13,8 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
     styleUrls: ['./kennisbank-searchbar.component.scss']
 })
 export class KennisbankSearchbarComponent implements OnInit, OnDestroy {
-    private kennisbankItems$: Observable<IKennisbankSearchItem[]>;
-    private autoCompleteFormControl = new FormControl();
+    public kennisbankItems$: Observable<IKennisbankSearchItem[]>;
+    public autoCompleteFormControl = new FormControl();
     @Output() public isActive = new EventEmitter<boolean>();
     private iisActive: boolean;
 

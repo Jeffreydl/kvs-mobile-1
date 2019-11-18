@@ -26,8 +26,8 @@ export class KennisbankService {
         );
     }
 
-    public getByWebsiteId(id: string): Observable<IkennisbankItemsChildren[]> {
-        return this.http.get<IkennisbankItemsChildren[]>(baseUrl + 'api/Nodes/nodes/getNode/nl/' + id).pipe(
+    public getByWebsiteId(id: string): Observable<IkennisbankItemsChildren> {
+        return this.http.get<IkennisbankItemsChildren>(baseUrl + 'api/Nodes/nodes/getNode/nl/' + id).pipe(
             map((data: any) => data.items)
         );
     }

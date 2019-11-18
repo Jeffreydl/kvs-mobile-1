@@ -12,11 +12,11 @@ import {DomSanitizer} from '@angular/platform-browser';
     styleUrls: ['./client-list.component.scss']
 })
 export class ClientListComponent implements OnInit, OnDestroy {
-    private clients$: Observable<ICustomer[]>;
-    private emailSubject = 'Reparatieverzoek';
-    private emailBody = 'Hallo%20Melanie,%0D%0A%0D%0AHoe%20gaat%20het?%0D%0A%0D%0AMet%20vriendelijke%20groet,%0D%0A%0D%0AJeffrey%20de%20Looper';
-    private smsBody = 'Hallo%20Melanie,%0D%0A%0D%0AHoe%20gaat%20het?%0D%0A%0D%0AMet%20vriendelijke%20groet,%0D%0A%0D%0AJeffrey%20de%20Looper';
-    private number = '063445815789';
+    public clients$: Observable<ICustomer[]>;
+    public emailSubject = 'Reparatieverzoek';
+    public emailBody = 'Hallo%20Melanie,%0D%0A%0D%0AHoe%20gaat%20het?%0D%0A%0D%0AMet%20vriendelijke%20groet,%0D%0A%0D%0AJeffrey%20de%20Looper';
+    public smsBody = 'Hallo%20Melanie,%0D%0A%0D%0AHoe%20gaat%20het?%0D%0A%0D%0AMet%20vriendelijke%20groet,%0D%0A%0D%0AJeffrey%20de%20Looper';
+    public number = '063445815789';
     sms = 'sms:' + this.number + '?body=aa';
     phoneNumber;
 
@@ -34,16 +34,11 @@ export class ClientListComponent implements OnInit, OnDestroy {
         this.clients$ = this.customersService.getAll();
     }
 
-
-    private sendText() {
-        console.log(this.phoneNumber);
+    public call(phoneNumber: string) {
+        return `tel:${phoneNumber}`;
     }
 
-    makeSafe(phoneNumber: string) {
-        this.phoneNumber = this.domSanitizer.bypassSecurityTrustUrl(`sms:${phoneNumber}`);
-    }
-
-    sendSms(phoneNumber: string) {
+    public sendSms(phoneNumber: string) {
         return `sms:${phoneNumber}`;
     }
 }

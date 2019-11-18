@@ -27,6 +27,8 @@ import { DossiersComponent } from './dossiers/dossiers.component';
 import { ClientListComponent } from './customers/client-list/client-list.component';
 import { SanitizeHtmlPipe } from './sanitize-html.pipe';
 import { SanitizeUrlPipe } from './sanitize-url.pipe';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,8 @@ import { SanitizeUrlPipe } from './sanitize-url.pipe';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     {

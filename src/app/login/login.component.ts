@@ -10,14 +10,14 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
     styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-    private form: FormGroup;
-    private breakpoint: number;
-    private rowspanForm: number;
-    private rowspanLogo: number;
+    public form: FormGroup;
+    public breakpoint: number;
+    public rowspanForm: number;
+    public rowspanLogo: number;
     private innerWidth: number;
     private innerHeight: number;
-    private hide = true;
-    private sessionExpiredMessage: string;
+    public hide = true;
+    public sessionExpiredMessage: string;
 
     constructor(private formBuilder: FormBuilder, private auth: AuthService) {}
 
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     @HostListener('window:resize', ['$event'])
-    private onResize(event) {
+    public onResize(event) {
         this.innerWidth = window.innerWidth;
         this.innerHeight = window.innerHeight;
 
@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
     }
 
-    private onSubmit(formData: any) {
+    public onSubmit(formData: any) {
         this.auth.login(formData);
     }
 }

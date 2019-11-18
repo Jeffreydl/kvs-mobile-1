@@ -10,13 +10,13 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
     styleUrls: ['./kennisbank.component.scss']
 })
 export class KennisbankComponent implements OnInit, OnDestroy {
-    private kennisbankItems: IKennisbankItems[];
-    private kennisbankItem: IkennisbankItemsChildren[];
+    public kennisbankItems: IKennisbankItems[];
+    public kennisbankItem: IkennisbankItemsChildren[];
     private show = false;
-    private searching = false;
-    private subTitleId: string;
-    private contentId: string;
-    private kennisbankWebsiteItem: IkennisbankItemsChildren[];
+    public searching = false;
+    public subTitleId: string;
+    public contentId: string;
+    public kennisbankWebsiteItem: IkennisbankItemsChildren;
 
     constructor(private kennisbankService: KennisbankService) {
     }
@@ -33,11 +33,11 @@ export class KennisbankComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
     }
 
-    private searchBarStatus($event: boolean) {
+    public searchBarStatus($event: boolean) {
         this.searching = $event;
     }
 
-    private toggleContent(id: string) {
+    public toggleContent(id: string) {
         if (this.contentId === id) {
             this.contentId = '';
         } else {
@@ -53,7 +53,7 @@ export class KennisbankComponent implements OnInit, OnDestroy {
         );
     }
 
-    private toggleSubContent(id: string, websiteId: string) {
+    public toggleSubContent(id: string, websiteId: string) {
         if (this.subTitleId === id) {
             this.subTitleId = '';
             this.show = false;
@@ -70,7 +70,7 @@ export class KennisbankComponent implements OnInit, OnDestroy {
             this.kennisbankService.getByWebsiteId(websiteId).subscribe(
                 (data) => {
                     this.kennisbankWebsiteItem = data;
-                    console.log(this.kennisbankItem);
+                    console.log(this.kennisbankWebsiteItem);
                 }
             );
         }
