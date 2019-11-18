@@ -1,20 +1,22 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {KennisbankService} from './kennisbank.service';
 import {IKennisbankItems, IkennisbankItemsChildren} from './IKennisbank';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
+@AutoUnsubscribe()
 @Component({
     selector: 'app-kennisbank',
     templateUrl: './kennisbank.component.html',
     styleUrls: ['./kennisbank.component.scss']
 })
-export class KennisbankComponent implements OnInit {
+export class KennisbankComponent implements OnInit, OnDestroy {
     public kennisbankItems: IKennisbankItems[];
     public kennisbankItem: IkennisbankItemsChildren[];
-    public show = false;
+    private show = false;
     public searching = false;
     public subTitleId: string;
     public contentId: string;
-    public kennisbankWebsiteItem: IkennisbankItemsChildren[];
+    public kennisbankWebsiteItem: IkennisbankItemsChildren;
 
     constructor(private kennisbankService: KennisbankService) {
     }
@@ -28,11 +30,14 @@ export class KennisbankComponent implements OnInit {
         );
     }
 
-    searchBarStatus($event: boolean) {
+    ngOnDestroy(): void {
+    }
+
+    public searchBarStatus($event: boolean) {
         this.searching = $event;
     }
 
-    toggleContent(id: string) {
+    public toggleContent(id: string) {
         if (this.contentId === id) {
             this.contentId = '';
         } else {
@@ -48,7 +53,7 @@ export class KennisbankComponent implements OnInit {
         );
     }
 
-    toggleSubContent(id: string, websiteId: string) {
+    public toggleSubContent(id: string, websiteId: string) {
         if (this.subTitleId === id) {
             this.subTitleId = '';
             this.show = false;
@@ -65,7 +70,7 @@ export class KennisbankComponent implements OnInit {
             this.kennisbankService.getByWebsiteId(websiteId).subscribe(
                 (data) => {
                     this.kennisbankWebsiteItem = data;
-                    console.log(this.kennisbankItem);
+                    console.log(this.kennisbankWebsiteItem);
                 }
             );
         }

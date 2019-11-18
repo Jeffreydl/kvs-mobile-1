@@ -1,0 +1,22 @@
+<div class="container" *ngFor="let client of clients$ | async">
+    <p>{{client.title}} {{client.fullname}} ({{client.age}})</p>
+    <div *ngFor="let address of client.address">{{address.fullAddress}}
+        <a href="https://www.google.com/maps/search/?api=1&query={{address.fullAddress}}"><img src="assets/google-maps.svg" height="25px" width="25px"></a>
+    </div>
+    <div *ngFor="let phone of client.phonenumber">{{phone.number}}
+        <a [href]="call(phone.number) | safeUrl">
+            <mat-icon class="md-default-theme-theme material-icons client-list-icon" role="img" aria-hidden="true">call</mat-icon>
+        </a>
+        <a [href]="sendSms(phone.number) | safeUrl">
+            <mat-icon class="md-default-theme-theme material-icons client-list-icon" role="img" aria-hidden="true">sms</mat-icon>
+        </a>
+    </div>
+    <div *ngFor="let email of client.emailaddress">{{email.address}}
+        <a href="mailto:{{email.address}}?&subject={{emailSubject}}&body={{emailBody}}">
+            <mat-icon class="md-default-theme-theme material-icons client-list-icon" role="img" aria-hidden="true">email</mat-icon>
+        </a>
+    </div>
+    <br>
+</div>
+
+<app-navigation></app-navigation>

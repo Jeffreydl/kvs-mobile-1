@@ -1,22 +1,43 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CustomersService} from '../customers.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {IAddress, ICustomer} from '../ICustomer';
+import {ICustomer} from '../ICustomer';
 import {Subscription} from 'rxjs';
+import {TaskFilter, TasksService} from '../../tasks/tasks.service';
+import {MatTableDataSource} from '@angular/material';
+import {FilterService} from '../../filter.service';
+import {DossierFilter, DossierService} from '../../dossiers/dossier.service';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
+@AutoUnsubscribe()
 @Component({
     selector: 'app-client-card',
     templateUrl: './client-card.component.html',
     styleUrls: ['./client-card.component.scss']
 })
-export class ClientCardComponent implements OnInit {
-    public id: number;
+export class ClientCardComponent implements OnInit, OnDestroy {
+    private id: number;
     public currentClient: ICustomer;
     private routeSubscription$: Subscription;
-    public fullName: string;
-    public fullAddresses = [];
 
-    constructor(private router: Router, private activatedRoute: ActivatedRoute, private customersService: CustomersService) {
+    private tasks: any;
+    public displayedColumnsTasks: string[] = ['category', 'subject', 'sla'];
+    public dataSourceTasks: MatTableDataSource<any>;
+    private openDossiers: any;
+    public displayedColumnsOpenDossiers: string[] = ['id', 'category', 'subject', 'sla'];
+    public dataSourceOpenDossiers: MatTableDataSource<any>;
+    private closedDossiers: any;
+    public displayedColumnsClosedDossiers: string[] = ['id', 'category', 'subject', 'sla'];
+    public dataSourceClosedDossiers: MatTableDataSource<any>;
+
+    constructor(
+        private router: Router,
+        private activatedRoute: ActivatedRoute,
+        private customersService: CustomersService,
+        private tasksService: TasksService,
+        private filterService: FilterService,
+        private dossiersService: DossierService
+    ) {
         // const navigation = this.router.getCurrentNavigation();
         // const state = navigation.extras.state as { data: string };
         // this.id = state.data;
@@ -27,35 +48,72 @@ export class ClientCardComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.customersService.getClient(+this.id).subscribe(
+        this.getClient();
+        this.getTasks();
+        this.getDossiers();
+    }
+
+    ngOnDestroy() {
+
+    }
+
+    private getTasks() {
+        this.tasksService.getAll(new TaskFilter()
+            .openTasks()
+            .inboundTasks()
+            .forClient(this.id)
+            .limitTo(10)
+            .descending()
+            .includeDrafts(false))
+            .subscribe(tasks => {
+                this.tasks = tasks;
+                this.dataSourceTasks = new MatTableDataSource(this.tasks);
+                this.filterService.filterNestedObjects(this.dataSourceTasks);
+            });
+    }
+
+    private getDossiers() {
+        this.dossiersService.getAll(new DossierFilter()
+            .forRelation(this.id)
+            .openDossiers()
+            .orderByCreationDate()
+            .descending())
+            .subscribe(dossiers => {
+                this.openDossiers = dossiers;
+                this.dataSourceOpenDossiers = new MatTableDataSource(this.openDossiers);
+                this.filterService.filterNestedObjects(this.dataSourceOpenDossiers);
+            });
+        this.dossiersService.getAll(new DossierFilter()
+            .forRelation(this.id)
+            .closedDossiers()
+            .orderByCreationDate()
+            .descending())
+            .subscribe(dossiers => {
+                this.closedDossiers = dossiers;
+                console.log(this.closedDossiers);
+                this.dataSourceClosedDossiers = new MatTableDataSource(this.closedDossiers);
+                this.filterService.filterNestedObjects(this.dataSourceClosedDossiers);
+            });
+    }
+
+    private getClient() {
+        console.log('one');
+        this.customersService.getById(+this.id).subscribe(
             (data) => {
                 this.currentClient = data;
-                console.log(this.currentClient);
-                this.getFullName(data);
-                this.getAddress(data.address);
             }
         );
     }
 
-    getFullName(data: ICustomer) {
-        let prefix = '';
-        if (data.gender === 'Vrouw') {
-            prefix = 'Mevr.';
-        } else if (data.gender === 'Man') {
-            prefix = 'M.';
-        }
-        this.fullName = prefix + ' ' + data.initials + ' (' + data.firstname + ') ' + data.lastname;
+    public applyFilterTasks(filterValue: string) {
+        this.dataSourceTasks.filter = filterValue;
     }
 
-    public getAddress(addresses: IAddress[]) {
+    public applyFilterOpenDossiers(filterValue: string) {
+        this.dataSourceOpenDossiers.filter = filterValue;
+    }
 
-        for (const address of addresses) {
-            let houseNumber = address.housenumber.toString();
-
-            if (address.housenumberaddition) {
-                houseNumber = address.housenumber + '-' + address.housenumberaddition;
-            }
-            this.fullAddresses.push(address.street + ' ' + houseNumber + ', ' + address.postalcode + ' ' + address.city + ' (' + address.type + ')');
-        }
+    public applyFilterClosedDossiers(filterValue: string) {
+        this.dataSourceClosedDossiers.filter = filterValue;
     }
 }

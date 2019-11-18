@@ -5,8 +5,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material-module/material.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { HttpErrorInterceptor } from './auth/http-error-interceptor';
+
+import { OrderByPipe } from './order-by.pipe';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -16,11 +19,16 @@ import { TasksComponent } from './tasks/tasks.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { KennisbankComponent } from './kennisbank/kennisbank.component';
 import { AddTaskComponent } from './tasks/add-task/add-task.component';
-import { OrderByPipe } from './order-by.pipe';
 import { SelectedClientComponent } from './customers/selected-client/selected-client.component';
 import { ClientSearchbarComponent } from './customers/client-searchbar/client-searchbar.component';
 import { ClientCardComponent } from './customers/client-card/client-card.component';
 import { HousesComponent } from './houses/houses.component';
+import { DossiersComponent } from './dossiers/dossiers.component';
+import { ClientListComponent } from './customers/client-list/client-list.component';
+import { SanitizeHtmlPipe } from './sanitize-html.pipe';
+import { SanitizeUrlPipe } from './sanitize-url.pipe';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -37,6 +45,10 @@ import { HousesComponent } from './houses/houses.component';
     ClientSearchbarComponent,
     ClientCardComponent,
     HousesComponent,
+    DossiersComponent,
+    ClientListComponent,
+    SanitizeHtmlPipe,
+    SanitizeUrlPipe,
   ],
   imports: [
     BrowserModule,
@@ -45,7 +57,8 @@ import { HousesComponent } from './houses/houses.component';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     {
