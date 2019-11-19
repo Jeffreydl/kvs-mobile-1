@@ -1,7 +1,8 @@
 .container {
   background-color: white;
   height: calc(100% - 40px - 80px);
-  overflow: auto;
+  position: relative;
+  top: 45px;
 
   .items {
 
@@ -24,6 +25,10 @@
       padding: 7px 0;
       text-align: center;
     }
+  }
+  .budget-margin-fix {
+    position: relative;
+    margin-top: 63px;
   }
 }
 

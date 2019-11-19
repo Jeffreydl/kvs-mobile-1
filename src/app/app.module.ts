@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import {BrowserModule, HAMMER_GESTURE_CONFIG, HammerGestureConfig} from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
@@ -25,6 +25,13 @@ import { ClientCardComponent } from './customers/client-card/client-card.compone
 import { HousesComponent } from './houses/houses.component';
 import { DossiersComponent } from './dossiers/dossiers.component';
 import { ClientListComponent } from './customers/client-list/client-list.component';
+import { SanitizeHtmlPipe } from './sanitize-html.pipe';
+import { SanitizeUrlPipe } from './sanitize-url.pipe';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+
+import { HammerConfig} from './hammer-config/hammerConfig';
+import {CurrentClientDialogComponent} from './customers/client-list/current-client-dialog/current-client-dialog.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +50,11 @@ import { ClientListComponent } from './customers/client-list/client-list.compone
     HousesComponent,
     DossiersComponent,
     ClientListComponent,
+    SanitizeHtmlPipe,
+    SanitizeUrlPipe,
+    CurrentClientDialogComponent,
   ],
+  entryComponents: [CurrentClientDialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -51,7 +62,8 @@ import { ClientListComponent } from './customers/client-list/client-list.compone
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     {
@@ -63,7 +75,10 @@ import { ClientListComponent } from './customers/client-list/client-list.compone
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
       multi: true
-    }
+    },
+     { provide: HAMMER_GESTURE_CONFIG,
+      useClass: HammerConfig
+     }
   ],
   bootstrap: [AppComponent]
 })

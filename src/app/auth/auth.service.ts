@@ -11,7 +11,7 @@ export class AuthService {
     public token: string;
     public ttl: number;
     public userId: number;
-    public hasPermission = true;
+    public hasPermission = false;
     public sessionExpiredMessage: string;
 
     constructor(private http: HttpClient, handler: HttpBackend, private router: Router) {
@@ -28,6 +28,7 @@ export class AuthService {
                 this.userId = data.accessToken.userId;
                 this.hasPermission = true;
                 this.tokenTtlTimer(this.token, this.ttl);
+                localStorage.setItem('loginToken', this.token);
                 this.router.navigate(['dashboard']);
             },
             (err: HttpErrorResponse) => {
@@ -48,10 +49,11 @@ export class AuthService {
             if (this.ttl % 10 === 0) {
                 console.log(tempToken + ' expires in: ' + this.ttl);
             }
-            if (this.ttl < 71980) {
+            if (this.ttl < 0) {
                 this.token = '';
                 this.ttl = 0;
                 this.hasPermission = false;
+                localStorage.removeItem('loginToken');
                 console.log('Token ' + tempToken + ' is no longer valid.');
                 this.router.navigate(['login']);
                 this.sessionExpiredMessage = 'Session expired';
@@ -64,8 +66,15 @@ export class AuthService {
         return this.token;
     }
 
-    public isLoggedIn() {
+    public setToken(token: string) {
+        this.token = token;
+    }
+
+    public getPermission() {
         return this.hasPermission;
+    }
+    public setPermission(value: boolean) {
+        this.hasPermission = value;
     }
 
     public getUserId() {

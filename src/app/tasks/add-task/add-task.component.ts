@@ -3,24 +3,25 @@ import {TasksService} from '../tasks.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CustomersService} from '../../customers/customers.service';
 import {Subscription} from 'rxjs';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
-
+@AutoUnsubscribe()
 @Component({
     selector: 'app-add-task',
     templateUrl: './add-task.component.html',
     styleUrls: ['./add-task.component.scss']
 })
 export class AddTaskComponent implements OnInit, OnDestroy {
-    private categories: any;
-    private contactReasons: any;
-    private dossierCategories: any;
-    private messageChannels: any;
-    private types: any;
+    public categories: any;
+    public contactReasons: any;
+    public dossierCategories: any;
+    public messageChannels: any;
+    public types: any;
 
-    private form: FormGroup;
-    private contactReason = '';
-    private isChecked = true;
-    private taskSubject = '';
+    public form: FormGroup;
+    public contactReason = '';
+    public isChecked = true;
+    public taskSubject = '';
 
     private categorySubscription$: Subscription;
     private contactReasonsSubscription$: Subscription;
@@ -50,8 +51,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
         this.form = this.formBuilder.group({
            messageChannel: this.formBuilder.control('', Validators.compose([Validators.required])),
            category: this.formBuilder.control('', Validators.compose([Validators.required])),
-           types: this.formBuilder.control('', Validators.compose([Validators.required])),
-           types: this.formBuilder.control('', Validators.compose([Validators.required])),
+           type: this.formBuilder.control('', Validators.compose([Validators.required])),
            contactReason: this.formBuilder.control('', Validators.compose([Validators.required])),
            dossierCategory: this.formBuilder.control('', Validators.compose([Validators.required])),
            subject: this.formBuilder.control('', Validators.compose([Validators.required])),
@@ -59,24 +59,44 @@ export class AddTaskComponent implements OnInit, OnDestroy {
         });
         this.form.valueChanges.subscribe(data => this.onFormValueChange(data));
 
+        console.log(this.isChecked);
     }
 
     ngOnDestroy(): void {
-        this.categorySubscription$.unsubscribe();
-        this.contactReasonsSubscription$.unsubscribe();
-        this.dossierCategoriesSubscription$.unsubscribe();
-        this.messageChannelsSubscription$.unsubscribe();
-        this.typesSubscription$.unsubscribe();
     }
+
+    public updateSubject() {
+        this.isChecked = !this.isChecked;
+        if (this.isChecked) {
+            this.form.patchValue({
+                subject: this.contactReason
+            });
+        } else {
+            this.form.patchValue({
+                subject: this.taskSubject
+            });
+        }
+    }
+
+    public contactReasonToSubject() {
+        if (this.isChecked) {
+            this.form.patchValue({
+                subject: this.contactReason
+            });
+        }
+    }
+
     private addTask() {
     }
 
-    private onSubmit(value: any) {
+    public onSubmit(formData: any) {
         // POST request to create a new task
+        this.taskService.new(formData);
     }
 
     private onFormValueChange(data: any) {
         this.contactReason = data.contactReason;
+        this.taskSubject = data.subject;
     }
 
 }

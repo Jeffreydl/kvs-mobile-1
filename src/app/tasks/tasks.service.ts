@@ -159,7 +159,9 @@ export class TasksService {
         return this.http.get<ITask[]>(url + 'Messages?filter=' + filter);
     }
 
-    public new() {
+    public new(formData: any) {
+        // return this.http.post<any>(url + 'Messages/' + id);
+        console.log(formData);
     }
 
     public getCategories() {

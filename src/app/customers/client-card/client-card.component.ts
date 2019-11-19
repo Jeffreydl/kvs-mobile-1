@@ -1,32 +1,34 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CustomersService} from '../customers.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {IAddress, ICustomer} from '../ICustomer';
-import {Observable, Subscription} from 'rxjs';
+import {ICustomer} from '../ICustomer';
+import {Subscription} from 'rxjs';
 import {TaskFilter, TasksService} from '../../tasks/tasks.service';
 import {MatTableDataSource} from '@angular/material';
 import {FilterService} from '../../filter.service';
 import {DossierFilter, DossierService} from '../../dossiers/dossier.service';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
+@AutoUnsubscribe()
 @Component({
     selector: 'app-client-card',
     templateUrl: './client-card.component.html',
     styleUrls: ['./client-card.component.scss']
 })
-export class ClientCardComponent implements OnInit {
+export class ClientCardComponent implements OnInit, OnDestroy {
     private id: number;
-    private currentClient: ICustomer;
+    public currentClient: ICustomer;
     private routeSubscription$: Subscription;
 
     private tasks: any;
-    private displayedColumnsTasks: string[] = ['category', 'subject', 'sla'];
-    private dataSourceTasks: MatTableDataSource<any>;
+    public displayedColumnsTasks: string[] = ['category', 'subject', 'sla'];
+    public dataSourceTasks: MatTableDataSource<any>;
     private openDossiers: any;
-    private displayedColumnsOpenDossiers: string[] = ['id', 'category', 'subject', 'sla'];
-    private dataSourceOpenDossiers: MatTableDataSource<any>;
+    public displayedColumnsOpenDossiers: string[] = ['id', 'category', 'subject', 'sla'];
+    public dataSourceOpenDossiers: MatTableDataSource<any>;
     private closedDossiers: any;
-    private displayedColumnsClosedDossiers: string[] = ['id', 'category', 'subject', 'sla'];
-    private dataSourceClosedDossiers: MatTableDataSource<any>;
+    public displayedColumnsClosedDossiers: string[] = ['id', 'category', 'subject', 'sla'];
+    public dataSourceClosedDossiers: MatTableDataSource<any>;
 
     constructor(
         private router: Router,
@@ -51,7 +53,7 @@ export class ClientCardComponent implements OnInit {
         this.getDossiers();
     }
 
-    ngOndestroy() {
+    ngOnDestroy() {
 
     }
 
@@ -103,15 +105,15 @@ export class ClientCardComponent implements OnInit {
         );
     }
 
-    private applyFilterTasks(filterValue: string) {
+    public applyFilterTasks(filterValue: string) {
         this.dataSourceTasks.filter = filterValue;
     }
 
-    private applyFilterOpenDossiers(filterValue: string) {
+    public applyFilterOpenDossiers(filterValue: string) {
         this.dataSourceOpenDossiers.filter = filterValue;
     }
 
-    private applyFilterClosedDossiers(filterValue: string) {
+    public applyFilterClosedDossiers(filterValue: string) {
         this.dataSourceClosedDossiers.filter = filterValue;
     }
 }

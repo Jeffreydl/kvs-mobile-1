@@ -26,7 +26,7 @@
 
                 <mat-form-field floatLabel="always" class="form-field" *ngIf="types">
                     <mat-label>Type*</mat-label>
-                    <mat-select formControlName="types">
+                    <mat-select formControlName="type">
                         <mat-option *ngFor="let type of types" [value]="type.name">
                             {{type.name}}
                         </mat-option>
@@ -35,7 +35,7 @@
 
                 <mat-form-field class="form-field" *ngIf="contactReasons">
                     <mat-label>Hoofdcontactreden*</mat-label>
-                    <mat-select formControlName="contactReason">
+                    <mat-select formControlName="contactReason" (selectionChange)="contactReasonToSubject()">
                         <mat-option *ngFor="let contactReason of contactReasons" [value]="contactReason.name">
                             {{contactReason.name}}
                         </mat-option>
@@ -44,7 +44,7 @@
 
                 <mat-checkbox [checked]="isChecked"
                               class="example-margin"
-                              (change)="isChecked = !isChecked">
+                              (change)="updateSubject()">
                     Gebruik contactreden als onderwerp
                 </mat-checkbox>
 
@@ -52,7 +52,8 @@
                     <input formControlName="subject"
                            matInput
                            placeholder="Onderwerp / Vraag"
-                           [value]="isChecked ? contactReason : taskSubject">
+                           [value]="isChecked ? contactReason : taskSubject"
+                           (keyup)="isChecked = false">
                 </mat-form-field>
 
                 <mat-form-field>
@@ -62,6 +63,8 @@
                               matInput matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5>
                     </textarea>
                 </mat-form-field>
+
+                <button type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple login">Aanmaken</button>
 
             </form>
 
@@ -85,5 +88,3 @@
     </mat-tab-group>
 
 </div>
-
-<app-navigation></app-navigation>

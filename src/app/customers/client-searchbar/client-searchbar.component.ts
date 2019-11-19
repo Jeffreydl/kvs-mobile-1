@@ -1,19 +1,21 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {FormControl} from '@angular/forms';
-import {IAddress, ICustomer, IPhoneNumber} from '../ICustomer';
+import {ICustomer} from '../ICustomer';
 import {CustomersService} from '../customers.service';
 import {Subscription} from 'rxjs';
 import {Router} from '@angular/router';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
+@AutoUnsubscribe()
 @Component({
     selector: 'app-client-searchbar',
     templateUrl: './client-searchbar.component.html',
     styleUrls: ['./client-searchbar.component.scss']
 })
 export class ClientSearchbarComponent implements OnInit, OnDestroy {
-    private autoCompleteFormControl = new FormControl();
-    private clients: ICustomer[];
+    public autoCompleteFormControl = new FormControl();
+    public clients: ICustomer[];
     private currentClient$: Subscription;
 
     constructor(private router: Router, private customersService: CustomersService) {
@@ -46,7 +48,7 @@ export class ClientSearchbarComponent implements OnInit, OnDestroy {
         }
     }
 
-    private selectClient(id: number) {
+    public selectClient(id: number) {
         this.router.navigate(['klantkaart', id]);
         // this.router.navigate(['client-card/', id], {state: { data: id}});
     }

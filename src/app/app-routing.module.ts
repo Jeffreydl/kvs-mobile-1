@@ -14,10 +14,10 @@ const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService]},
     {path: 'kennisbank', component: KennisbankComponent, canActivate: [AuthGuardService]},
-    {path: 'add-task', component: AddTaskComponent, canActivate: [AuthGuardService]},
+    {path: 'taak-aanmaken', component: AddTaskComponent, canActivate: [AuthGuardService]},
     {path: 'klantkaart/:id', component: ClientCardComponent, canActivate: [AuthGuardService]},
     {path: 'klanten', component: ClientListComponent, canActivate: [AuthGuardService]},
-    {path: '', pathMatch: 'full', redirectTo: 'login'}
+    {path: '', pathMatch: 'full', redirectTo: 'dashboard'}
 ];
 
 @NgModule({

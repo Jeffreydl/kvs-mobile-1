@@ -1,18 +1,20 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {KennisbankService} from '../kennisbank.service';
 import {FormControl} from '@angular/forms';
 import {IKennisbankSearchItem} from '../IKennisbank';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
+@AutoUnsubscribe()
 @Component({
     selector: 'app-kennisbank-searchbar',
     templateUrl: './kennisbank-searchbar.component.html',
     styleUrls: ['./kennisbank-searchbar.component.scss']
 })
-export class KennisbankSearchbarComponent implements OnInit {
-    private kennisbankItems$: Observable<IKennisbankSearchItem[]>;
-    private autoCompleteFormControl = new FormControl();
+export class KennisbankSearchbarComponent implements OnInit, OnDestroy {
+    public kennisbankItems$: Observable<IKennisbankSearchItem[]>;
+    public autoCompleteFormControl = new FormControl();
     @Output() public isActive = new EventEmitter<boolean>();
     private iisActive: boolean;
 
@@ -26,6 +28,9 @@ export class KennisbankSearchbarComponent implements OnInit {
         ).subscribe((value) => {
             this.searchKennisbank(value);
         });
+    }
+
+    ngOnDestroy(): void {
     }
 
     private searchKennisbank(value: string) {

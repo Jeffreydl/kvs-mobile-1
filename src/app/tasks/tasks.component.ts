@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TaskFilter, TasksService} from './tasks.service';
 import {AuthService} from '../auth/auth.service';
 import {ITask} from './itask';
 import {MatTableDataSource} from '@angular/material';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.scss']
 })
-export class TasksComponent implements OnInit {
+export class TasksComponent implements OnInit, OnDestroy {
   public tasks: ITask[];
   public displayedColumnsTasks: string[] = ['category', 'subject', 'sla'];
   public dataSourceTasks: MatTableDataSource<ITask>;
@@ -23,7 +25,10 @@ export class TasksComponent implements OnInit {
       this.getTasks();
   }
 
-  getTasks() {
+  ngOnDestroy(): void {
+  }
+
+    getTasks() {
       this.tasksService.getAll(new TaskFilter()
       // See TasksService.ts for all filter methods
           // .openTasks()

@@ -1,7 +1,13 @@
-<p>client-list works!</p>
-
-<div class="container" *ngFor="let client of clients$ | async">
-    <li>{{client.title}} {{client.fullname}} ({{client.age}})</li>
-    <li *ngFor="let address of client.address">{{address.fullAddress}}</li>
-    <br>
+<div class="container">
+    <mat-list>
+        <div *ngFor="let letter of filteredFirstLetters">
+            <h3>{{letter}}</h3>
+            <div *ngFor="let client of clients">
+                <div *ngIf="client.lastname.substr(0,1) == letter">
+                    <mat-list-item (click)="openDetailsDialog(client)"><span class="contacts">{{client?.fullname}}</span></mat-list-item>
+                    <mat-divider></mat-divider>
+                </div>
+            </div>
+        </div>
+    </mat-list>
 </div>
