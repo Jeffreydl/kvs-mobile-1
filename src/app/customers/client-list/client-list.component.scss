@@ -1,7 +1,20 @@
-.client-list-icon {
-  color: rgba(0,0,0,0.54);
-  font-size: 25px;
-  height: 25px;
-  width: 25px;
-  padding: 3px;
+.container {
+  text-align: center;
+  background-color: white;
+
+  .mat-list {
+    padding: 0;
+
+    .contacts {
+      font-size: 20px;
+      font-weight: 300;
+    }
+  }
+
+  h3 {
+    background-color: #6FB0DF;
+    height: 25px;
+    padding-top: 5px;
+  }
 }
+
