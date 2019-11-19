@@ -53,6 +53,7 @@ export class AuthService {
                 this.token = '';
                 this.ttl = 0;
                 this.hasPermission = false;
+                localStorage.removeItem('loginToken');
                 console.log('Token ' + tempToken + ' is no longer valid.');
                 this.router.navigate(['login']);
                 this.sessionExpiredMessage = 'Session expired';

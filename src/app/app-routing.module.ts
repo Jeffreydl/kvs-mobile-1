@@ -17,7 +17,7 @@ const routes: Routes = [
     {path: 'taak-aanmaken', component: AddTaskComponent, canActivate: [AuthGuardService]},
     {path: 'klantkaart/:id', component: ClientCardComponent, canActivate: [AuthGuardService]},
     {path: 'klanten', component: ClientListComponent, canActivate: [AuthGuardService]},
-    {path: '', pathMatch: 'full', redirectTo: 'login'}
+    {path: '', pathMatch: 'full', redirectTo: 'dashboard'}
 ];
 
 @NgModule({

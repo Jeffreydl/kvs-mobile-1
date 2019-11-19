@@ -51,8 +51,6 @@ export class CustomersService {
                 this.getFullAddress(client);
                 this.getAge(client);
 
-                console.log('hhj');
-
                 return client;
             })
         );
@@ -97,13 +95,15 @@ export class CustomersService {
 
     public getAge(client: ICustomer): ICustomer {
         const today = new Date();
-        const birthDate = new Date(client.dateofbirth);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        const months = today.getMonth() - birthDate.getMonth();
-        if (months < 0 || (months === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
+        if (client.dateofbirth) {
+            const birthDate = new Date(client.dateofbirth);
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const months = today.getMonth() - birthDate.getMonth();
+            if (months < 0 || (months === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            client.age = age;
         }
-        client.age = age;
         return client;
     }
 }

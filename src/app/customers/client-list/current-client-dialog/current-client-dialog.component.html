@@ -1,0 +1,64 @@
+<div class="container">
+
+<h2>{{client.fullname}}</h2>
+    <mat-list>
+        <mat-list-item class="list-item">ID: {{client?.id}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item class="list-item">Geslacht: {{client?.gender}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item class="list-item"><span>Geboortedatum: {{client?.dateofbirth | date: 'dd-MM-yyyy'}} <span *ngIf="client.age">({{client.age}} jaar)</span></span></mat-list-item>
+        <mat-divider></mat-divider>
+        <div *ngIf="client.address.length !== 0">
+            <p *ngIf="client.address.length === 1; else multipleAddresses">Adres:</p>
+            <ng-template #multipleAddresses>
+                Adressen:
+            </ng-template>
+            <mat-list-item class="list-item" *ngFor="let address of client?.address">{{address.fullAddress}}</mat-list-item>
+            <mat-divider></mat-divider>
+        </div>
+        <div *ngIf="client.phonenumber.length !== 0">
+            <p *ngIf="client.phonenumber.length === 1; else multiplePhoneNumbers">Telefoonnummer:</p>
+            <ng-template #multiplePhoneNumbers>Telefoonnummers:</ng-template>
+            <mat-list-item class="list-item" *ngFor="let phone of client.phonenumber">{{phone.number}}</mat-list-item>
+            <mat-divider></mat-divider>
+        </div>
+        <div *ngIf="client.emailaddress.length !== 0">
+            <p *ngIf="client.emailaddress.length === 1; else multipleEmails">E-mailadres:</p>
+            <ng-template #multipleEmails>E-mailadressen:</ng-template>
+            <mat-list-item class="list-item" *ngFor="let email of client.emailaddress"><span #test>{{email.address}}</span></mat-list-item>
+        </div>
+
+    </mat-list>
+
+    <div class="actions">
+        <div class="action">
+            <a [href]="call(phone?.number) | safeUrl">
+                <mat-icon class="md-default-theme-theme material-icons action-icon" role="img" aria-hidden="true">call</mat-icon>
+            </a>
+        </div>
+        <div class="action">
+            <a [href]="sendSms(phone?.number) | safeUrl">
+                <mat-icon class="md-default-theme-theme material-icons action-icon" role="img" aria-hidden="true">sms
+                </mat-icon>
+            </a>
+       </div>
+        <div class="action">
+            <a href="mailto:{{email?.address}}?&subject={{emailSubject}}&body={{emailBody}}">
+                <mat-icon class="md-default-theme-theme material-icons action-icon" role="img" aria-hidden="true">email
+                </mat-icon>
+            </a>
+       </div>
+
+        <div class="action">
+            <a href="https://www.google.com/maps/search/?api=1&query={{address?.fullAddress}}">
+                <img src="assets/google-maps.svg" height="25px" width="25px" class="action-icon">
+            </a>
+        </div>
+    </div>
+
+
+<!--    <div mat-dialog-actions>-->
+<!--        <button mat-button (click)="onNoClick()">No Thanks</button>-->
+<!--        <button mat-button [mat-dialog-close]="client.address" cdkFocusInitial>Ok</button>-->
+<!--    </div>-->
+</div>
