@@ -4,13 +4,13 @@ import {MatTableDataSource} from '@angular/material';
 @Injectable({
     providedIn: 'root'
 })
-export class FilterService {
+export class FilterTableService {
 
     constructor() {
     }
 
-    public filterNestedObjects(datasource: MatTableDataSource<any>) {
-        datasource.filterPredicate = (order: any, filter: string) => {
+    public filterNestedObjects(dataSource: MatTableDataSource<any>) {
+        dataSource.filterPredicate = (order: any, filter: string) => {
             const transformedFilter = filter.trim().toLowerCase();
 
             const listAsFlatString = (obj): string => {

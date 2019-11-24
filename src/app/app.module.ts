@@ -32,6 +32,7 @@ import { environment } from '../environments/environment';
 
 import { HammerConfig} from './hammer-config/hammerConfig';
 import {CurrentClientDialogComponent} from './customers/client-list/current-client-dialog/current-client-dialog.component';
+import {AddClientDialogComponent} from './customers/add-client-dialog/add-client-dialog.component';
 
 @NgModule({
   declarations: [
@@ -53,8 +54,9 @@ import {CurrentClientDialogComponent} from './customers/client-list/current-clie
     SanitizeHtmlPipe,
     SanitizeUrlPipe,
     CurrentClientDialogComponent,
+    AddClientDialogComponent,
   ],
-  entryComponents: [CurrentClientDialogComponent],
+  entryComponents: [CurrentClientDialogComponent, AddClientDialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

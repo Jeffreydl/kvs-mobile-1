@@ -27,8 +27,10 @@ export class AuthService {
                 this.ttl = data.accessToken.ttl;
                 this.userId = data.accessToken.userId;
                 this.hasPermission = true;
-                this.tokenTtlTimer(this.token, this.ttl);
+                // this.tokenTtlTimer(this.token, this.ttl);
                 localStorage.setItem('loginToken', this.token);
+                localStorage.setItem('ttl', this.ttl.toString());
+                localStorage.setItem('tokenCreationTime', new Date().getTime().toString());
                 this.router.navigate(['dashboard']);
             },
             (err: HttpErrorResponse) => {
@@ -42,24 +44,32 @@ export class AuthService {
     }
 
     // Starts the countdown of the token (20 hours) and limits site access when it reaches 0
-    public tokenTtlTimer(tempToken, tempTtl) {
-        const source$: Observable<number> = timer(1000, 1000);
-        const abc: Subscription = source$.subscribe(val => {
-            this.ttl = tempTtl - val;
-            if (this.ttl % 10 === 0) {
-                console.log(tempToken + ' expires in: ' + this.ttl);
-            }
-            if (this.ttl < 0) {
-                this.token = '';
-                this.ttl = 0;
-                this.hasPermission = false;
-                localStorage.removeItem('loginToken');
-                console.log('Token ' + tempToken + ' is no longer valid.');
-                this.router.navigate(['login']);
-                this.sessionExpiredMessage = 'Session expired';
-                abc.unsubscribe();
-            }
-        });
+    // public tokenTtlTimer(tempToken, tempTtl) {
+    //     const source$: Observable<number> = timer(1000, 1000);
+    //     const abc: Subscription = source$.subscribe(val => {
+    //         this.ttl = tempTtl - val;
+    //         if (this.ttl % 10 === 0) {
+    //             console.log(tempToken + ' expires in: ' + this.ttl);
+    //         }
+    //         if (this.ttl < 0) {
+    //             this.token = '';
+    //             this.ttl = 0;
+    //             this.hasPermission = false;
+    //             localStorage.removeItem('loginToken');
+    //             console.log('Token ' + tempToken + ' is no longer valid.');
+    //             this.router.navigate(['login']);
+    //             this.sessionExpiredMessage = 'Session expired';
+    //             abc.unsubscribe();
+    //         }
+    //     });
+    // }
+
+    public logOut() {
+        this.hasPermission = false;
+        localStorage.removeItem('loginToken');
+        localStorage.removeItem('tokenCreationTime');
+        this.sessionExpiredMessage = 'Session expired';
+        this.router.navigate(['login']);
     }
 
     public getToken() {
@@ -83,6 +93,10 @@ export class AuthService {
 
     public getSessionExpiredMessage() {
         return this.sessionExpiredMessage;
+    }
+
+    public getTokenTtl() {
+        return this.ttl;
     }
 }
 

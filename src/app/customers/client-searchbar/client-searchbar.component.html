@@ -1,9 +1,9 @@
 <div class="container">
-<input [formControl]="autoCompleteFormControl"
-       type="text"
-       placeholder="Zoek klantkaart"
-       class="searchClient"
-/>
+    <input [formControl]="autoCompleteFormControl"
+           type="text"
+           placeholder="Zoek klantkaart"
+           class="searchClient"
+    />
 
     <div class="clients" *ngFor="let client of clients" (click)="selectClient(client.id)">
         {{ client.initials }} ({{ client.firstname }}) {{ client.lastname }} <br>
@@ -12,4 +12,5 @@
         {{ client.dateofbirth | date: 'dd-MM-yyyy' }} |
         {{ client.age }} jaar
     </div>
+    <p *ngIf="clients?.length === 0">Geen klanten gevonden.</p>
 </div>

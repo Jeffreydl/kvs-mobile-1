@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import {AuthService} from './auth/auth.service';
-import {Route, Router} from '@angular/router';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -23,16 +23,12 @@ export class AppComponent implements OnInit {
     console.log(this.token);
 
     if (this.token != null) {
-      this.authService.setToken(this.token);
       this.authService.setPermission(true);
       this.router.navigate(['dashboard']);
-    } else {
-      this.router.navigate(['login']);
     }
   }
 
   onSwipe(event) {
-
     const x = Math.abs(event.deltaX) > 40 ? (event.deltaX > 0 ? 'right' : 'left') : '';
     this.currentRoute = this.router.url;
     const direction = x;

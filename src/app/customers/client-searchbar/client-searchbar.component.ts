@@ -37,10 +37,11 @@ export class ClientSearchbarComponent implements OnInit, OnDestroy {
     }
 
     private searchCustomers(value: string) {
-        if (value.length > 0) {
+        if (value.length > 1) {
             this.customersService.search(value).subscribe(
                 (data) => {
                     this.clients = data;
+                    console.log(this.clients);
                 }
             );
         } else {

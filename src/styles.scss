@@ -150,7 +150,7 @@ body {
 
 #loader .dot:nth-child(7n+7)::before {
   animation: 0.8s linear 0.7s normal none infinite running load;
-  background: 2F4858 none repeat scroll 0 0;
+  background: #2F4858 none repeat scroll 0 0;
 }
 
 #loader .dot:nth-child(7n+8) {
@@ -197,10 +197,13 @@ body {
   margin-bottom: 50px;
 
   .mat-list .mat-list-item {
-    height: 40px;
+    height: 30px;
 
     .mat-list-item-content {
       padding: 0 10px !important;
     }
+  }
+  .mat-list-item.inline-item {
+    display: inline-block;
   }
 }

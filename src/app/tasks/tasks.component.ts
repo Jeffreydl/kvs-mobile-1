@@ -37,7 +37,7 @@ export class TasksComponent implements OnInit, OnDestroy {
           // .assignedTo(this.userId)
           .limitTo(10)
           .descending()
-          .includeDrafts(false))
+          .includeDrafts(true))
           .subscribe(tasks => {
               this.tasks = tasks;
               console.log(this.tasks);

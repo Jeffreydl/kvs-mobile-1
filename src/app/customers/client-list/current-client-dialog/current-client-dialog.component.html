@@ -1,10 +1,13 @@
 <div class="container">
 
+    <mat-icon class="md-default-theme-theme material-icons action-icon close-dialog" role="img" aria-hidden="true" (click)="onNoClick()">close
+    </mat-icon>
+
 <h2>{{client.fullname}}</h2>
     <mat-list>
-        <mat-list-item class="list-item">ID: {{client?.id}}</mat-list-item>
+        <mat-list-item class="list-item inline-item">ID: {{client?.id}}</mat-list-item>
         <mat-divider></mat-divider>
-        <mat-list-item class="list-item">Geslacht: {{client?.gender}}</mat-list-item>
+        <mat-list-item class="list-item inline-item">Geslacht: {{client?.gender}}</mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item class="list-item"><span>Geboortedatum: {{client?.dateofbirth | date: 'dd-MM-yyyy'}} <span *ngIf="client.age">({{client.age}} jaar)</span></span></mat-list-item>
         <mat-divider></mat-divider>
@@ -19,7 +22,18 @@
         <div *ngIf="client.phonenumber.length !== 0">
             <p *ngIf="client.phonenumber.length === 1; else multiplePhoneNumbers">Telefoonnummer:</p>
             <ng-template #multiplePhoneNumbers>Telefoonnummers:</ng-template>
-            <mat-list-item class="list-item" *ngFor="let phone of client.phonenumber">{{phone.number}}</mat-list-item>
+            <mat-list-item class="list-item" *ngFor="let phone of client.phonenumber">
+                {{phone.number}}
+                <span>
+                    <a [href]="call(client.phonenumber) | safeUrl">
+                        <mat-icon class="md-default-theme-theme material-icons action-icon" role="img" aria-hidden="true">call</mat-icon>
+                    </a>
+                    <a [href]="sendSms(client.phonenumber) | safeUrl">
+                        <mat-icon class="md-default-theme-theme material-icons action-icon" role="img" aria-hidden="true">sms</mat-icon>
+                    </a>
+                </span>
+                <mat-divider></mat-divider>
+            </mat-list-item>
             <mat-divider></mat-divider>
         </div>
         <div *ngIf="client.emailaddress.length !== 0">
@@ -32,25 +46,25 @@
 
     <div class="actions">
         <div class="action">
-            <a [href]="call(phone?.number) | safeUrl">
+            <a [href]="call(client.phonenumber) | safeUrl">
                 <mat-icon class="md-default-theme-theme material-icons action-icon" role="img" aria-hidden="true">call</mat-icon>
             </a>
         </div>
         <div class="action">
-            <a [href]="sendSms(phone?.number) | safeUrl">
+            <a [href]="sendSms(client.phonenumber) | safeUrl">
                 <mat-icon class="md-default-theme-theme material-icons action-icon" role="img" aria-hidden="true">sms
                 </mat-icon>
             </a>
        </div>
         <div class="action">
-            <a href="mailto:{{email?.address}}?&subject={{emailSubject}}&body={{emailBody}}">
+            <a href="mailto:{{client.emailaddress}}?&subject={{emailSubject}}&body={{emailBody}}">
                 <mat-icon class="md-default-theme-theme material-icons action-icon" role="img" aria-hidden="true">email
                 </mat-icon>
             </a>
        </div>
 
         <div class="action">
-            <a href="https://www.google.com/maps/search/?api=1&query={{address?.fullAddress}}">
+            <a href="https://www.google.com/maps/search/?api=1&query={{client.address}}">
                 <img src="assets/google-maps.svg" height="25px" width="25px" class="action-icon">
             </a>
         </div>

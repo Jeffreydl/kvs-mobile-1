@@ -12,7 +12,7 @@ import {ICustomer} from '../../ICustomer';
 export class CurrentClientDialogComponent implements OnInit, OnDestroy {
   public emailSubject = 'Reparatieverzoek';
   public emailBody = 'Hallo%20Melanie,%0D%0A%0D%0AHoe%20gaat%20het?%0D%0A%0D%0AMet%20vriendelijke%20groet,%0D%0A%0D%0AJeffrey%20de%20Looper';
-  private client: ICustomer;
+  public client: ICustomer;
 
   constructor(
       public dialogRef: MatDialogRef<CurrentClientDialogComponent>,
@@ -29,11 +29,11 @@ export class CurrentClientDialogComponent implements OnInit, OnDestroy {
     this.dialogRef.close();
   }
 
-  public call(phoneNumber: string) {
+  public call(phoneNumber) {
     return `tel:${phoneNumber}`;
   }
 
-  public sendSms(phoneNumber: string) {
+  public sendSms(phoneNumber) {
     return `sms:${phoneNumber}`;
   }
 }
