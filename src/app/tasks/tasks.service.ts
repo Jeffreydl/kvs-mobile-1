@@ -160,8 +160,12 @@ export class TasksService {
     }
 
     public new(formData: any) {
-        // return this.http.post<any>(url + 'Messages/' + id);
+        // return this.http.post<ITask>(url + 'Messages/', formData);
         console.log(formData);
+    }
+
+    public delete(id: number) {
+        return this.http.delete(url + 'messages' + id + 'deleteWithReason/0');
     }
 
     public getCategories() {

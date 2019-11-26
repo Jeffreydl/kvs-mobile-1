@@ -6,11 +6,12 @@
                placeholder="Zoek klant"
                class="search-client"
         />
+        <mat-icon class="md-default-theme-theme material-icons nav-icon add-icon" role="img" aria-hidden="true" (click)="openNewClientDialog()">person_add</mat-icon>
 
         <div class="found-clients" *ngIf="isSearching">
             <mat-list class="found-clients-list">
                 <mat-list-item *ngFor="let client of filteredClients" (click)="openDetailsDialog(client)">
-                    <span class="contacts">{{client.fullname}}</span>
+                    <span class="contacts">{{client.lastname}}, {{client.firstname}} {{client.middlename}}</span>
                     <mat-divider></mat-divider>
                 </mat-list-item>
 
@@ -25,7 +26,7 @@
             <div *ngFor="let client of clients">
                 <div *ngIf="client.lastname.substr(0,1) == letter">
                     <mat-list-item (click)="openDetailsDialog(client)">
-                        <span class="contacts">{{client?.fullname}}</span>
+                        <span class="contacts">{{client.lastname}}, {{client.firstname}} {{client.middlename}}</span>
                     </mat-list-item>
                     <mat-divider></mat-divider>
                 </div>

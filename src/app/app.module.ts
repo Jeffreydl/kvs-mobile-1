@@ -19,7 +19,6 @@ import { TasksComponent } from './tasks/tasks.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { KennisbankComponent } from './kennisbank/kennisbank.component';
 import { AddTaskComponent } from './tasks/add-task/add-task.component';
-import { SelectedClientComponent } from './customers/selected-client/selected-client.component';
 import { ClientSearchbarComponent } from './customers/client-searchbar/client-searchbar.component';
 import { ClientCardComponent } from './customers/client-card/client-card.component';
 import { HousesComponent } from './houses/houses.component';
@@ -33,6 +32,7 @@ import { environment } from '../environments/environment';
 import { HammerConfig} from './hammer-config/hammerConfig';
 import {CurrentClientDialogComponent} from './customers/client-list/current-client-dialog/current-client-dialog.component';
 import {AddClientDialogComponent} from './customers/add-client-dialog/add-client-dialog.component';
+import { CurrentTaskDialogComponent } from './tasks/current-task-dialog/current-task-dialog.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +45,6 @@ import {AddClientDialogComponent} from './customers/add-client-dialog/add-client
     KennisbankComponent,
     AddTaskComponent,
     OrderByPipe,
-    SelectedClientComponent,
     ClientSearchbarComponent,
     ClientCardComponent,
     HousesComponent,
@@ -55,8 +54,9 @@ import {AddClientDialogComponent} from './customers/add-client-dialog/add-client
     SanitizeUrlPipe,
     CurrentClientDialogComponent,
     AddClientDialogComponent,
+    CurrentTaskDialogComponent,
   ],
-  entryComponents: [CurrentClientDialogComponent, AddClientDialogComponent],
+  entryComponents: [CurrentClientDialogComponent, AddClientDialogComponent, CurrentTaskDialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

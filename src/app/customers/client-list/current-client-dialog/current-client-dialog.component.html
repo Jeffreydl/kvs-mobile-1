@@ -1,48 +1,71 @@
 <div class="container">
 
-    <mat-icon class="md-default-theme-theme material-icons action-icon close-dialog" role="img" aria-hidden="true" (click)="onNoClick()">close
-    </mat-icon>
-
-<h2>{{client.fullname}}</h2>
+    <div class="header">
+        <h3>{{client.fullname}}</h3>
+        <mat-icon class="md-default-theme-theme material-icons action-icon close-dialog" role="img" aria-hidden="true" (click)="onNoClick()">close
+        </mat-icon>
+    </div>
     <mat-list>
-        <mat-list-item class="list-item inline-item">ID: {{client?.id}}</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item class="list-item inline-item">Geslacht: {{client?.gender}}</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item class="list-item"><span>Geboortedatum: {{client?.dateofbirth | date: 'dd-MM-yyyy'}} <span *ngIf="client.age">({{client.age}} jaar)</span></span></mat-list-item>
-        <mat-divider></mat-divider>
-        <div *ngIf="client.address.length !== 0">
-            <p *ngIf="client.address.length === 1; else multipleAddresses">Adres:</p>
-            <ng-template #multipleAddresses>
-                Adressen:
-            </ng-template>
-            <mat-list-item class="list-item" *ngFor="let address of client?.address">{{address.fullAddress}}</mat-list-item>
-            <mat-divider></mat-divider>
-        </div>
-        <div *ngIf="client.phonenumber.length !== 0">
-            <p *ngIf="client.phonenumber.length === 1; else multiplePhoneNumbers">Telefoonnummer:</p>
-            <ng-template #multiplePhoneNumbers>Telefoonnummers:</ng-template>
-            <mat-list-item class="list-item" *ngFor="let phone of client.phonenumber">
-                {{phone.number}}
-                <span>
-                    <a [href]="call(client.phonenumber) | safeUrl">
-                        <mat-icon class="md-default-theme-theme material-icons action-icon" role="img" aria-hidden="true">call</mat-icon>
-                    </a>
-                    <a [href]="sendSms(client.phonenumber) | safeUrl">
-                        <mat-icon class="md-default-theme-theme material-icons action-icon" role="img" aria-hidden="true">sms</mat-icon>
-                    </a>
+        <h3 matLine>Geslacht:</h3>
+        <mat-list-item>
+            <p matLine>
+                <span>{{client?.gender}}</span>
+            </p>
+        </mat-list-item>
+        <h3 matLine>Geboortedatum:</h3>
+        <mat-list-item>
+            <p matLine>
+                <span>{{client?.dateofbirth | date: 'dd-MM-yyyy'}}
+                    <span *ngIf="client.age">({{client.age}} jaar)</span>
                 </span>
-                <mat-divider></mat-divider>
+            </p>
+        </mat-list-item>
+
+        <div *ngIf="client.address.length !== 0">
+            <h3 matLine *ngIf="client.address.length === 1; else multipleAddresses">Adres:</h3>
+            <ng-template #multipleAddresses>
+                <h3>Adressen:</h3>
+            </ng-template>
+            <mat-list-item *ngFor="let address of client?.address">
+                <a href="https://www.google.com/maps/search/?api=1&query={{address.fullAddress}}">
+                    <img src="assets/google-maps.svg" height="25px" width="25px" class="action-icon">
+                </a>
+                <p matLine>
+                    <span>{{address?.fullAddress}}</span>
+                </p>
             </mat-list-item>
-            <mat-divider></mat-divider>
         </div>
+
+        <div *ngIf="client.phonenumber.length !== 0">
+            <h3 matLine *ngIf="client.phonenumber.length === 1; else multiplePhoneNumbers">Telefoonnummer:</h3>
+            <ng-template #multiplePhoneNumbers>
+                <h3>Telefoonnummers:</h3>
+            </ng-template>
+            <mat-list-item *ngFor="let phone of client.phonenumber">
+                <a [href]="call(phone?.number) | safeUrl"><mat-icon matListIcon class="">call</mat-icon></a>
+                <a [href]="sendSms(phone?.number) | safeUrl"><mat-icon matListIcon class="">sms</mat-icon></a>
+                <p matLine>
+                    <span>{{phone.number}}</span>
+                </p>
+            </mat-list-item>
+        </div>
+
         <div *ngIf="client.emailaddress.length !== 0">
-            <p *ngIf="client.emailaddress.length === 1; else multipleEmails">E-mailadres:</p>
-            <ng-template #multipleEmails>E-mailadressen:</ng-template>
-            <mat-list-item class="list-item" *ngFor="let email of client.emailaddress"><span #test>{{email.address}}</span></mat-list-item>
+            <h3 matLine *ngIf="client.emailaddress.length === 1; else multipleEmails">E-mailadres:</h3>
+            <ng-template #multipleEmails>
+                <h3>E-mailadressen:</h3>
+            </ng-template>
+            <mat-list-item class="list-item" *ngFor="let email of client.emailaddress">
+                <a [href]="sendMail(email, client)"><mat-icon class="action-icon">email</mat-icon></a>
+                <p matLine>
+                    <span>{{email.address}}</span>
+                </p>
+            </mat-list-item>
         </div>
 
     </mat-list>
+
+
 
     <div class="actions">
         <div class="action">

@@ -38,6 +38,7 @@ export class KennisbankComponent implements OnInit, OnDestroy {
     }
 
     public toggleContent(id: string) {
+        console.log(this.contentId);
         if (this.contentId === id) {
             this.contentId = '';
             console.log('close');

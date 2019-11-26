@@ -35,8 +35,6 @@ export class ClientListComponent implements OnInit, OnDestroy {
         ).subscribe((value) => {
             this.filterClients(value);
         });
-
-        this.openNewClientDialog();
     }
     ngOnDestroy(): void {
     }
@@ -72,8 +70,9 @@ export class ClientListComponent implements OnInit, OnDestroy {
 
     public openDetailsDialog(client: ICustomer): void {
         this.dialog.open(CurrentClientDialogComponent, {
-            height: '70%',
+            height: '85%',
             width: '90%',
+            maxWidth: '90%',
             panelClass: 'client-dialog',
             data: {client}
         });
@@ -81,8 +80,9 @@ export class ClientListComponent implements OnInit, OnDestroy {
 
     openNewClientDialog(): void {
         this.dialog.open(AddClientDialogComponent, {
-            height: '70%',
+            height: '85%',
             width: '90%',
+            maxWidth: '90%',
             panelClass: 'client-dialog',
         });
     }

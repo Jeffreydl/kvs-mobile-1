@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {FormControl} from '@angular/forms';
 import {ICustomer} from '../ICustomer';
@@ -17,6 +17,7 @@ export class ClientSearchbarComponent implements OnInit, OnDestroy {
     public autoCompleteFormControl = new FormControl();
     public clients: ICustomer[];
     private currentClient$: Subscription;
+    @Output() clientId = new EventEmitter<number>();
 
     constructor(private router: Router, private customersService: CustomersService) {
     }
@@ -36,12 +37,12 @@ export class ClientSearchbarComponent implements OnInit, OnDestroy {
         }
     }
 
+
     private searchCustomers(value: string) {
         if (value.length > 1) {
             this.customersService.search(value).subscribe(
                 (data) => {
                     this.clients = data;
-                    console.log(this.clients);
                 }
             );
         } else {
@@ -50,7 +51,11 @@ export class ClientSearchbarComponent implements OnInit, OnDestroy {
     }
 
     public selectClient(id: number) {
-        this.router.navigate(['klantkaart', id]);
+        if (this.router.url === '/taak-aanmaken') {
+            this.clientId.emit(id);
+        } else {
+            this.router.navigate(['klantkaart', id]);
+        }
         // this.router.navigate(['client-card/', id], {state: { data: id}});
     }
 

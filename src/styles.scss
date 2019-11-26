@@ -14,8 +14,8 @@ html, body {
 }
 
 body {
-  background: url("/assets/kvs-back-min.jpg") center no-repeat;
-  background-size: cover;
+  //background: url("/assets/kvs-back-min.jpg") center no-repeat;
+  //background-size: cover;
 
 }
 
@@ -194,7 +194,6 @@ body {
 // css class created in client-list.component.ts when a dialog is opened
 .client-dialog .mat-dialog-container {
   padding: 0;
-  margin-bottom: 50px;
 
   .mat-list .mat-list-item {
     height: 30px;
@@ -205,5 +204,11 @@ body {
   }
   .mat-list-item.inline-item {
     display: inline-block;
+  }
+
+  .container-client-dialog {
+    .mat-radio-label-content {
+      padding-left: 2px;
+    }
   }
 }

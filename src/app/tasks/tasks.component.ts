@@ -2,8 +2,10 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TaskFilter, TasksService} from './tasks.service';
 import {AuthService} from '../auth/auth.service';
 import {ITask} from './itask';
-import {MatTableDataSource} from '@angular/material';
+import {MatDialog, MatTableDataSource} from '@angular/material';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
+import {AddClientDialogComponent} from '../customers/add-client-dialog/add-client-dialog.component';
+import {CurrentTaskDialogComponent} from './current-task-dialog/current-task-dialog.component';
 
 @AutoUnsubscribe()
 @Component({
@@ -15,10 +17,9 @@ export class TasksComponent implements OnInit, OnDestroy {
   public tasks: ITask[];
   public displayedColumnsTasks: string[] = ['category', 'subject', 'sla'];
   public dataSourceTasks: MatTableDataSource<ITask>;
-  public datee;
   public userId: number;
 
-  constructor(private tasksService: TasksService, private authService: AuthService) { }
+  constructor(private tasksService: TasksService, private authService: AuthService, public dialog: MatDialog) { }
 
   ngOnInit() {
       // this.userId = this.authService.getUserId();
@@ -44,6 +45,16 @@ export class TasksComponent implements OnInit, OnDestroy {
               this.dataSourceTasks = new MatTableDataSource(this.tasks);
           });
   }
+
+    openCurrentTask(task: any): void {
+        this.dialog.open(CurrentTaskDialogComponent, {
+            height: '85%',
+            width: '90%',
+            maxWidth: '90%',
+            panelClass: 'client-dialog',
+            data: {task}
+        });
+    }
 
   // getSla(slaDateTime) {
   //   const currentDate = new Date();
