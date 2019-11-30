@@ -1,0 +1,19 @@
+
+<div class="search-bar">
+    <input [formControl]="autoCompleteFormControl"
+           type="text"
+           placeholder="Zoek klant"
+           class="search-client"
+    />
+
+    <div class="found-clients">
+        <mat-list class="found-clients-list">
+            <mat-list-item *ngFor="let employee of filteredEmployees">
+                <span class="contacts">{{employee?.profile.fullname}}({{employee?.email}})</span>
+                <mat-divider></mat-divider>
+            </mat-list-item>
+
+            <p *ngIf="filteredEmployees?.length === 0">Geen medewerkers gevonden.</p>
+        </mat-list>
+    </div>
+</div>

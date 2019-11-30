@@ -33,6 +33,7 @@ import { HammerConfig} from './hammer-config/hammerConfig';
 import {CurrentClientDialogComponent} from './customers/client-list/current-client-dialog/current-client-dialog.component';
 import {AddClientDialogComponent} from './customers/add-client-dialog/add-client-dialog.component';
 import { CurrentTaskDialogComponent } from './tasks/current-task-dialog/current-task-dialog.component';
+import { EmployeesComponent } from './employees/employees.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { CurrentTaskDialogComponent } from './tasks/current-task-dialog/current-
     CurrentClientDialogComponent,
     AddClientDialogComponent,
     CurrentTaskDialogComponent,
+    EmployeesComponent,
   ],
   entryComponents: [CurrentClientDialogComponent, AddClientDialogComponent, CurrentTaskDialogComponent],
   imports: [

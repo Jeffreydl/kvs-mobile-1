@@ -30,26 +30,6 @@ export class CustomersService {
     public create(formData: ICustomer) {
         console.log(formData);
         return this.http.post(baseUrl + 'api/relaties/createRelation', formData);
-
-        // {"data":
-        //     {"relation":
-        //         {
-        //             "emailaddress":[
-        //                 {"address":"Roberta1923@gmail.com"}
-        //             ]
-        //             ,"phonenumber":[
-        //                 {"type":"correspondence","number":"0355219191919"}
-        //             ],
-        //         "address":[
-        //         ],
-        //         "relatiecluster":[],
-        //             "gender":"Vrouw",
-        //             "dateofbirth":"1923-01-01T00:00:00+00:19",
-        //             "initials":"R",
-        //             "firstname":"Roberta",
-        //             "lastname":"Ovalidarte"}
-        //     }
-        // }
     }
 
     public search(keyword: string): Observable<ICustomer[]> {

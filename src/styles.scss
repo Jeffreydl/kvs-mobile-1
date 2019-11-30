@@ -212,3 +212,21 @@ body {
     }
   }
 }
+
+
+// add-task css for stepper
+.mat-stepper-vertical {
+
+  .mat-vertical-stepper-header {
+    padding: 10px;
+    height: auto;
+  }
+
+  .mat-stepper-vertical-line {
+    margin: 10px 0 10px 22px;
+  }
+
+  .mat-vertical-content {
+    padding: 0 10px 10px 10px;
+  }
+}

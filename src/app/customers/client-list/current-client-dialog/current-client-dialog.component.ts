@@ -2,7 +2,7 @@ import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {ICustomer, IEmailAddress} from '../../ICustomer';
-import {EmployeesService} from '../../../employees.service';
+import {EmployeesService} from '../../../employees/employees.service';
 import {AuthService} from '../../../auth/auth.service';
 
 @AutoUnsubscribe()

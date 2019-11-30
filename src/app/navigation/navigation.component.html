@@ -1,7 +1,7 @@
 <div class="container">
     <div class="nav-item">
         <a routerLink="/dashboard" routerLinkActive="active-route">
-            <mat-icon class="md-default-theme-theme material-icons nav-icon" role="img">dashboard</mat-icon>
+            <mat-icon [matBadge]="tasksCount$ | async" matBadgeColor="warn" [matBadgeHidden]="!isVisible" class="md-default-theme-theme material-icons nav-icon" role="img">dashboard</mat-icon>
         </a>
     </div>
     <div class="nav-item">

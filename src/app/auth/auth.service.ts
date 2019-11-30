@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpBackend, HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Observable, Subscription, timer} from 'rxjs';
 import {Router} from '@angular/router';
 import {baseUrl} from '../base-api.service';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -10,9 +10,10 @@ import {baseUrl} from '../base-api.service';
 export class AuthService {
     public token: string;
     public ttl: number;
-    public userId: number;
-    public hasPermission = false;
+    public userId: string;
     public sessionExpiredMessage: string;
+    public loggedIn = new BehaviorSubject<boolean>(false);
+    public hasPermission = false;
 
     constructor(private http: HttpClient, handler: HttpBackend, private router: Router) {
         // Service is not intercepted due to HttpBackend so Authorization token does not get added
@@ -23,14 +24,13 @@ export class AuthService {
     public login(formData: FormData) {
         return this.http.post(baseUrl + 'api/Employees/securelogin', formData).subscribe(
             (data: any) => {
-                this.token = data.accessToken.id;
-                this.ttl = data.accessToken.ttl;
-                this.userId = data.accessToken.userId;
-                this.hasPermission = true;
-                localStorage.setItem('loginToken', this.token);
-                localStorage.setItem('ttl', this.ttl.toString());
+                this.setToken(data.accessToken.id);
+                localStorage.setItem('ttl', data.accessToken.ttl.toString());
                 localStorage.setItem('tokenCreationTime', new Date().getTime().toString());
-                localStorage.setItem('userId', this.userId.toString());
+                this.setUserId(data.accessToken.userId);
+                this.hasPermission = true;
+                this.loggedIn.next(true);
+                localStorage.setItem('hasPermission', JSON.stringify(this.loggedIn.value));
                 this.router.navigate(['dashboard']);
             },
             (err: HttpErrorResponse) => {
@@ -43,40 +43,63 @@ export class AuthService {
         );
     }
 
+    public get isLoggedIn() {
+        console.log(this.loggedIn);
+        if (JSON.parse(localStorage.getItem('hasPermission'))) {
+            this.loggedIn.next(true);
+        }
+        console.log(this.loggedIn.value);
+        return this.loggedIn.asObservable();
+    }
+
     public logOut() {
-        this.hasPermission = false;
-        localStorage.removeItem('loginToken');
-        localStorage.removeItem('tokenCreationTime');
         this.sessionExpiredMessage = 'Session expired';
+        this.hasPermission = false;
+        this.loggedIn.next(false);
+        localStorage.clear();
         this.router.navigate(['login']);
     }
 
     public getToken() {
+        this.token = localStorage.getItem('loginToken');
         return this.token;
     }
 
     public setToken(token: string) {
+        localStorage.setItem('loginToken', token);
         this.token = token;
     }
 
-    public getPermission() {
-        return this.hasPermission;
-    }
-    public setPermission(value: boolean) {
-        this.hasPermission = value;
-    }
-
-    public getUserId() {
-        this.userId = Number(localStorage.getItem('userId'));
+    public getUserId(): string {
+        this.userId = localStorage.getItem('userId');
         return this.userId;
     }
 
-    public getSessionExpiredMessage() {
+    public setUserId(userId: string) {
+        localStorage.setItem('userId', userId);
+        this.userId = userId;
+    }
+
+    public getSessionExpiredMessage(): string {
         return this.sessionExpiredMessage;
     }
 
-    public getTokenTtl() {
+    public getTokenTtl(): number {
+        this.ttl = Number(localStorage.getItem('ttl'));
         return this.ttl;
+    }
+
+    public checkPermission(): boolean {
+        const tokenCreationTime = Number(localStorage.getItem('tokenCreationTime'));
+        const currentTime =  Number(new Date().getTime());
+        const ttl = Number(this.getTokenTtl()) * 1000;
+
+        this.hasPermission = JSON.parse(localStorage.getItem('hasPermission'));
+
+        if (tokenCreationTime + ttl < currentTime) {
+            this.logOut();
+        }
+        return this.hasPermission;
     }
 }
 
