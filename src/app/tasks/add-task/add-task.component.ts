@@ -30,8 +30,9 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     @ViewChild('stepper', {static: false}) stepper: MatStepper;
     private action: string;
     public assigneeForm: FormGroup;
-    private formData: any;
-    private task: any;
+    public formData: any;
+    public task: any;
+    public employeeId: number;
 
     constructor(private taskService: TasksService,
                 private customersService: CustomersService,
@@ -98,12 +99,12 @@ export class AddTaskComponent implements OnInit, OnDestroy {
 
     public addTask(formData: FormData) {
         this.formData = formData;
-        // this.taskService.new(formData).subscribe(
-        //     (task) => {
-        //         this.task = task;
-        //         console.log(this.task);
-        //     }
-        // );
+        this.taskService.new(formData).subscribe(
+            (task) => {
+                this.task = task;
+                console.log(this.task);
+            }
+        );
 
         if (this.action === 'toewijzen') {
             this.createAssigneeForm();
@@ -160,6 +161,10 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     }
 
     onSubmit2(value: any) {
+        console.log(this.task);
+        console.log(this.currentClient);
+        console.log(this.employeeId);
+        // console.log(this.)
         console.log(value);
     }
 }

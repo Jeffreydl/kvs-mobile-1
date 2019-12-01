@@ -98,4 +98,26 @@ export class DossierService {
     public getAll(filter: DossierFilter): Observable<any> {
         return this.http.get(url + 'Dossiers?filter=' + filter);
     }
+
+    public new(formData: any) {
+    //     createdById: "13"
+    //     description: ""
+    //     dossierCategory: {name: "Buurt", sla: "4h", defaultAssigneeId: 2, dueDate: "5h", isSystem: false, id: 1,…}
+    //     defaultAssigneeId: 2
+    //     deletedAt: null
+    //     dueDate: "5h"
+    //     id: 1
+    //     isSystem: false
+    //     name: "Buurt"
+    //     sla: "4h"
+    //     dossierType: {name: "Klacht", default: null, icon: null, id: 1, deletedAt: null}
+    // default: null
+    //     deletedAt: null
+    //     icon: null
+    //     id: 1
+    //     name: "Klacht"
+    //     relatieId: 26
+    //     subject: "Contract"
+        return this.http.post(url + 'Dossiers', formData);
+    }
 }

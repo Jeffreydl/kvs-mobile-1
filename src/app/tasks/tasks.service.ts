@@ -180,6 +180,10 @@ export class TasksService {
         return this.http.post<any>(url + 'Messages/', formData);
     }
 
+    public edit(id: number, formData: any) {
+        return this.http.patch(url + 'Messages/' + id, formData);
+    }
+
     public getById(id: number) {
         return this.http.get<any>(url + 'Messages/' + id);
     }

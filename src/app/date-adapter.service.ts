@@ -18,12 +18,12 @@ export class DateAdapterService extends NativeDateAdapter {
     return isNaN(timestamp) ? null : new Date(timestamp);
   }
   format(date: Date, displayFormat: string): string {
-    if (displayFormat == 'input') {
+    if (displayFormat === 'input') {
       const day = date.getDate();
       const month = date.getMonth() + 1;
       const year = date.getFullYear();
       return this._to2digit(day) + '/' + this._to2digit(month) + '/' + year;
-    } else if (displayFormat == 'inputMonth') {
+    } else if (displayFormat === 'inputMonth') {
       const month = date.getMonth() + 1;
       const year = date.getFullYear();
       return  this._to2digit(month) + '/' + year;

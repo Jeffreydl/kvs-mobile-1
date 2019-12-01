@@ -5,6 +5,13 @@
 
 
     <mat-vertical-stepper [linear]="false" #stepper>
+
+        <mat-step>
+            <ng-template matStepLabel>Type taak kiezen</ng-template>
+            <mat-icon class="ng-binding md-default-theme-theme material-icons task-preset" role="img" aria-hidden="true">phone</mat-icon>
+            <mat-icon class="ng-binding md-default-theme-theme material-icons task-preset" role="img" aria-hidden="true">email</mat-icon>
+        </mat-step>
+
         <mat-step [stepControl]="form">
 
             <app-client-searchbar (clientId)="getClientId($event)" *ngIf="!clientSelected"></app-client-searchbar>
@@ -89,8 +96,8 @@
                 <input formControlName="direction" hidden>
                 <input formControlName="isDraft" hidden>
 
-                <button type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple login" (click)="move(1, 'toewijzen')">Toewijzen</button>
-                <button type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple login" (click)="move(1, 'beantwoorden')">Beantwoorden</button>
+                <button type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple login" (click)="move(2, 'toewijzen')">Toewijzen</button>
+                <button type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple login" (click)="move(2, 'beantwoorden')">Beantwoorden</button>
 
             </form>
         </mat-step>
@@ -110,7 +117,7 @@
                         </mat-select>
                     </mat-form-field>
 
-                    <app-employees></app-employees>
+                    <app-employees (employeeId)="employeeId"></app-employees>
 
                     <mat-form-field class="form-field">
                         <input formControlName="subject"
