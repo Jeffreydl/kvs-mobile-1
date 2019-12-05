@@ -177,10 +177,26 @@ export class TasksService {
         if (!formData.subject) {
             formData.subject = '[nieuw]';
         }
-        return this.http.post<any>(url + 'Messages/', formData);
+        return this.http.post<any>(url + 'Messages', formData);
     }
 
     public edit(id: number, formData: any) {
+
+        // const formData = {
+            // body: 'a',
+            // contactReasonId: 3,
+            // createdDateTime: new Date(),
+            // dossierId: 62,
+            // id: id,
+            // relatieId: 26,
+            // typeId: 1,
+            // parentContactReason: {
+            //     name: 'Algemeen',
+            //     id: 3,
+            //     parentId: null,
+            //     deletedAt: null
+            // },
+        // };
         return this.http.patch(url + 'Messages/' + id, formData);
     }
 

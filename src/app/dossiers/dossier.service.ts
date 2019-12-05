@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {baseUrl} from '../base-api.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {TaskFilter} from '../tasks/tasks.service';
+import {IDossier} from './IDossier';
 
 export class DossierFilter {
     private state: string;
@@ -95,8 +95,8 @@ export class DossierService {
     constructor(private http: HttpClient) {
     }
 
-    public getAll(filter: DossierFilter): Observable<any> {
-        return this.http.get(url + 'Dossiers?filter=' + filter);
+    public getAll(filter: DossierFilter): Observable<IDossier[]> {
+        return this.http.get<IDossier[]>(url + 'Dossiers?filter=' + filter);
     }
 
     public new(formData: any) {

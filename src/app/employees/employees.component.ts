@@ -1,8 +1,8 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {EmployeeFilter, EmployeesService} from './employees.service';
 import {IEmployee} from './IEmployee';
-import {FormControl} from '@angular/forms';
-import {debounceTime, distinctUntilChanged, map, startWith} from 'rxjs/operators';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {map, startWith} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 
 @Component({
@@ -14,13 +14,15 @@ export class EmployeesComponent implements OnInit {
     public employees: IEmployee[];
     public myControl = new FormControl();
     public filteredEmployees: Observable<IEmployee[]>;
-    @Output() public employeeId = new EventEmitter<IEmployee>();
+    @Input() formStepThree: FormGroup;
     public selectedEmployee = '';
 
   constructor(private employeesService: EmployeesService) { }
 
   ngOnInit() {
     this.getEmployees();
+
+    this.formStepThree.addControl('assigneeId', new FormControl(Validators.compose([Validators.required])));
   }
 
     private filter(value: string): IEmployee[] {
@@ -30,11 +32,6 @@ export class EmployeesComponent implements OnInit {
         console.log(this.employees.filter(option => option.filterByNameAndEmail.toLowerCase().includes(filterValue)));
         return this.employees.filter(option => option.filterByNameAndEmail.toLowerCase().includes(filterValue));
     }
-
-    // public filterEmployees(value: string) {
-    //     const regex = new RegExp(value, 'i');
-    //     this.filteredEmployees = this.employees.filter(({filterByNameAndEmail}) => regex.test(filterByNameAndEmail));
-    // }
 
     public getEmployees() {
         this.employeesService.getAll(new EmployeeFilter()
@@ -52,7 +49,6 @@ export class EmployeesComponent implements OnInit {
     }
 
     public selectEmployee(employee: IEmployee) {
-        console.log(employee);
-        this.employeeId.emit(employee);
+        this.formStepThree.controls.assigneeId.setValue(employee.id);
     }
 }

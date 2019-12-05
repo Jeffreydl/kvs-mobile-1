@@ -22,7 +22,7 @@ import {CustomersService} from '../customers.service';
     ]
 })
 export class AddClientDialogComponent implements OnInit, OnDestroy {
-    private client: Object;
+    private client: object;
 
   constructor(
       public dialogRef: MatDialogRef<AddClientDialogComponent>,

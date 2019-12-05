@@ -34,6 +34,10 @@ import {CurrentClientDialogComponent} from './customers/client-list/current-clie
 import {AddClientDialogComponent} from './customers/add-client-dialog/add-client-dialog.component';
 import { CurrentTaskDialogComponent } from './tasks/current-task-dialog/current-task-dialog.component';
 import { EmployeesComponent } from './employees/employees.component';
+import { TaskCreationStepOneComponent } from './tasks/task-creation-step-one/task-creation-step-one.component';
+import { TaskCreationStepTwoComponent } from './tasks/task-creation-step-two/task-creation-step-two.component';
+import { TaskCreationStepThreeComponent } from './tasks/task-creation-step-three/task-creation-step-three.component';
+import { TaskCreationStepFourComponent } from './tasks/task-creation-step-four/task-creation-step-four.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +61,10 @@ import { EmployeesComponent } from './employees/employees.component';
     AddClientDialogComponent,
     CurrentTaskDialogComponent,
     EmployeesComponent,
+    TaskCreationStepOneComponent,
+    TaskCreationStepTwoComponent,
+    TaskCreationStepThreeComponent,
+    TaskCreationStepFourComponent,
   ],
   entryComponents: [CurrentClientDialogComponent, AddClientDialogComponent, CurrentTaskDialogComponent],
   imports: [

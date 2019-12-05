@@ -28,17 +28,6 @@
     }
   }
 
-  .task-preset {
-    font-size: 32px;
-    height: 32px;
-    width: 32px;
-    background-color: #0070c0;
-    color: white;
-    padding: 12px;
-    border-radius: 50%
-  }
-
-
   .form-field {
     width: 40%;
     margin-right: 15px;
@@ -48,9 +37,23 @@
       max-height: 90px !important;
     }
   }
+  .form-50 {
+    width: 50%;
+    margin: 0;
+  }
 
   .name {
     font-weight: 700;
     font-size: 1.2rem;
   }
+}
+
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.example-radio-button {
+  margin: 5px;
 }

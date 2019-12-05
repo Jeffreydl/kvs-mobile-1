@@ -1,0 +1,36 @@
+<div class="toewijzen" *ngIf="__action === 'toewijzen' && formStepThree">
+
+
+    <form [formGroup]="formStepThree" (ngSubmit)="onSubmit2(formStepThree.value)">
+        <mat-form-field floatLabel="always" class="form-field" *ngIf="categories">
+            <mat-label>Categorie*</mat-label>
+            <mat-select formControlName="category">
+                <mat-option *ngFor="let category of categories" [value]="category.name">
+                    {{category.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <app-employees [formStepThree]="formStepThree"></app-employees>
+
+        <mat-form-field class="form-field">
+            <input formControlName="subject"
+                   matInput
+                   placeholder="Onderwerp">
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+            <input formControlName="description"
+                   matInput
+                   placeholder="Omschrijving">
+        </mat-form-field>
+
+        <button type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple" matStepperNext>Toevoegen aan dossier</button>
+
+
+    </form>
+</div>
+
+<div class="beantwoorden" *ngIf="__action === 'beantwoorden' && formStepThree">
+    beantwoorden
+</div>
