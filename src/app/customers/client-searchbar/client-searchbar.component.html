@@ -6,12 +6,13 @@
                formControlName="relatieId"
         />
     </mat-form-field>
-    <div class="clients" *ngFor="let client of clients" (click)="selectClient(client.id)">
-        {{ client.initials }} ({{ client.firstname }}) {{ client.lastname }} <br>
-        {{ client.personsnumber }} |
-        {{ client.gender }} |
-        {{ client.dateofbirth | date: 'dd-MM-yyyy' }} |
-        {{ client.age }} jaar
+    <div class="found-clients">
+        <ng-container *ngFor="let client of clients">
+            <mat-option (click)="selectClient(client.id)" class="found-client">
+                {{ client.initials }} ({{ client.firstname }}) {{ client.lastname }}<span *ngIf="client.dateofbirth">, {{ client.dateofbirth | date: 'dd-MM-yyyy' }} ({{ client.age }})</span>
+                <mat-divider></mat-divider>
+            </mat-option>
+            <p *ngIf="clients?.length === 0">Geen klanten gevonden.</p>
+        </ng-container>
     </div>
-    <p *ngIf="clients?.length === 0">Geen klanten gevonden.</p>
 </div>

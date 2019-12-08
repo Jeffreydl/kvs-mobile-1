@@ -24,7 +24,7 @@
         </mat-select>
     </mat-form-field>
 
-    <mat-form-field floatLabel="always" class="form-field form-50" *ngIf="categories">
+    <mat-form-field floatLabel="always" class="form-field-50" *ngIf="categories">
         <mat-label>Categorie*</mat-label>
         <mat-select formControlName="messageCategoryId">
             <mat-option *ngFor="let category of categories" [value]="category.id">
@@ -42,10 +42,10 @@
         </mat-select>
     </mat-form-field>
 
-    <mat-form-field class="form-field form-50" *ngIf="contactReasons">
+    <mat-form-field class="form-field form-field-50" *ngIf="contactReasons">
         <mat-label>Hoofdcontactreden*</mat-label>
-        <mat-select formControlName="contactReason" (selectionChange)="contactReasonToSubject()">
-            <mat-option *ngFor="let contactReason of contactReasons" [value]="contactReason">
+        <mat-select formControlName="contactReasonId" (selectionChange)="contactReasonToSubject()">
+            <mat-option *ngFor="let contactReason of contactReasons" [value]="contactReason.id">
                 {{contactReason.name}}
             </mat-option>
         </mat-select>
@@ -57,15 +57,15 @@
         Gebruik contactreden als onderwerp
     </mat-checkbox>
 
-    <mat-form-field class="form-field">
+    <mat-form-field class="form-field-100">
         <input formControlName="subject"
                matInput
                placeholder="Onderwerp / Vraag"
-               [value]="isChecked && contactReason ? contactReason : taskSubject"
+               [value]="isChecked && contactReason ? test : taskSubject"
                (keyup)="isChecked = false">
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field class="form-field-100">
                     <textarea formControlName="body"
                               class="message-body"
                               placeholder="Bericht (optioneel)"
@@ -79,7 +79,7 @@
     <input formControlName="direction" hidden>
     <input formControlName="isDraft" hidden>
 
-    <button matStepperNext type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple login" (click)="addTask('toewijzen', formStepTwo.value)">Toewijzen</button>
-    <button matStepperNext type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple login" (click)="addTask('beantwoorden', formStepTwo.value)">Beantwoorden</button>
+    <button matStepperNext type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple submit-step-2" (click)="submit('toewijzen', formStepTwo.value)">Toewijzen</button>
+    <button matStepperNext type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple submit-step-2" (click)="submit('beantwoorden', formStepTwo.value)">Beantwoorden</button>
 
 </form>

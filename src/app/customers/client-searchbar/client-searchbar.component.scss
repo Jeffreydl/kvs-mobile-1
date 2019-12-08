@@ -4,21 +4,13 @@
     width: 100%;
   }
 
-  .clients {
-    min-height: 40px;
-    width: 100%;
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    box-sizing: border-box;
+  .found-clients {
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
+    margin-bottom: 10px;
 
-    &:hover {
-      background-color: rgba(158, 158, 158, 0.18);
+    .found-client {
+      height: 42px;
+      line-height: 42px;
     }
-
-    &:nth-last-of-type(1) {
-      border-bottom: 1px solid black;
-    }
-
   }
 }

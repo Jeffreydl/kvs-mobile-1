@@ -75,6 +75,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
 
     public getTask(task: ITask) {
         this.task = task;
+        console.log(this.task);
     }
 
     getAction(action: string) {

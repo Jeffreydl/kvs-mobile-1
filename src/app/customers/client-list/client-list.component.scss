@@ -35,7 +35,9 @@
   .mat-list {
     position: relative;
     padding: 0;
-    margin-top: 40px;
+    top: 40px;
+    height: calc(100vh - 120px);
+    overflow-y: auto;
 
     .contacts {
       font-size: 20px;

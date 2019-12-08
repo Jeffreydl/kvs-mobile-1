@@ -1,5 +1,7 @@
 .container {
   background-color: white;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
 
   .header {
     background-color: #3f464b;

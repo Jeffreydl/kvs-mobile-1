@@ -21,8 +21,6 @@ export class EmployeesComponent implements OnInit {
 
   ngOnInit() {
     this.getEmployees();
-
-    this.formStepThree.addControl('assigneeId', new FormControl(Validators.compose([Validators.required])));
   }
 
     private filter(value: string): IEmployee[] {
@@ -49,6 +47,10 @@ export class EmployeesComponent implements OnInit {
     }
 
     public selectEmployee(employee: IEmployee) {
+        console.log(employee.id);
+        console.log(this.formStepThree.value);
+        this.formStepThree.addControl('assigneeId',  new FormControl(Validators.compose([Validators.required])));
         this.formStepThree.controls.assigneeId.setValue(employee.id);
+
     }
 }

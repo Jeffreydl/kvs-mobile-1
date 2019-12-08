@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {TasksService} from '../tasks.service';
 import {CustomersService} from '../../customers/customers.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -14,14 +14,16 @@ import {ITask} from '../ITask';
   templateUrl: './task-creation-step-two.component.html',
   styleUrls: ['./task-creation-step-two.component.scss']
 })
-export class TaskCreationStepTwoComponent implements OnInit, OnDestroy {
+export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public categories: any;
   public contactReasons: any;
   public messageChannels: any;
   public types: any;
+  public taskId: number;
 
   __taskType: string;
+    public test: any;
   public get taskType(): string {
     return this.__taskType;
   }
@@ -33,7 +35,7 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy {
   }
 
   public formStepTwo: FormGroup;
-  public contactReason = '';
+  public contactReason: number;
   public isChecked = true;
   public taskSubject = '';
 
@@ -44,6 +46,8 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy {
   @Output() task = new EventEmitter<ITask>();
   @Output() action = new EventEmitter<string>();
 
+  @Input() currentTask: ITask;
+
   constructor(private tasksService: TasksService,
               private customersService: CustomersService,
               private formBuilder: FormBuilder,
@@ -51,7 +55,6 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-
     this.tasksService.getMessageChannels().subscribe((data) => {
       this.messageChannels = data;
     });
@@ -70,6 +73,10 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
   }
 
+  ngAfterViewInit() {
+    this.checkCurrentTask();
+  }
+
   selectPreset() {
     console.log(this.__taskType);
     if (this.__taskType === 'email') {
@@ -77,7 +84,7 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy {
       this.formStepTwo.controls.messageCategoryId.setValue(1);
       this.formStepTwo.controls.typeId.setValue(1);
     } else if (this.__taskType === 'telefoon') {
-      this.formStepTwo.controls.messageChannelId.setValue(1);
+      this.formStepTwo.controls.messageChannelId.setValue(4);
       this.formStepTwo.controls.messageCategoryId.setValue(4);
       this.formStepTwo.controls.typeId.setValue(2);
     }
@@ -85,10 +92,10 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy {
 
   public createAddTaskForm() {
     this.formStepTwo = this.formBuilder.group({
-      messageChannelId: this.formBuilder.control(1, Validators.compose([Validators.required])),
+      messageChannelId: this.formBuilder.control(2, Validators.compose([Validators.required])),
       messageCategoryId: this.formBuilder.control(4, Validators.compose([Validators.required])),
       typeId: this.formBuilder.control(2, Validators.compose([Validators.required])),
-      contactReason: this.formBuilder.control('', Validators.compose([Validators.required])),
+      contactReasonId: this.formBuilder.control('', Validators.compose([Validators.required])),
       subject: this.formBuilder.control('', Validators.compose([Validators.required])),
       body: this.formBuilder.control(''),
       assignedById: this.formBuilder.control(this.authService.getUserId()),
@@ -101,25 +108,53 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy {
   }
 
   private onFormValueChange(data: any) {
-    this.contactReason = data.contactReason.name;
+
+    this.contactReason = data.contactReasonId;
     this.taskSubject = data.subject;
+    console.log(this.currentTask);
   }
 
-  public addTask(action: string, formData: any) {
+  public submit(action: string, formData: any) {
+    if (this.taskId || this.currentTask) {
+      this.editTask(formData);
+    } else {
+      this.addTask(formData);
+    }
+    this.action.emit(action);
+  }
+
+  public addTask(formData: any) {
     this.tasksService.new(formData).subscribe(
-        (task) => {
-          console.log(task);
+        (task: ITask) => {
+          console.log(task.id);
+          this.taskId = task.id;
           this.task.emit(task);
         }
     );
-    this.action.emit(action);
+  }
+
+  public editTask(formData: any) {
+    if (this.taskId) {
+        this.tasksService.edit(this.taskId, formData).subscribe(
+            (task) => {
+                console.log(task);
+            }
+        );
+    } else {
+        this.tasksService.edit(this.currentTask.id, formData).subscribe(
+            (task) => {
+                console.log(task);
+            }
+        );
+    }
   }
 
   public updateSubject() {
     this.isChecked = !this.isChecked;
-    if (this.isChecked && this.contactReason !== '') {
-      this.formStepTwo.patchValue({
-        subject: this.contactReason
+    if (this.isChecked && this.contactReason) {
+        this.test = this.contactReasons[this.contactReason - 1].name;
+        this.formStepTwo.patchValue({
+        subject: this.test
       });
     } else {
       this.formStepTwo.patchValue({
@@ -130,8 +165,10 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy {
 
   public contactReasonToSubject() {
     if (this.isChecked) {
+      this.test = this.contactReasons[this.contactReason - 1].name;
+
       this.formStepTwo.patchValue({
-        subject: this.contactReason
+        subject: this.test
       });
     }
   }
@@ -154,4 +191,35 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy {
     this.clientSelected = true;
   }
 
+  public checkCurrentTask() {
+      if (this.currentTask) {
+          if (this.currentTask.relatieId) {
+              this.clientSelected = true;
+              this.getClient(this.currentTask.relatieId);
+              this.formStepTwo.controls.relatieId.setValue(this.currentTask.relatieId);
+          }
+          if (this.currentTask.assigneeId) {
+              this.formStepTwo.controls.assigneeId.setValue(this.currentTask.assigneeId);
+          }
+          if (this.currentTask.assignedById) {
+              this.formStepTwo.controls.assignedById.setValue(this.currentTask.assignedById);
+          }
+          if (this.currentTask.subject) {
+              this.formStepTwo.controls.subject.setValue(this.currentTask.subject);
+              this.test = this.currentTask.subject;
+          }
+          if (this.currentTask.messageChannelId) {
+              this.formStepTwo.controls.messageChannelId.setValue(this.currentTask.messageChannelId);
+          }
+          if (this.currentTask.messageCategoryId) {
+              this.formStepTwo.controls.messageCategoryId.setValue(this.currentTask.messageCategoryId);
+          }
+          if (this.currentTask.typeId) {
+              this.formStepTwo.controls.typeId.setValue(this.currentTask.typeId);
+          }
+          if (this.currentTask.contactReasonId) {
+              this.formStepTwo.controls.contactReasonId.setValue(this.currentTask.contactReasonId);
+          }
+      }
+  }
 }
