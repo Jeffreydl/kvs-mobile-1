@@ -1,19 +1,19 @@
 <form [formGroup]="formStepTwo">
 
-<app-client-searchbar [formStepTwo]="formStepTwo" (clientId)="getClientId($event)" *ngIf="!clientSelected"></app-client-searchbar>
+    <app-client-searchbar [formStepTwo]="formStepTwo" (clientId)="getClientId($event)" *ngIf="!clientSelected"></app-client-searchbar>
 
-<div class="currentClient" *ngIf="currentClient">
-    <mat-icon class="md-default-theme-theme material-icons action-icon close-button" role="img" aria-hidden="true" (click)="deselectClient()">close</mat-icon>
+    <div class="currentClient" *ngIf="currentClient">
+        <mat-icon class="md-default-theme-theme material-icons action-icon close-button" role="img" aria-hidden="true" (click)="deselectClient()">close</mat-icon>
 
-    {{currentClient.fullname}}
-    <div *ngFor="let email of currentClient.emailaddress">
-        {{email.address}}
+        {{currentClient.fullname}}
+        <div *ngFor="let email of currentClient.emailaddress">
+            {{email.address}}
+        </div>
+        <div *ngFor="let phone of currentClient.phonenumber">{{phone.number}}</div>
+        <div *ngFor="let address of currentClient.address">
+            {{address.fullAddress}}
+        </div>
     </div>
-    <div *ngFor="let phone of currentClient.phonenumber">{{phone.number}}</div>
-    <div *ngFor="let address of currentClient.address">
-        {{address.fullAddress}}
-    </div>
-</div>
 
     <mat-form-field floatLabel="always" class="form-field" *ngIf="messageChannels">
         <mat-label>Kanaal*</mat-label>
@@ -61,7 +61,7 @@
         <input formControlName="subject"
                matInput
                placeholder="Onderwerp / Vraag"
-               [value]="isChecked && contactReason ? test : taskSubject"
+               [value]="isChecked && contactReasonId ? contactReasonName : taskSubject"
                (keyup)="isChecked = false">
     </mat-form-field>
 
