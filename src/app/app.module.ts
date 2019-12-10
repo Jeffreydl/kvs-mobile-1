@@ -19,7 +19,6 @@ import { TasksComponent } from './tasks/tasks.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { KennisbankComponent } from './kennisbank/kennisbank.component';
 import { AddTaskComponent } from './tasks/add-task/add-task.component';
-import { SelectedClientComponent } from './customers/selected-client/selected-client.component';
 import { ClientSearchbarComponent } from './customers/client-searchbar/client-searchbar.component';
 import { ClientCardComponent } from './customers/client-card/client-card.component';
 import { HousesComponent } from './houses/houses.component';
@@ -32,6 +31,13 @@ import { environment } from '../environments/environment';
 
 import { HammerConfig} from './hammer-config/hammerConfig';
 import {CurrentClientDialogComponent} from './customers/client-list/current-client-dialog/current-client-dialog.component';
+import {AddClientDialogComponent} from './customers/add-client-dialog/add-client-dialog.component';
+import { CurrentTaskDialogComponent } from './tasks/current-task-dialog/current-task-dialog.component';
+import { EmployeesComponent } from './employees/employees.component';
+import { TaskCreationStepOneComponent } from './tasks/task-creation-step-one/task-creation-step-one.component';
+import { TaskCreationStepTwoComponent } from './tasks/task-creation-step-two/task-creation-step-two.component';
+import { TaskCreationStepThreeComponent } from './tasks/task-creation-step-three/task-creation-step-three.component';
+import { TaskCreationStepFourComponent } from './tasks/task-creation-step-four/task-creation-step-four.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +50,6 @@ import {CurrentClientDialogComponent} from './customers/client-list/current-clie
     KennisbankComponent,
     AddTaskComponent,
     OrderByPipe,
-    SelectedClientComponent,
     ClientSearchbarComponent,
     ClientCardComponent,
     HousesComponent,
@@ -53,8 +58,15 @@ import {CurrentClientDialogComponent} from './customers/client-list/current-clie
     SanitizeHtmlPipe,
     SanitizeUrlPipe,
     CurrentClientDialogComponent,
+    AddClientDialogComponent,
+    CurrentTaskDialogComponent,
+    EmployeesComponent,
+    TaskCreationStepOneComponent,
+    TaskCreationStepTwoComponent,
+    TaskCreationStepThreeComponent,
+    TaskCreationStepFourComponent,
   ],
-  entryComponents: [CurrentClientDialogComponent],
+  entryComponents: [CurrentClientDialogComponent, AddClientDialogComponent, CurrentTaskDialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

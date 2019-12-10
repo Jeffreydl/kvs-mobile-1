@@ -38,19 +38,20 @@ export class KennisbankComponent implements OnInit, OnDestroy {
     }
 
     public toggleContent(id: string) {
+        console.log(this.contentId);
         if (this.contentId === id) {
             this.contentId = '';
+            console.log('close');
         } else {
             this.contentId = id;
+            console.log('open');
+            this.kennisbankService.getById(id).subscribe(
+                (data) => {
+                    this.kennisbankItem = data;
+                    console.log(this.kennisbankItem);
+                }
+            );
         }
-        console.log('toggleContent');
-
-        this.kennisbankService.getById(id).subscribe(
-            (data) => {
-                this.kennisbankItem = data;
-                console.log(this.kennisbankItem);
-            }
-        );
     }
 
     public toggleSubContent(id: string, websiteId: string) {

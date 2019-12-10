@@ -27,6 +27,11 @@ export class CustomersService {
         );
     }
 
+    public create(formData: ICustomer) {
+        console.log(formData);
+        return this.http.post(baseUrl + 'api/relaties/createRelation', formData);
+    }
+
     public search(keyword: string): Observable<ICustomer[]> {
         return this.http.get<ICustomer[]>(baseUrl + 'search/' + keyword).pipe(
             map((clients: any) => {

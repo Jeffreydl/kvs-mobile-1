@@ -1,0 +1,118 @@
+<div class="container-client-dialog">
+    <div class="header">
+        <h3>Klant toevoegen</h3>
+        <mat-icon class="md-default-theme-theme material-icons action-icon close-dialog" role="img" aria-hidden="true" (click)="onNoClick()">close
+        </mat-icon>
+    </div>
+    <div class="content">
+        <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+
+            <mat-label class="gender-label">Geslacht:</mat-label><br>
+            <mat-radio-group formControlName="gender">
+                <mat-radio-button value="man" class="gender-radio-button">Man</mat-radio-button>
+                <mat-radio-button value="vrouw" class="gender-radio-button">Vrouw</mat-radio-button>
+                <mat-radio-button value="onbekend" class="gender-radio-button">Onbekend</mat-radio-button>
+            </mat-radio-group>
+
+            <mat-form-field class="form-field" class="date-of-birth">
+                <input matInput [matDatepicker]="picker" placeholder="Geboortedatum (DD-MM-YYYY)" formControlName="dateofbirth">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field class="form-field" class="first-name">
+                <input formControlName="firstname"
+                       matInput
+                       placeholder="Voornaam">
+            </mat-form-field>
+
+            <mat-form-field class="form-field" class="initials">
+                <input formControlName="initials"
+                       matInput
+                       placeholder="Voorletters">
+            </mat-form-field>
+
+            <mat-form-field class="form-field" class="middle-name">
+                <input formControlName="middlename"
+                       matInput
+                       placeholder="Tussenvoegsel">
+            </mat-form-field>
+
+            <mat-form-field class="form-field" class="last-name">
+                <input formControlName="lastname"
+                       matInput
+                       placeholder="Achternaam">
+            </mat-form-field>
+
+            <div formArrayName="emailaddress">
+                <span class="email-label">E-mailaddressen<mat-icon (click)="addEmailAddress()" class="ng-scope md-default-theme-theme material-icons add-icon" role="img" aria-hidden="true">playlist_add</mat-icon></span>
+                <div *ngFor="let email of emailaddress.controls; let i = index" [formGroupName]="i">
+                    <mat-form-field class="form-field" class="email">
+                        <input formControlName="address"
+                               matInput
+                               placeholder="E-mailadres">
+                        <mat-icon class="md-default-theme-theme material-icons action-icon remove-icon" role="img" aria-hidden="true" (click)="removeEmailAddress(i)">cancel
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
+            </div>
+
+                <div formArrayName="phonenumber">
+                    <span class="phone-label">Telefoonnummers<mat-icon (click)="addPhoneNumber()" class="ng-scope md-default-theme-theme material-icons add-icon" role="img" aria-hidden="true">playlist_add</mat-icon></span>
+                    <div *ngFor="let phone of phonenumber.controls; let i = index" [formGroupName]="i">
+                        <mat-form-field class="form-field" class="phone-number">
+                        <input formControlName="number"
+                               matInput
+                               placeholder="Telefoonnummer">
+                            <mat-icon class="md-default-theme-theme material-icons action-icon remove-icon" role="img" aria-hidden="true" (click)="removePhoneNumber(i)">cancel
+                            </mat-icon>
+
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            <div formArrayName="address" class="address">
+                <span class="address-label">Adressen<mat-icon (click)="addAddress()" class="ng-scope md-default-theme-theme material-icons add-icon" role="img" aria-hidden="true">playlist_add</mat-icon></span>
+                <div *ngFor="let addr of address.controls; let i = index" [formGroupName]="i">
+                    <mat-form-field class="form-field" class="street">
+                        <input formControlName="street"
+                               matInput
+                               placeholder="Straat">
+                    </mat-form-field>
+                    <mat-form-field class="form-field" class="house-number">
+                        <input formControlName="housenumber"
+                               matInput
+                               placeholder="Huisnummer">
+                    </mat-form-field>
+                    <mat-form-field class="form-field" class="house-number-addition">
+                        <input formControlName="housenumberaddition"
+                               matInput
+                               placeholder="Toevoeging">
+                    </mat-form-field>
+                    <mat-form-field class="form-field" class="postal-code">
+                        <input formControlName="postalcode"
+                               matInput
+                               placeholder="Postcode">
+                    </mat-form-field>
+                    <mat-form-field class="form-field" class="city">
+                        <input formControlName="city"
+                               matInput
+                               placeholder="Plaats">
+                    </mat-form-field>
+                    <mat-form-field class="form-field" class="country">
+                        <input formControlName="country"
+                               matInput
+                               placeholder="Land">
+                    </mat-form-field>
+                    <mat-divider></mat-divider>
+                </div>
+            </div>
+
+
+            <button type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple login">Aanmaken</button>
+
+        </form>
+
+    </div>
+
+</div>

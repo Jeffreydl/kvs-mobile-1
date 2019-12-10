@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="header">
+        <h3>Taak aanmaken</h3>
+    </div>
+
+
+    <mat-vertical-stepper linear #stepper>
+
+        <mat-step [stepControl]="formStepTwo">
+            <ng-template matStepLabel>Taak aanmaken</ng-template>
+            <app-task-creation-step-two [taskType]="taskType"
+                                        (task)="getTask($event)"
+                                        (action)="getAction($event)"
+                                        [currentTask]="currentTask">
+            </app-task-creation-step-two>
+        </mat-step>
+
+        <mat-step [stepControl]="formStepThree">
+            <ng-template matStepLabel>Toewijzen/Beantwoorden</ng-template>
+            <app-task-creation-step-three [task]="task" [action]="action"></app-task-creation-step-three>
+        </mat-step>
+
+        <mat-step [stepControl]="formStepFour">
+            <ng-template matStepLabel>Dossier aanmaken/toewijzen</ng-template>
+
+        </mat-step>
+    </mat-vertical-stepper>
+</div>

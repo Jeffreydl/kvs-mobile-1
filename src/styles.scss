@@ -14,8 +14,8 @@ html, body {
 }
 
 body {
-  background: url("/assets/kvs-back-min.jpg") center no-repeat;
-  background-size: cover;
+  //background: url("/assets/kvs-back-min.jpg") center no-repeat;
+  //background-size: cover;
 
 }
 
@@ -150,7 +150,7 @@ body {
 
 #loader .dot:nth-child(7n+7)::before {
   animation: 0.8s linear 0.7s normal none infinite running load;
-  background: 2F4858 none repeat scroll 0 0;
+  background: #2F4858 none repeat scroll 0 0;
 }
 
 #loader .dot:nth-child(7n+8) {
@@ -194,13 +194,39 @@ body {
 // css class created in client-list.component.ts when a dialog is opened
 .client-dialog .mat-dialog-container {
   padding: 0;
-  margin-bottom: 50px;
 
   .mat-list .mat-list-item {
-    height: 40px;
+    height: 30px;
 
     .mat-list-item-content {
       padding: 0 10px !important;
     }
+  }
+  .mat-list-item.inline-item {
+    display: inline-block;
+  }
+
+  .container-client-dialog {
+    .mat-radio-label-content {
+      padding-left: 2px;
+    }
+  }
+}
+
+
+// add-task css for stepper
+.mat-stepper-vertical {
+
+  .mat-vertical-stepper-header {
+    padding: 10px;
+    height: auto;
+  }
+
+  .mat-stepper-vertical-line {
+    margin: 10px 0 10px 22px;
+  }
+
+  .mat-vertical-content {
+    padding: 0 10px 10px 10px;
   }
 }

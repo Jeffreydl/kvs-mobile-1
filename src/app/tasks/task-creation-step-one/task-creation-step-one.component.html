@@ -1,0 +1,12 @@
+<div class="step-1-container">
+    <form [formGroup]="formStepOne">
+        <button class="no-button" matStepperNext mat-icon-button>
+            <mat-icon class="ng-binding md-default-theme-theme material-icons task-preset"
+                role="img" aria-hidden="true" (click)="selectTaskType('telefoon')">phone</mat-icon>
+        </button>
+        <button class="no-button" matStepperNext mat-icon-button>
+            <mat-icon class="ng-binding md-default-theme-theme material-icons task-preset"
+              role="img" (click)="selectTaskType('email')">email</mat-icon>
+        </button>
+    </form>
+</div>

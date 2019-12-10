@@ -11,7 +11,6 @@ export class AuthGuardService implements CanActivate {
 
     public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
         if (!this.authService.hasPermission) {
-            alert('You are not allowed to view this page. You are redirected to the login Page');
             this.router.navigate(['login']);
             return false;
         }

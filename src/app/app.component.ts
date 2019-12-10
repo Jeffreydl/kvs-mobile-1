@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import {AuthService} from './auth/auth.service';
-import {Route, Router} from '@angular/router';
+import {Router} from '@angular/router';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -10,29 +11,25 @@ import {Route, Router} from '@angular/router';
 })
 export class AppComponent implements OnInit {
   public title = 'KVS Mobile';
-  public token: string;
   public currentRoute: string;
+  public isLoggedIn$: Observable<boolean>;
 
   constructor(private authService: AuthService, public router: Router) {
   }
 
 
   ngOnInit(): void {
-    this.token = localStorage.getItem('loginToken');
-    this.currentRoute = this.router.url;
-    console.log(this.token);
+    this.isLoggedIn$ = this.authService.isLoggedIn;
+    console.log(this.isLoggedIn$);
 
-    if (this.token != null) {
-      this.authService.setToken(this.token);
-      this.authService.setPermission(true);
-      this.router.navigate(['dashboard']);
-    } else {
-      this.router.navigate(['login']);
+    this.authService.checkPermission();
+
+    if (this.authService.hasPermission) {
+        this.router.navigate(['taak-aanmaken']);
     }
   }
 
   onSwipe(event) {
-
     const x = Math.abs(event.deltaX) > 40 ? (event.deltaX > 0 ? 'right' : 'left') : '';
     this.currentRoute = this.router.url;
     const direction = x;

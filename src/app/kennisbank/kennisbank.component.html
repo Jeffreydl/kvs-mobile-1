@@ -7,8 +7,8 @@
             <h3>{{category.title}}</h3>
             <mat-expansion-panel *ngFor="let subject of category.children"
                                  class="panel">
-                <mat-expansion-panel-header>
-                    <mat-panel-title class="title" (click)="toggleContent(subject.id)">
+                <mat-expansion-panel-header (click)="toggleContent(subject.id)">
+                    <mat-panel-title class="title">
                         {{subject.title}}
                     </mat-panel-title>
                 </mat-expansion-panel-header>
@@ -25,7 +25,6 @@
             </mat-expansion-panel>
         </div>
     </mat-accordion>
-    <div class="budget-margin-fix">fix</div>
 
 </div>
 

@@ -5,6 +5,9 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {SortByNameService} from '../../sort-by-name.service';
 import {CurrentClientDialogComponent} from './current-client-dialog/current-client-dialog.component';
 import {MatDialog} from '@angular/material';
+import {FormControl} from '@angular/forms';
+import {debounceTime, distinctUntilChanged, first, map, startWith} from 'rxjs/operators';
+import {AddClientDialogComponent} from '../add-client-dialog/add-client-dialog.component';
 
 @AutoUnsubscribe()
 @Component({
@@ -16,17 +19,35 @@ export class ClientListComponent implements OnInit, OnDestroy {
     public clients: ICustomer[];
     public alphabet = [];
     public filteredFirstLetters: any[];
-    private currentClient: ICustomer;
-
-    animal: any;
+    public autoCompleteFormControl = new FormControl();
+    public isSearching = false;
+    public filteredClients: ICustomer[];
 
     constructor(private customersService: CustomersService, private orderByNameService: SortByNameService, public dialog: MatDialog) {
+
     }
 
     ngOnInit() {
         this.getClients();
+        this.autoCompleteFormControl.valueChanges.pipe(
+            debounceTime(300),
+            distinctUntilChanged()
+        ).subscribe((value) => {
+            this.filterClients(value);
+        });
     }
     ngOnDestroy(): void {
+    }
+
+    public filterClients(value: string) {
+        if (value.length > 1) {
+            console.log(value);
+            const regex = new RegExp(value, 'i');
+            this.filteredClients = this.clients.filter(({fullname}) => regex.test(fullname));
+            this.isSearching = true;
+        } else {
+            this.isSearching = false;
+        }
     }
 
     private getClients() {
@@ -47,21 +68,22 @@ export class ClientListComponent implements OnInit, OnDestroy {
         this.filteredFirstLetters = [...new Set(this.alphabet)].sort();
     }
 
-    checkArray() {
-        console.log(this.alphabet);
-    }
-
-    openDetailsDialog(client: ICustomer): void {
-        const dialogRef = this.dialog.open(CurrentClientDialogComponent, {
-            height: '70%',
+    public openDetailsDialog(client: ICustomer): void {
+        this.dialog.open(CurrentClientDialogComponent, {
+            height: '85%',
             width: '90%',
+            maxWidth: '90%',
             panelClass: 'client-dialog',
             data: {client}
         });
+    }
 
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
-            this.animal = result;
+    openNewClientDialog(): void {
+        this.dialog.open(AddClientDialogComponent, {
+            height: '85%',
+            width: '90%',
+            maxWidth: '90%',
+            panelClass: 'client-dialog',
         });
     }
 }

@@ -1,90 +1,32 @@
 <div class="container">
+    <div class="header">
+        <h3>Taak aanmaken</h3>
+    </div>
 
-    <mat-tab-group animationDuration="0ms">
-        <mat-tab label="TAAK">
-            <app-selected-client></app-selected-client>
 
-            <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+    <mat-vertical-stepper linear #stepper>
 
-                <mat-form-field floatLabel="always" class="form-field" *ngIf="messageChannels">
-                    <mat-label>Kanaal*</mat-label>
-                    <mat-select formControlName="messageChannel">
-                        <mat-option *ngFor="let messageChannel of messageChannels" [value]="messageChannel.name">
-                            {{messageChannel.name }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+        <mat-step [stepControl]="formStepOne">
+            <ng-template matStepLabel>Type taak kiezen</ng-template>
+            <app-task-creation-step-one (taskType)="getPreset($event)"></app-task-creation-step-one>
+        </mat-step>
 
-                <mat-form-field floatLabel="always" class="form-field" *ngIf="categories">
-                    <mat-label>Categorie*</mat-label>
-                    <mat-select formControlName="category">
-                        <mat-option *ngFor="let category of categories" [value]="category.name">
-                            {{category.name}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+        <mat-step [stepControl]="formStepTwo">
+            <ng-template matStepLabel>Taak aanmaken</ng-template>
+            <app-task-creation-step-two [taskType]="taskType"
+                                        (task)="getTask($event)"
+                                        (action)="getAction($event)">
+            </app-task-creation-step-two>
+        </mat-step>
 
-                <mat-form-field floatLabel="always" class="form-field" *ngIf="types">
-                    <mat-label>Type*</mat-label>
-                    <mat-select formControlName="type">
-                        <mat-option *ngFor="let type of types" [value]="type.name">
-                            {{type.name}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+        <mat-step [stepControl]="formStepThree">
+            <ng-template matStepLabel>Toewijzen/Beantwoorden</ng-template>
+            <app-task-creation-step-three [task]="task" [action]="action"></app-task-creation-step-three>
+        </mat-step>
 
-                <mat-form-field class="form-field" *ngIf="contactReasons">
-                    <mat-label>Hoofdcontactreden*</mat-label>
-                    <mat-select formControlName="contactReason" (selectionChange)="contactReasonToSubject()">
-                        <mat-option *ngFor="let contactReason of contactReasons" [value]="contactReason.name">
-                            {{contactReason.name}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+        <mat-step [stepControl]="formStepFour">
+          <ng-template matStepLabel>Dossier aanmaken/toewijzen</ng-template>
 
-                <mat-checkbox [checked]="isChecked"
-                              class="example-margin"
-                              (change)="updateSubject()">
-                    Gebruik contactreden als onderwerp
-                </mat-checkbox>
-
-                <mat-form-field class="form-field">
-                    <input formControlName="subject"
-                           matInput
-                           placeholder="Onderwerp / Vraag"
-                           [value]="isChecked ? contactReason : taskSubject"
-                           (keyup)="isChecked = false">
-                </mat-form-field>
-
-                <mat-form-field>
-                    <textarea formControlName="body"
-                              class="message-body"
-                              placeholder="Bericht (optioneel)"
-                              matInput matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5>
-                    </textarea>
-                </mat-form-field>
-
-                <button type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple login">Aanmaken</button>
-
-            </form>
-
-        </mat-tab>
-
-        <mat-tab label="BEANTWOORDEN">
-
-            jfhfkjffkjsfkjkjsk
-
-            <mat-form-field class="form-field" *ngIf="dossierCategories">
-                <mat-label>Dossier Categorie*</mat-label>
-                <mat-select>
-                    <mat-option *ngFor="let dossierCategory of dossierCategories" [value]="dossierCategory.name">
-                        {{dossierCategory.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            rhfkjewkjdfskjdfsakjdfdsdfshjddfashjl
-        </mat-tab>
-    </mat-tab-group>
-
+        </mat-step>
+    </mat-vertical-stepper>
 </div>

@@ -1,0 +1,17 @@
+Maak een nieuw dossier
+
+<div *ngIf="openDossiers">
+    <form [formGroup]="formStepFour" (ngSubmit)="onSubmit3(dossierForm.value)">
+
+        <label id="example-radio-group-label">Toevoegen aan openstaand dossier</label>
+        <mat-radio-group formControlName="dossierId">
+            <mat-radio-button *ngFor="let openDossier of openDossiers" class="example-radio-button" [value]="openDossier.id">
+                {{openDossier.id}} |
+                {{openDossier.dossierCategory.name}} |
+                {{openDossier.dossierType.name}} |
+                {{openDossier.subject}}
+            </mat-radio-button>
+        </mat-radio-group>
+        <button type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple" matStepperNext>Toevoegen aan dossier</button>
+    </form>
+</div>

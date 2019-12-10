@@ -11,15 +11,10 @@ export class AuthInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // Add Authorization token to every request
-
-        const modifiedHeader = request.clone({setHeaders: {Authorization: this.authService.getToken()}});
-        // const modifiedHeader = request.clone({
-        //     setHeaders: {
-        //         'Content-Type': 'application/json',
-        //         Accept: 'application/json',
-        //         Authorization: 'dHQJyzAwz7F0j5aosoelLsHKa0WTR8dBbEHt1YJerWUKkHIxLDDpDlvvE40h0p3F'
-        //     }
-        // });
-        return next.handle(modifiedHeader);
+        if (this.authService.checkPermission()) {
+            const loginToken = this.authService.getToken();
+            const modifiedHeader = request.clone({setHeaders: {Authorization: loginToken}});
+            return next.handle(modifiedHeader);
+        }
     }
 }

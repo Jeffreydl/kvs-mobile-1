@@ -52,6 +52,14 @@ export interface IPhoneNumber {
     id: number;
 }
 
+export class IPhoneNumber {
+    constructor(
+        public relatieId: number,
+        public number: string,
+        public type: string,
+        public id: number
+    ) {}
+}
 export interface IRelatieCluster {
     name: string;
     isSystem: boolean;

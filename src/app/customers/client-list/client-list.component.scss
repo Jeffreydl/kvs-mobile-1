@@ -2,8 +2,42 @@
   text-align: center;
   background-color: white;
 
+  .search-bar {
+    position: fixed;
+    top: 0;
+    margin-bottom: 10px;
+    width: 100vw;
+    z-index: 999;
+
+    .search-client {
+      height: 40px;
+      width: 100vw;
+      font-size: 16px;
+      box-sizing: border-box;
+      padding-left: 16px;
+    }
+
+    .add-icon {
+      position: absolute;
+      right: 0;
+      margin-right: 5px;
+      color: rgba(0, 0, 0, 0.54);
+      font-size: 40px;
+      height: 40px;
+      width: 40px;
+    }
+
+    .found-clients-list {
+      margin: 0;
+    }
+  }
+
   .mat-list {
+    position: relative;
     padding: 0;
+    top: 40px;
+    height: calc(100vh - 120px);
+    overflow-y: auto;
 
     .contacts {
       font-size: 20px;

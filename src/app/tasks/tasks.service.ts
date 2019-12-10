@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {baseUrl} from '../base-api.service';
-import {ITask} from './itask';
+import {ITask} from './ITask';
+import {map} from 'rxjs/operators';
 
 export class TaskFilter {
     private state: string;
@@ -152,16 +153,60 @@ const url = baseUrl + 'api/';
     providedIn: 'root'
 })
 export class TasksService {
+    data;
+    public tasks: Observable<ITask[]>;
+    public tasksLength = new BehaviorSubject<number>(null);
 
     constructor(private http: HttpClient) {}
 
     public getAll(filter: TaskFilter): Observable<ITask[]> {
-        return this.http.get<ITask[]>(url + 'Messages?filter=' + filter);
+        this.tasks = this.http.get<ITask[]>(url + 'Messages?filter=' + filter).pipe(
+            map((tasks) => {
+                this.tasksLength.next(tasks.length);
+                return tasks;
+            })
+        );
+        return this.tasks;
+    }
+
+    public getTasksLength(): BehaviorSubject<number> {
+        return this.tasksLength;
     }
 
     public new(formData: any) {
-        // return this.http.post<any>(url + 'Messages/' + id);
-        console.log(formData);
+        if (!formData.subject) {
+            formData.subject = '[nieuw]';
+        }
+        return this.http.post<any>(url + 'Messages', formData);
+    }
+
+    public edit(id: number, formData: any) {
+
+        // const formData = {
+            // body: 'a',
+            // contactReasonId: 3,
+            // createdDateTime: new Date(),
+            // dossierId: 62,
+            // id: id,
+            // relatieId: 26,
+            // typeId: 1,
+            // parentContactReason: {
+            //     name: 'Algemeen',
+            //     id: 3,
+            //     parentId: null,
+            //     deletedAt: null
+            // },
+        // };
+        return this.http.patch(url + 'Messages/' + id, formData);
+    }
+
+    public getById(id: number) {
+        return this.http.get<any>(url + 'Messages/' + id);
+    }
+
+    public delete(id: number) {
+        console.log(id);
+        return this.http.delete<any>(url + 'Messages/' + id + '/deleteWithReason/0');
     }
 
     public getCategories() {

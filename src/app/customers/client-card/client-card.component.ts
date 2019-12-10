@@ -5,7 +5,7 @@ import {ICustomer} from '../ICustomer';
 import {Subscription} from 'rxjs';
 import {TaskFilter, TasksService} from '../../tasks/tasks.service';
 import {MatTableDataSource} from '@angular/material';
-import {FilterService} from '../../filter.service';
+import {FilterTableService} from '../../filterTable.service';
 import {DossierFilter, DossierService} from '../../dossiers/dossier.service';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
@@ -35,7 +35,7 @@ export class ClientCardComponent implements OnInit, OnDestroy {
         private activatedRoute: ActivatedRoute,
         private customersService: CustomersService,
         private tasksService: TasksService,
-        private filterService: FilterService,
+        private filterService: FilterTableService,
         private dossiersService: DossierService
     ) {
         // const navigation = this.router.getCurrentNavigation();
