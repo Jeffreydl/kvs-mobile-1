@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1575767882496,
+  "timestamp": 1575936176421,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -10,8 +10,8 @@
       "urls": [
         "/favicon.ico",
         "/index.html",
-        "/main-es2015.d69a12ebaeeb04ee0bbb.js",
-        "/main-es5.d69a12ebaeeb04ee0bbb.js",
+        "/main-es2015.3f2e6c6646ade5c7adcd.js",
+        "/main-es5.3f2e6c6646ade5c7adcd.js",
         "/manifest.webmanifest",
         "/polyfills-es2015.e85e284a6921191b4e9d.js",
         "/polyfills-es5.f3dcbfca242fe061aec8.js",
@@ -57,9 +57,9 @@
     "/assets/logo.svg": "4490614dd5a4b6df9a4f61f9c1b0ef592535626d",
     "/assets/zig-logo.svg": "25ac213e88ee7ba1699378b03e239e1757d3b02d",
     "/favicon.ico": "1dda739f2adc755eebed33f94aef050df20e3a82",
-    "/index.html": "69fb07c29e2dbf5987fdf4db2e55a10badadf5b0",
-    "/main-es2015.d69a12ebaeeb04ee0bbb.js": "094679b0558e6bd82376e5ae60a57afa39f1920e",
-    "/main-es5.d69a12ebaeeb04ee0bbb.js": "8ee3e30f5297d5cdad96ecd4969d50b763e87311",
+    "/index.html": "6f0b3eb76bed42648e29916fc95edc0afed28d09",
+    "/main-es2015.3f2e6c6646ade5c7adcd.js": "be5326ef285f68c46cb1082be8dc54e0ba65a6d7",
+    "/main-es5.3f2e6c6646ade5c7adcd.js": "aa8c39a83a248a726806756abd76d6d5cb1af4a9",
     "/manifest.webmanifest": "8875d8a34f94ab32c8b68ec3ffc1ab8ff7a51669",
     "/polyfills-es2015.e85e284a6921191b4e9d.js": "e2f28c3743afd2899e140ad831df9675c233c02b",
     "/polyfills-es5.f3dcbfca242fe061aec8.js": "bc55c457c97924a880c8c5bee5337b8d12a7d7d8",
