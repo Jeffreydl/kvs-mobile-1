@@ -33,7 +33,6 @@ export class TasksComponent implements OnInit, OnDestroy {
           // .openTasks()
           .inboundTasks()
           .assignedTo(Number(this.authService.getUserId()))
-          // .assignedTo(this.userId)
           .limitTo(10)
           .descending()
           .includeDrafts(true))
@@ -44,11 +43,12 @@ export class TasksComponent implements OnInit, OnDestroy {
           });
   }
 
-    public openCurrentTask(task: any): void {
+    public openCurrentTask(task: ITask): void {
         const dialogRef = this.dialog.open(CurrentTaskDialogComponent, {
-            height: '85%',
-            width: '90%',
-            maxWidth: '90%',
+            position: {top: '0'},
+            height: 'calc(100% - 80px)',
+            width: '100%',
+            maxWidth: '100%',
             panelClass: 'client-dialog',
             data: {task}
         });

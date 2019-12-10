@@ -42,34 +42,23 @@
     font-weight: 600;
   }
 
-  .actions {
-    position: absolute;
-    bottom: 0;
-    height: 50px;
-    width: 100%;
+  .list-item {
+    height: 35px;
+    margin-bottom: 10px;
+  }
 
-    .action {
-      position: relative;
-      display: inline-block;
-      width: 25%;
-
-      a {
-        display: block;
-        height: 100%;
-        width: 100%;
-
-        .action-icon {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          font-size: 40px;
-          height: 40px;
-          width: 40px;
-          color: grey;
-        }
-      }
-    }
+  .action-icon {
+    background-color: white;
+    color: #0070c0;
+    font-size: 28px;
+    height: 28px;
+    width: 28px;
+    border-radius: 50%;
+    padding: 5px;
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
+  }
+  .sms {
+    margin-left: 5px;
   }
 }
 

@@ -1,5 +1,7 @@
 .container {
   background-color: white;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
 
   .header {
     background-color: #3f464b;
@@ -37,9 +39,23 @@
       max-height: 90px !important;
     }
   }
+  .form-50 {
+    width: 50%;
+    margin: 0;
+  }
 
   .name {
     font-weight: 700;
     font-size: 1.2rem;
   }
+}
+
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.example-radio-button {
+  margin: 5px;
 }

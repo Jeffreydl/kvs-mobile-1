@@ -1,0 +1,21 @@
+.form-field {
+  width: 40%;
+  margin-right: 15px;
+
+  .message-body {
+    min-height: 40px !important;
+    max-height: 90px !important;
+  }
+}
+.form-field-50 {
+  width: 50%;
+  margin: 0;
+}
+
+.form-field-100 {
+  width: 100%;
+}
+
+.submit-step-2 {
+  margin-right: 10px;
+}

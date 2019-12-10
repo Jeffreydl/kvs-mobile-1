@@ -2,7 +2,7 @@
 
     <div class="header">
         <h3>{{client.fullname}}</h3>
-        <mat-icon class="md-default-theme-theme material-icons action-icon close-dialog" role="img" aria-hidden="true" (click)="onNoClick()">close
+        <mat-icon class="md-default-theme-theme material-icons close-dialog" role="img" aria-hidden="true" (click)="onNoClick()">close
         </mat-icon>
     </div>
     <mat-list>
@@ -26,7 +26,7 @@
             <ng-template #multipleAddresses>
                 <h3>Adressen:</h3>
             </ng-template>
-            <mat-list-item *ngFor="let address of client?.address">
+            <mat-list-item *ngFor="let address of client?.address" class="list-item">
                 <a href="https://www.google.com/maps/search/?api=1&query={{address.fullAddress}}">
                     <img src="assets/google-maps.svg" height="25px" width="25px" class="action-icon">
                 </a>
@@ -41,9 +41,9 @@
             <ng-template #multiplePhoneNumbers>
                 <h3>Telefoonnummers:</h3>
             </ng-template>
-            <mat-list-item *ngFor="let phone of client.phonenumber">
-                <a [href]="call(phone?.number) | safeUrl"><mat-icon matListIcon class="">call</mat-icon></a>
-                <a [href]="sendSms(phone?.number) | safeUrl"><mat-icon matListIcon class="">sms</mat-icon></a>
+            <mat-list-item *ngFor="let phone of client.phonenumber" class="list-item">
+                <a [href]="call(phone?.number) | safeUrl"><mat-icon matListIcon class="action-icon">call</mat-icon></a>
+                <a [href]="sendSms(phone?.number) | safeUrl"><mat-icon matListIcon class="action-icon sms">sms</mat-icon></a>
                 <p matLine>
                     <span>{{phone.number}}</span>
                 </p>
@@ -55,47 +55,40 @@
             <ng-template #multipleEmails>
                 <h3>E-mailadressen:</h3>
             </ng-template>
-            <mat-list-item class="list-item" *ngFor="let email of client.emailaddress">
+            <mat-list-item class="list-item" *ngFor="let email of client.emailaddress" class="list-item">
                 <a [href]="sendMail(email, client)"><mat-icon class="action-icon">email</mat-icon></a>
                 <p matLine>
                     <span>{{email.address}}</span>
                 </p>
             </mat-list-item>
         </div>
-
     </mat-list>
 
 
 
-    <div class="actions">
-        <div class="action">
-            <a [href]="call(client.phonenumber) | safeUrl">
-                <mat-icon class="md-default-theme-theme material-icons action-icon" role="img" aria-hidden="true">call</mat-icon>
-            </a>
-        </div>
-        <div class="action">
-            <a [href]="sendSms(client.phonenumber) | safeUrl">
-                <mat-icon class="md-default-theme-theme material-icons action-icon" role="img" aria-hidden="true">sms
-                </mat-icon>
-            </a>
-       </div>
-        <div class="action">
-            <a href="mailto:{{client.emailaddress}}?&subject={{emailSubject}}&body={{emailBody}}">
-                <mat-icon class="md-default-theme-theme material-icons action-icon" role="img" aria-hidden="true">email
-                </mat-icon>
-            </a>
-       </div>
+<!--    <div class="actions">-->
+<!--        <div class="action">-->
+<!--            <a [href]="call(client.phonenumber) | safeUrl">-->
+<!--                <mat-icon class="md-default-theme-theme material-icons action-icon" role="img" aria-hidden="true">call</mat-icon>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="action">-->
+<!--            <a [href]="sendSms(client.phonenumber) | safeUrl">-->
+<!--                <mat-icon class="md-default-theme-theme material-icons action-icon" role="img" aria-hidden="true">sms-->
+<!--                </mat-icon>-->
+<!--            </a>-->
+<!--       </div>-->
+<!--        <div class="action">-->
+<!--            <a href="mailto:{{client.emailaddress}}?&subject={{emailSubject}}&body={{emailBody}}">-->
+<!--                <mat-icon class="md-default-theme-theme material-icons action-icon" role="img" aria-hidden="true">email-->
+<!--                </mat-icon>-->
+<!--            </a>-->
+<!--       </div>-->
 
-        <div class="action">
-            <a href="https://www.google.com/maps/search/?api=1&query={{client.address}}">
-                <img src="assets/google-maps.svg" height="25px" width="25px" class="action-icon">
-            </a>
-        </div>
-    </div>
-
-
-<!--    <div mat-dialog-actions>-->
-<!--        <button mat-button (click)="onNoClick()">No Thanks</button>-->
-<!--        <button mat-button [mat-dialog-close]="client.address" cdkFocusInitial>Ok</button>-->
+<!--        <div class="action">-->
+<!--            <a href="https://www.google.com/maps/search/?api=1&query={{client.address}}">-->
+<!--                <img src="assets/google-maps.svg" height="25px" width="25px" class="action-icon">-->
+<!--            </a>-->
+<!--        </div>-->
 <!--    </div>-->
 </div>

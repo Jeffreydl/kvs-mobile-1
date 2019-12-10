@@ -12,7 +12,7 @@ import {Observable} from 'rxjs';
 export class AppComponent implements OnInit {
   public title = 'KVS Mobile';
   public currentRoute: string;
-  private isLoggedIn$: Observable<boolean>;
+  public isLoggedIn$: Observable<boolean>;
 
   constructor(private authService: AuthService, public router: Router) {
   }
@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
     this.authService.checkPermission();
 
     if (this.authService.hasPermission) {
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['taak-aanmaken']);
     }
   }
 

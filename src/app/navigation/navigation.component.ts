@@ -19,7 +19,6 @@ export class NavigationComponent implements OnInit, OnDestroy {
       this.tasksCount$ = this.tasksService.getTasksLength();
       this.tasksService.getTasksLength().subscribe(
           (value) => {
-              console.log(value);
               this.isVisible = value !== 0;
           }
       );

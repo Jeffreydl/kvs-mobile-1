@@ -1,0 +1,85 @@
+<form [formGroup]="formStepTwo">
+
+    <app-client-searchbar [formStepTwo]="formStepTwo" (clientId)="getClientId($event)" *ngIf="!clientSelected"></app-client-searchbar>
+
+    <div class="currentClient" *ngIf="currentClient">
+        <mat-icon class="md-default-theme-theme material-icons action-icon close-button" role="img" aria-hidden="true" (click)="deselectClient()">close</mat-icon>
+
+        {{currentClient.fullname}}
+        <div *ngFor="let email of currentClient.emailaddress">
+            {{email.address}}
+        </div>
+        <div *ngFor="let phone of currentClient.phonenumber">{{phone.number}}</div>
+        <div *ngFor="let address of currentClient.address">
+            {{address.fullAddress}}
+        </div>
+    </div>
+
+    <mat-form-field floatLabel="always" class="form-field" *ngIf="messageChannels">
+        <mat-label>Kanaal*</mat-label>
+        <mat-select formControlName="messageChannelId">
+            <mat-option *ngFor="let messageChannel of messageChannels" [value]="messageChannel.id">
+                {{messageChannel.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field floatLabel="always" class="form-field-50" *ngIf="categories">
+        <mat-label>Categorie*</mat-label>
+        <mat-select formControlName="messageCategoryId">
+            <mat-option *ngFor="let category of categories" [value]="category.id">
+                {{category.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field floatLabel="always" class="form-field" *ngIf="types">
+        <mat-label>Type*</mat-label>
+        <mat-select formControlName="typeId">
+            <mat-option *ngFor="let type of types" [value]="type.id">
+                {{type.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-field form-field-50" *ngIf="contactReasons">
+        <mat-label>Hoofdcontactreden*</mat-label>
+        <mat-select formControlName="contactReasonId" (selectionChange)="contactReasonToSubject()">
+            <mat-option *ngFor="let contactReason of contactReasons" [value]="contactReason.id">
+                {{contactReason.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-checkbox [checked]="isChecked"
+                  class="example-margin"
+                  (change)="updateSubject()">
+        Gebruik contactreden als onderwerp
+    </mat-checkbox>
+
+    <mat-form-field class="form-field-100">
+        <input formControlName="subject"
+               matInput
+               placeholder="Onderwerp / Vraag"
+               [value]="isChecked && contactReasonId ? contactReasonName : taskSubject"
+               (keyup)="isChecked = false">
+    </mat-form-field>
+
+    <mat-form-field class="form-field-100">
+                    <textarea formControlName="body"
+                              class="message-body"
+                              placeholder="Bericht (optioneel)"
+                              matInput matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5>
+                    </textarea>
+    </mat-form-field>
+
+    <input formControlName="assignedById" hidden>
+    <input formControlName="assigneeId" hidden>
+    <input formControlName="createdById" hidden>
+    <input formControlName="direction" hidden>
+    <input formControlName="isDraft" hidden>
+
+    <button matStepperNext type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple submit-step-2" (click)="submit('toewijzen', formStepTwo.value)">Toewijzen</button>
+    <button matStepperNext type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple submit-step-2" (click)="submit('beantwoorden', formStepTwo.value)">Beantwoorden</button>
+
+</form>

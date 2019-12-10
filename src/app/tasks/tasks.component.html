@@ -13,7 +13,7 @@
 
         <ng-container matColumnDef="sla">
             <th mat-header-cell *matHeaderCellDef> SLA-datum </th>
-            <td (click)="openCurrentTask(task)" mat-cell *matCellDef="let task"> {{task.slaDateTime | date:'dd-MM-yyy'}} </td>
+            <td (click)="openCurrentTask(task)" mat-cell *matCellDef="let task"> {{task.slaDateTime | date:'HH:mm, dd-MM-yyy'}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumnsTasks"></tr>
