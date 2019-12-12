@@ -195,6 +195,11 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
         this.clientSelected = false;
     }
 
+    public getClientId(id: number) {
+        this.getClient(id);
+        this.clientSelected = true;
+    }
+
   public checkCurrentTask() {
       if (this.currentTask) {
           if (this.currentTask.relatieId) {
