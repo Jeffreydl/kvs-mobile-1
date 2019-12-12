@@ -22,11 +22,11 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
     public types: any;
     public taskId: number;
 
-    __taskType: string;
-    public contactReasonName: string;
-    public get taskType(): string {
-        return this.__taskType;
-    }
+  __taskType: string;
+    public contactReason: any;
+  public get taskType(): string {
+    return this.__taskType;
+  }
 
     @Input()
     public set taskType(val: string) {
@@ -34,10 +34,10 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
         this.selectPreset();
     }
 
-    public formStepTwo: FormGroup;
-    public contactReasonId: number;
-    public isChecked = true;
-    public taskSubject = '';
+  public formStepTwo: FormGroup;
+  public contactReasonId: number;
+  public isChecked = true;
+  public taskSubject = '';
 
     public currentClient: ICustomer;
     public clientSelected: boolean;
@@ -48,11 +48,15 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
 
     @Input() currentTask: ITask;
 
-    constructor(private tasksService: TasksService,
-                private customersService: CustomersService,
-                private formBuilder: FormBuilder,
-                private authService: AuthService,
-    ) {}
+  @Output() categoriesEmitter = new EventEmitter<any>();
+  @Output() typesEmitter = new EventEmitter<any>();
+  @Output() contactReasonEmitter = new EventEmitter<string>();
+
+  constructor(private tasksService: TasksService,
+              private customersService: CustomersService,
+              private formBuilder: FormBuilder,
+              private authService: AuthService,
+  ) {}
 
     ngOnInit() {
         this.tasksService.getMessageChannels().subscribe((data) => {
@@ -109,10 +113,22 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
 
     private onFormValueChange(data: any) {
 
-        this.contactReasonId = data.contactReasonId;
-        this.taskSubject = data.subject;
-        console.log(this.currentTask);
+    this.contactReasonId = data.contactReasonId;
+    this.taskSubject = data.subject;
+    console.log(this.currentTask);
+  }
+
+  public submit(action: string, formData: any) {
+    if (this.taskId || this.currentTask) {
+      this.editTask(formData);
+    } else {
+      this.addTask(formData);
     }
+    this.action.emit(action);
+    this.categoriesEmitter.emit(this.categories);
+    this.typesEmitter.emit(this.types);
+    this.contactReasonEmitter.emit(this.contactReason);
+  }
 
     public submit(action: string, formData: any) {
         if (this.taskId || this.currentTask) {
@@ -123,44 +139,43 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
         this.action.emit(action);
     }
 
-    public addTask(formData: any) {
-        this.tasksService.new(formData).subscribe(
+  public editTask(formData: any) {
+    if (this.taskId) {
+        this.tasksService.edit(this.taskId, formData).subscribe(
             (task: ITask) => {
-                console.log(task.id);
-                this.taskId = task.id;
+                console.log(task);
+                this.task.emit(task);
+            }
+        );
+    } else {
+        this.tasksService.edit(this.currentTask.id, formData).subscribe(
+            (task: ITask) => {
+                console.log(task);
                 this.task.emit(task);
             }
         );
     }
 
-    public editTask(formData: any) {
-        if (this.taskId) {
-            this.tasksService.edit(this.taskId, formData).subscribe(
-                (task) => {
-                    console.log(task);
-                }
-            );
-        } else {
-            this.tasksService.edit(this.currentTask.id, formData).subscribe(
-                (task) => {
-                    console.log(task);
-                }
-            );
-        }
+  public updateSubject() {
+    this.isChecked = !this.isChecked;
+    if (this.isChecked && this.contactReasonId) {
+        this.contactReason = this.contactReasons[this.contactReasonId - 1].name;
+        this.formStepTwo.patchValue({
+        subject: this.contactReason
+      });
+    } else {
+      this.formStepTwo.patchValue({
+        subject: this.taskSubject
+      });
     }
 
-    public updateSubject() {
-        this.isChecked = !this.isChecked;
-        if (this.isChecked && this.contactReasonId) {
-            this.contactReasonName = this.contactReasons[this.contactReasonId - 1].name;
-            this.formStepTwo.patchValue({
-                subject: this.contactReasonName
-            });
-        } else {
-            this.formStepTwo.patchValue({
-                subject: this.taskSubject
-            });
-        }
+  public contactReasonToSubject() {
+    if (this.isChecked) {
+      this.contactReason = this.contactReasons[this.contactReasonId - 1].name;
+
+      this.formStepTwo.patchValue({
+        subject: this.contactReason
+      });
     }
 
     public contactReasonToSubject() {
@@ -186,40 +201,35 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
         this.clientSelected = false;
     }
 
-    public getClientId(id: number) {
-        this.getClient(id);
-        this.clientSelected = true;
-    }
-
-    public checkCurrentTask() {
-        if (this.currentTask) {
-            if (this.currentTask.relatieId) {
-                this.clientSelected = true;
-                this.getClient(this.currentTask.relatieId);
-                this.formStepTwo.controls.relatieId.setValue(this.currentTask.relatieId);
-            }
-            if (this.currentTask.assigneeId) {
-                this.formStepTwo.controls.assigneeId.setValue(this.currentTask.assigneeId);
-            }
-            if (this.currentTask.assignedById) {
-                this.formStepTwo.controls.assignedById.setValue(this.currentTask.assignedById);
-            }
-            if (this.currentTask.subject) {
-                this.formStepTwo.controls.subject.setValue(this.currentTask.subject);
-                this.contactReasonName = this.currentTask.subject;
-            }
-            if (this.currentTask.messageChannelId) {
-                this.formStepTwo.controls.messageChannelId.setValue(this.currentTask.messageChannelId);
-            }
-            if (this.currentTask.messageCategoryId) {
-                this.formStepTwo.controls.messageCategoryId.setValue(this.currentTask.messageCategoryId);
-            }
-            if (this.currentTask.typeId) {
-                this.formStepTwo.controls.typeId.setValue(this.currentTask.typeId);
-            }
-            if (this.currentTask.contactReasonId) {
-                this.formStepTwo.controls.contactReasonId.setValue(this.currentTask.contactReasonId);
-            }
-        }
-    }
+  public checkCurrentTask() {
+      if (this.currentTask) {
+          if (this.currentTask.relatieId) {
+              this.clientSelected = true;
+              this.getClient(this.currentTask.relatieId);
+              this.formStepTwo.controls.relatieId.setValue(this.currentTask.relatieId);
+          }
+          if (this.currentTask.assigneeId) {
+              this.formStepTwo.controls.assigneeId.setValue(this.currentTask.assigneeId);
+          }
+          if (this.currentTask.assignedById) {
+              this.formStepTwo.controls.assignedById.setValue(this.currentTask.assignedById);
+          }
+          if (this.currentTask.subject) {
+              this.formStepTwo.controls.subject.setValue(this.currentTask.subject);
+              this.contactReason = this.currentTask.subject;
+          }
+          if (this.currentTask.messageChannelId) {
+              this.formStepTwo.controls.messageChannelId.setValue(this.currentTask.messageChannelId);
+          }
+          if (this.currentTask.messageCategoryId) {
+              this.formStepTwo.controls.messageCategoryId.setValue(this.currentTask.messageCategoryId);
+          }
+          if (this.currentTask.typeId) {
+              this.formStepTwo.controls.typeId.setValue(this.currentTask.typeId);
+          }
+          if (this.currentTask.contactReasonId) {
+              this.formStepTwo.controls.contactReasonId.setValue(this.currentTask.contactReasonId);
+          }
+      }
+  }
 }

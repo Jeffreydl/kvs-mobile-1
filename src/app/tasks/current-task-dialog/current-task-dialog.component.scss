@@ -3,12 +3,13 @@
 
   .header {
     background-color: #3f464b;
-    position: relative;
+    position: fixed;
     top: 0;
     height: 40px;
     width: 100%;
     color: white;
     margin-bottom: 10px;
+    z-index: 999;
 
     h3 {
       position: absolute;
@@ -18,42 +19,55 @@
       margin: 0;
     }
 
-    .close-dialog {
-      position: absolute;
-      right: 0;
-      top: 0;
-      font-size: 40px;
-      width: 40px;
-      height: 40px;
+      .delete {
+        font-size: 32px;
+        height: 32px;
+        width: 32px;
+        position: absolute;
+        top: 4px;
+        right: 36px;
+      }
+
+      .close-dialog {
+        font-size: 40px;
+        height: 40px;
+        width: 40px;
+        position: absolute;
+        right: 0;
+      }
+  }
+
+  .task-stepper {
+    margin-top: 40px;
+
+    .form-field {
+      width: 40%;
+      margin-right: 15px;
+
+      .message-body {
+        min-height: 40px !important;
+        max-height: 90px !important;
+      }
+    }
+
+    .form-50 {
+      width: 50%;
+      margin: 0;
+    }
+
+    .name {
+      font-weight: 700;
+      font-size: 1.2rem;
     }
   }
 
-  .form-field {
-    width: 40%;
-    margin-right: 15px;
-
-    .message-body {
-      min-height: 40px !important;
-      max-height: 90px !important;
-    }
-  }
-  .form-50 {
-    width: 50%;
-    margin: 0;
+  .example-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
   }
 
-  .name {
-    font-weight: 700;
-    font-size: 1.2rem;
+  .example-radio-button {
+    margin: 5px;
   }
-}
-
-.example-radio-group {
-  display: flex;
-  flex-direction: column;
-  margin: 15px 0;
-}
-
-.example-radio-button {
-  margin: 5px;
 }

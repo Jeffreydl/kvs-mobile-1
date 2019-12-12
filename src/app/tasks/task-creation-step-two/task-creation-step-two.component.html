@@ -61,7 +61,7 @@
         <input formControlName="subject"
                matInput
                placeholder="Onderwerp / Vraag"
-               [value]="isChecked && contactReasonId ? contactReasonName : taskSubject"
+               [value]="isChecked && contactReasonId ? contactReason : taskSubject"
                (keyup)="isChecked = false">
     </mat-form-field>
 

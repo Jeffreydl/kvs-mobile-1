@@ -100,6 +100,17 @@ export class DossierService {
     }
 
     public new(formData: any) {
+        return this.http.post(url + 'Dossiers', formData);
+
+
+        // createdById
+        // description
+        // dossierCategoryId
+        // dossierTypeId
+        // relatieId
+        // subject
+
+
     //     createdById: "13"
     //     description: ""
     //     dossierCategory: {name: "Buurt", sla: "4h", defaultAssigneeId: 2, dueDate: "5h", isSystem: false, id: 1,…}

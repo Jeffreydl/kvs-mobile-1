@@ -1,9 +1,8 @@
 .container {
   background-color: white;
-  height: calc(100% - 40px - 80px);
   position: relative;
   top: 45px;
-  overflow-y: auto;
+  margin-bottom: 80px;
 
   .items {
 

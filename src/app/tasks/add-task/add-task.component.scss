@@ -1,7 +1,6 @@
 .container {
   background-color: white;
-  height: calc(100vh - 80px);
-  overflow-y: auto;
+  margin-bottom: 80px;
 
   .header {
     background-color: #3f464b;
@@ -11,6 +10,7 @@
     width: 100%;
     color: white;
     margin-bottom: 10px;
+    z-index: 999;
 
     h3 {
       position: absolute;
