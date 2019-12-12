@@ -130,63 +130,57 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
     this.contactReasonEmitter.emit(this.contactReason);
   }
 
-    public submit(action: string, formData: any) {
-        if (this.taskId || this.currentTask) {
-            this.editTask(formData);
-        } else {
-            this.addTask(formData);
-        }
-        this.action.emit(action);
-    }
+  public addTask(formData: any) {
+      this.tasksService.new(formData).subscribe(
+          (task: ITask) => {
+              console.log(task.id);
+              this.taskId = task.id;
+              this.task.emit(task);
+          }
+      )
+  }
 
   public editTask(formData: any) {
-    if (this.taskId) {
-        this.tasksService.edit(this.taskId, formData).subscribe(
-            (task: ITask) => {
-                console.log(task);
-                this.task.emit(task);
-            }
-        );
-    } else {
-        this.tasksService.edit(this.currentTask.id, formData).subscribe(
-            (task: ITask) => {
-                console.log(task);
-                this.task.emit(task);
-            }
-        );
-    }
+      if (this.taskId) {
+          this.tasksService.edit(this.taskId, formData).subscribe(
+              (task: ITask) => {
+                  console.log(task);
+                  this.task.emit(task);
+              }
+          );
+      } else {
+          this.tasksService.edit(this.currentTask.id, formData).subscribe(
+              (task: ITask) => {
+                  console.log(task);
+                  this.task.emit(task);
+              }
+          );
+      }
+  }
 
   public updateSubject() {
-    this.isChecked = !this.isChecked;
-    if (this.isChecked && this.contactReasonId) {
-        this.contactReason = this.contactReasons[this.contactReasonId - 1].name;
-        this.formStepTwo.patchValue({
-        subject: this.contactReason
-      });
-    } else {
-      this.formStepTwo.patchValue({
-        subject: this.taskSubject
-      });
-    }
+      this.isChecked = !this.isChecked;
+      if (this.isChecked && this.contactReasonId) {
+          this.contactReason = this.contactReasons[this.contactReasonId - 1].name;
+          this.formStepTwo.patchValue({
+              subject: this.contactReason
+          });
+      } else {
+          this.formStepTwo.patchValue({
+              subject: this.taskSubject
+          });
+      }
+  }
 
   public contactReasonToSubject() {
-    if (this.isChecked) {
-      this.contactReason = this.contactReasons[this.contactReasonId - 1].name;
+      if (this.isChecked) {
+          this.contactReason = this.contactReasons[this.contactReasonId - 1].name;
 
-      this.formStepTwo.patchValue({
-        subject: this.contactReason
-      });
-    }
-
-    public contactReasonToSubject() {
-        if (this.isChecked) {
-            this.contactReasonName = this.contactReasons[this.contactReasonId - 1].name;
-
-            this.formStepTwo.patchValue({
-                subject: this.contactReasonName
-            });
-        }
-    }
+          this.formStepTwo.patchValue({
+              subject: this.contactReason
+          });
+      }
+  }
 
     public getClient(id: number) {
         this.customersService.getById(id).subscribe(
