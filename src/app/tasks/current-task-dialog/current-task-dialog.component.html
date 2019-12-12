@@ -1,10 +1,13 @@
 <div class="container">
     <div class="header">
-        <h3>Taak aanmaken</h3>
+        <h3>Taak bewerken</h3>
+        <span>
+            <mat-icon (click)=deleteTask() class="ng-scope md-default-theme-theme material-icons delete" role="img" aria-hidden="true">delete</mat-icon>
+            <mat-icon (click)="onNoClick()" class="ng-scope md-default-theme-theme material-icons close-dialog" role="img" aria-hidden="true">close</mat-icon>
+        </span>
     </div>
 
-
-    <mat-vertical-stepper linear #stepper>
+    <mat-vertical-stepper linear #stepper class="task-stepper">
 
         <mat-step [stepControl]="formStepTwo">
             <ng-template matStepLabel>Taak aanmaken</ng-template>
@@ -17,7 +20,9 @@
 
         <mat-step [stepControl]="formStepThree">
             <ng-template matStepLabel>Toewijzen/Beantwoorden</ng-template>
-            <app-task-creation-step-three [task]="task" [action]="action"></app-task-creation-step-three>
+            <app-task-creation-step-three [task]="task"
+                                          [action]="action">
+            </app-task-creation-step-three>
         </mat-step>
 
         <mat-step [stepControl]="formStepFour">

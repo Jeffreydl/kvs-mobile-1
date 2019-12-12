@@ -12,7 +12,7 @@
     .search-client {
       height: 40px;
       width: 100vw;
-      font-size: 16px;
+      font-size: 18px;
       box-sizing: border-box;
       padding-left: 16px;
     }
@@ -36,8 +36,7 @@
     position: relative;
     padding: 0;
     top: 40px;
-    height: calc(100vh - 120px);
-    overflow-y: auto;
+    margin-bottom: 80px;
 
     .contacts {
       font-size: 20px;

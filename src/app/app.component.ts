@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
     this.authService.checkPermission();
 
     if (this.authService.hasPermission) {
-        this.router.navigate(['taak-aanmaken']);
+        this.router.navigate(['dashboard']);
     }
   }
 
@@ -39,6 +39,7 @@ export class AppComponent implements OnInit {
     if (direction === 'left') {
       if (this.currentRoute === '/dashboard') {
         this.router.navigate(['kennisbank']);
+        console.log(this.router.url);
       } else if (this.currentRoute === '/kennisbank') {
         this.router.navigate(['klanten']);
       } else if (this.currentRoute === '/klanten') {

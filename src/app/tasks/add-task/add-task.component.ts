@@ -23,29 +23,21 @@ import {TaskCreationStepFourComponent} from '../task-creation-step-four/task-cre
     // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddTaskComponent implements OnInit, OnDestroy {
-    public types: any;
-
-    public currentClient: ICustomer;
     @ViewChild('stepper', {static: false}) stepper: MatStepper;
     public action: string;
-    public assigneeForm: FormGroup;
     public task: ITask;
-    public openDossiers: IDossier[];
-    public dossierForm: FormGroup;
+    public clientId: number;
 
     @ViewChild(TaskCreationStepOneComponent, {static: false}) taskCreationStepOneComponent: TaskCreationStepOneComponent;
     @ViewChild(TaskCreationStepTwoComponent, {static: false}) taskCreationStepTwoComponent: TaskCreationStepTwoComponent;
     @ViewChild(TaskCreationStepThreeComponent, {static: false}) taskCreationStepThreeComponent: TaskCreationStepThreeComponent;
     @ViewChild(TaskCreationStepFourComponent, {static: false}) taskCreationStepFourComponent: TaskCreationStepFourComponent;
+    public types: any;
     public taskType: string;
+    public categories: any;
+    public contactReason: string;
 
-    constructor(private taskService: TasksService,
-                private customersService: CustomersService,
-                private formBuilder: FormBuilder,
-                private authService: AuthService,
-                private dossiersService: DossierService,
-                private router: Router,
-    ) {}
+    constructor() {}
 
     public get formStepOne() {
         return this.taskCreationStepOneComponent ? this.taskCreationStepOneComponent.formStepOne : null;
@@ -75,49 +67,59 @@ export class AddTaskComponent implements OnInit, OnDestroy {
 
     public getTask(task: ITask) {
         this.task = task;
-        console.log(this.task);
+        this.clientId = task.relatieId;
     }
 
     getAction(action: string) {
         this.action = action;
-        console.log(action);
     }
 
-    public createDossierForm() {
-        this.dossierForm = this.formBuilder.group({
-            dossierId: '',
-        });
-        this.dossierForm.valueChanges.subscribe(data => this.onFormValueChange3(data));
-    }
+    // public createDossierForm() {
+    //     this.dossierForm = this.formBuilder.group({
+    //         dossierId: '',
+    //     });
+    //     this.dossierForm.valueChanges.subscribe(data => this.onFormValueChange3(data));
+    // }
 
-    private onFormValueChange3(data: any) {
-        console.log(data);
-    }
-
-    onSubmit3(formData: any) {
-        console.log(formData);
-        this.taskService.edit(this.task.id, formData).subscribe(
-            (task) => {
-                console.log(task);
-            }
-        );
-    }
+    // private onFormValueChange3(data: any) {
+    //     console.log(data);
+    // }
+    //
+    // onSubmit3(formData: any) {
+    //     console.log(formData);
+    //     this.taskService.edit(this.task.id, formData).subscribe(
+    //         (task) => {
+    //             console.log(task);
+    //         }
+    //     );
+    // }
 
 
     private createResponseForm() {
 
     }
+    //
+    // public getOpenDossiers() {
+    //     this.dossiersService.getAll(new DossierFilter()
+    //         .forRelation(this.currentClient.id)
+    //         .openDossiers()
+    //         .orderByCreationDate()
+    //         .descending())
+    //         .subscribe(dossiers => {
+    //             this.openDossiers = dossiers;
+    //             console.log(this.openDossiers);
+    //         });
+    //     this.router.navigate(['dashboard']);
+    // }
+    public getCategories(categories: any) {
+        this.categories = categories;
+    }
 
-    public getOpenDossiers() {
-        this.dossiersService.getAll(new DossierFilter()
-            .forRelation(this.currentClient.id)
-            .openDossiers()
-            .orderByCreationDate()
-            .descending())
-            .subscribe(dossiers => {
-                this.openDossiers = dossiers;
-                console.log(this.openDossiers);
-            });
-        this.router.navigate(['dashboard']);
+    public getTypes(types: any) {
+        this.types = types;
+    }
+
+    public getContactReason(contactReason: string) {
+        this.contactReason = contactReason;
     }
 }

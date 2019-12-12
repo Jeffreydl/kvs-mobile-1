@@ -13,7 +13,7 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
   public formStepThree: FormGroup;
   public category = '';
   public taskSubject = '';
-  public categories: any;
+  // public categories: any;
 
   currentTask: any;
   public get task(): any {
@@ -35,12 +35,22 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
     this.__action = val;
   }
 
+  categories: any;
+  public get categoriesList(): any {
+    return this.categories;
+  }
+  @Input()
+  public set categoriesList(val: any) {
+    this.categories = val;
+  }
+
   constructor(private formBuilder: FormBuilder, private tasksService: TasksService) { }
 
   ngOnInit() {
-    this.tasksService.getCategories().subscribe((data) => {
-      this.categories = data;
-    });
+    console.log(this.currentTask);
+    // this.tasksService.getCategories().subscribe((data) => {
+    //   this.categories = data;
+    // });
   }
 
   ngOnDestroy(): void {

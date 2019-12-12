@@ -90,42 +90,10 @@ export class CurrentTaskDialogComponent implements OnInit, OnDestroy {
         console.log(action);
     }
 
-    public createDossierForm() {
-        this.dossierForm = this.formBuilder.group({
-            dossierId: '',
+    public deleteTask() {
+        this.taskService.delete(this.currentTask.id).subscribe((task) => {
+            this.dialogRef.close();
         });
-        this.dossierForm.valueChanges.subscribe(data => this.onFormValueChange3(data));
-    }
-
-    private onFormValueChange3(data: any) {
-        console.log(data);
-    }
-
-    onSubmit3(formData: any) {
-        console.log(formData);
-        this.taskService.edit(this.task.id, formData).subscribe(
-            (task) => {
-                console.log(task);
-            }
-        );
-    }
-
-
-    private createResponseForm() {
 
     }
-
-    public getOpenDossiers() {
-        this.dossiersService.getAll(new DossierFilter()
-            .forRelation(this.currentClient.id)
-            .openDossiers()
-            .orderByCreationDate()
-            .descending())
-            .subscribe(dossiers => {
-                this.openDossiers = dossiers;
-                console.log(this.openDossiers);
-            });
-        this.router.navigate(['dashboard']);
-    }
-
 }
