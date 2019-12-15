@@ -80,7 +80,7 @@ export class ClientListComponent implements OnInit, OnDestroy {
 
     openNewClientDialog(): void {
         this.dialog.open(AddClientDialogComponent, {
-            height: '85%',
+            height: '735px',
             width: '90%',
             maxWidth: '90%',
             panelClass: 'client-dialog',

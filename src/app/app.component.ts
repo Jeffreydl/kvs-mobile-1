@@ -3,6 +3,7 @@ import { OnInit } from '@angular/core';
 import {AuthService} from './auth/auth.service';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
+import {Meta} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -14,11 +15,21 @@ export class AppComponent implements OnInit {
   public currentRoute: string;
   public isLoggedIn$: Observable<boolean>;
 
-  constructor(private authService: AuthService, public router: Router) {
+  mobHeight;
+  mobWidth;
+
+  constructor(private authService: AuthService, public router: Router, private metaService: Meta) {
+      this.mobHeight = (window.innerHeight);
+      this.mobWidth = (window.innerWidth);
+      console.log(this.mobHeight);
+      console.log(this.mobWidth);
   }
 
 
   ngOnInit(): void {
+
+
+
     this.isLoggedIn$ = this.authService.isLoggedIn;
     console.log(this.isLoggedIn$);
 
@@ -30,6 +41,19 @@ export class AppComponent implements OnInit {
   }
 
   onSwipe(event) {
+
+      const viewport = this.metaService.getTag('name=viewport');
+      console.log(viewport.content); // width=device-width, initial-scale=1
+      if (viewport) {
+          this.metaService.updateTag({
+                  name: 'viewport',
+                  content: `height=${this.mobHeight}px, width=${this.mobWidth}px, initial-scale=1.0`
+              },
+              `name='viewport'`
+          );
+      }
+
+
     const x = Math.abs(event.deltaX) > 40 ? (event.deltaX > 0 ? 'right' : 'left') : '';
     this.currentRoute = this.router.url;
     const direction = x;
