@@ -49,10 +49,11 @@ export class TasksComponent implements OnInit, OnDestroy {
             height: 'calc(100% - 80px)',
             width: '100%',
             maxWidth: '100%',
-            panelClass: 'client-dialog',
+            panelClass: 'task-dialog',
             data: {task}
         });
-        dialogRef.afterClosed().subscribe(() => { this.reloadComponent(); });
+        // dialogRef.afterClosed().subscribe(() => { this.reloadComponent(); });
+        dialogRef.afterClosed().subscribe(() => { this.getTasks(); });
     }
 
     public reloadComponent() {

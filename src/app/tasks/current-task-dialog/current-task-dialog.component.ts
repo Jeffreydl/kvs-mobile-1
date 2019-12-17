@@ -93,6 +93,7 @@ export class CurrentTaskDialogComponent implements OnInit, OnDestroy {
     public deleteTask() {
         this.taskService.delete(this.currentTask.id).subscribe((task) => {
             this.dialogRef.close();
+            this.router.navigate(['dashboard']);
         });
 
     }

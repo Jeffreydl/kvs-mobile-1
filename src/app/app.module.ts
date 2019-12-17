@@ -38,6 +38,7 @@ import { TaskCreationStepOneComponent } from './tasks/task-creation-step-one/tas
 import { TaskCreationStepTwoComponent } from './tasks/task-creation-step-two/task-creation-step-two.component';
 import { TaskCreationStepThreeComponent } from './tasks/task-creation-step-three/task-creation-step-three.component';
 import { TaskCreationStepFourComponent } from './tasks/task-creation-step-four/task-creation-step-four.component';
+import { SplashScreenComponent } from './splash-screen/splash-screen.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { TaskCreationStepFourComponent } from './tasks/task-creation-step-four/t
     TaskCreationStepTwoComponent,
     TaskCreationStepThreeComponent,
     TaskCreationStepFourComponent,
+    SplashScreenComponent,
   ],
   entryComponents: [CurrentClientDialogComponent, AddClientDialogComponent, CurrentTaskDialogComponent],
   imports: [

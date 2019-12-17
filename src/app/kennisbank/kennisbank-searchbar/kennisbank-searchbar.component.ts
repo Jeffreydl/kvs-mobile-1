@@ -16,7 +16,6 @@ export class KennisbankSearchbarComponent implements OnInit, OnDestroy {
     public kennisbankItems$: Observable<IKennisbankSearchItem[]>;
     public autoCompleteFormControl = new FormControl();
     @Output() public isActive = new EventEmitter<boolean>();
-    private iisActive: boolean;
 
     constructor(private kennisbankService: KennisbankService) {
     }
@@ -36,13 +35,10 @@ export class KennisbankSearchbarComponent implements OnInit, OnDestroy {
     private searchKennisbank(value: string) {
         if (value.length > 0) {
             this.kennisbankItems$ = this.kennisbankService.search(value);
-            console.log(this.kennisbankItems$);
-            this.iisActive = true;
             this.isActive.emit(true);
         } else {
             this.kennisbankItems$ = null;
             this.isActive.emit(false);
-            this.iisActive = false;
         }
     }
 }

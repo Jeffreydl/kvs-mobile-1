@@ -3,7 +3,6 @@ import {switchMap} from 'rxjs/operators';
 import {Subscription, timer} from 'rxjs';
 import {TaskFilter, TasksService} from '../tasks/tasks.service';
 import {AuthService} from '../auth/auth.service';
-import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,9 +15,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(private tasksService: TasksService, private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.subscription = timer(0, 500000).pipe(
+    this.subscription = timer(10000, 100000).pipe(
         switchMap(() => this.tasksService.getAll(new TaskFilter()
-        // See TasksService.ts for all filter methods
         // .openTasks()
             .inboundTasks()
             .assignedTo(Number(this.authService.getUserId()))

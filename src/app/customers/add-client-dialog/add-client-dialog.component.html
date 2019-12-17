@@ -16,7 +16,7 @@
 
             <mat-form-field class="form-field" class="date-of-birth">
                 <input matInput [matDatepicker]="picker" placeholder="Geboortedatum (DD-MM-YYYY)" formControlName="dateofbirth">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker-toggle matSuffix [for]="picker" class="date-picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
 

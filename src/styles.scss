@@ -192,8 +192,9 @@ body {
 }
 
 // css class created in client-list.component.ts when a dialog is opened
-.client-dialog .mat-dialog-container {
+.client-dialog .mat-dialog-container, .task-dialog .mat-dialog-container {
   padding: 0;
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
 
   .mat-list .mat-list-item {
     height: 30px;
@@ -233,4 +234,18 @@ body {
 
 .mat-radio-label {
   white-space: normal !important;
+}
+
+.date-of-birth svg {
+  font-size: 40px;
+  height: 40px;
+  width: 40px;
+  margin-left: -10px;
+  margin-top: -9px;
+}
+
+router-outlet ~ * {
+  position: absolute;
+  //height: 100%;
+  width: 100%;
 }

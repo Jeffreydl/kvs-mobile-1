@@ -70,9 +70,10 @@ export class ClientListComponent implements OnInit, OnDestroy {
 
     public openDetailsDialog(client: ICustomer): void {
         this.dialog.open(CurrentClientDialogComponent, {
-            height: '85%',
-            width: '90%',
-            maxWidth: '90%',
+            position: {top: '0'},
+            height: 'calc(100% - 80px)',
+            width: '100%',
+            maxWidth: '100%',
             panelClass: 'client-dialog',
             data: {client}
         });
@@ -80,9 +81,10 @@ export class ClientListComponent implements OnInit, OnDestroy {
 
     openNewClientDialog(): void {
         this.dialog.open(AddClientDialogComponent, {
-            height: '735px',
-            width: '90%',
-            maxWidth: '90%',
+            position: {top: '0'},
+            height: 'calc(100% - 80px)',
+            width: '100%',
+            maxWidth: '100%',
             panelClass: 'client-dialog',
         });
     }

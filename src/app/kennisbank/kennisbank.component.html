@@ -1,7 +1,6 @@
 <app-kennisbank-searchbar (isActive)="searchBarStatus($event)"></app-kennisbank-searchbar>
 
 <div class="container" *ngIf="!searching">
-
     <mat-accordion multi="false">
         <div class="items" *ngFor="let category of kennisbankItems">
             <h3>{{category.title}}</h3>
@@ -25,6 +24,5 @@
             </mat-expansion-panel>
         </div>
     </mat-accordion>
-
 </div>
 

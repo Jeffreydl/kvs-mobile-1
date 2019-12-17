@@ -10,7 +10,7 @@
     <mat-vertical-stepper linear #stepper class="task-stepper">
 
         <mat-step [stepControl]="formStepTwo">
-            <ng-template matStepLabel>Taak aanmaken</ng-template>
+            <ng-template matStepLabel>Taak bewerken</ng-template>
             <app-task-creation-step-two [taskType]="taskType"
                                         (task)="getTask($event)"
                                         (action)="getAction($event)"

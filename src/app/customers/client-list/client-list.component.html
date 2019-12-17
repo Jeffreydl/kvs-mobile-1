@@ -21,16 +21,16 @@
     </div>
 
     <mat-list *ngIf="!isSearching" class="client-list">
-    <div *ngFor="let letter of filteredFirstLetters">
-        <h3>{{letter}}</h3>
-        <div *ngFor="let client of clients">
-            <div *ngIf="client.lastname.substr(0,1) == letter">
-                <mat-list-item (click)="openDetailsDialog(client)">
-                    <span class="contacts">{{client.lastname}}, {{client.firstname}} {{client.middlename}}</span>
-                </mat-list-item>
-                <mat-divider></mat-divider>
+        <div *ngFor="let letter of filteredFirstLetters">
+            <h3>{{letter}}</h3>
+            <div *ngFor="let client of clients">
+                <div *ngIf="client.lastname.substr(0,1) == letter">
+                    <mat-list-item (click)="openDetailsDialog(client)">
+                        <span class="contacts">{{client.lastname}}, {{client.firstname}} {{client.middlename}}</span>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                </div>
             </div>
         </div>
-    </div>
-</mat-list>
+    </mat-list>
 </div>

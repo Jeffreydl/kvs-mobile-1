@@ -2,7 +2,7 @@
 
     <app-client-searchbar [formStepTwo]="formStepTwo" (clientId)="getClientId($event)" *ngIf="!clientSelected"></app-client-searchbar>
 
-    <div class="currentClient" *ngIf="currentClient">
+    <div class="current-client" *ngIf="currentClient">
         <mat-icon class="md-default-theme-theme material-icons action-icon close-button" role="img" aria-hidden="true" (click)="deselectClient()">close</mat-icon>
 
         {{currentClient.fullname}}
