@@ -25,9 +25,6 @@ export class EmployeesComponent implements OnInit {
 
     private filter(value: string): IEmployee[] {
         const filterValue = value.toLowerCase();
-        console.log(filterValue);
-
-        console.log(this.employees.filter(option => option.filterByNameAndEmail.toLowerCase().includes(filterValue)));
         return this.employees.filter(option => option.filterByNameAndEmail.toLowerCase().includes(filterValue));
     }
 
@@ -47,8 +44,6 @@ export class EmployeesComponent implements OnInit {
     }
 
     public selectEmployee(employee: IEmployee) {
-        console.log(employee.id);
-        console.log(this.formStepThree.value);
         this.formStepThree.addControl('assigneeId',  new FormControl(Validators.compose([Validators.required])));
         this.formStepThree.controls.assigneeId.setValue(employee.id);
 

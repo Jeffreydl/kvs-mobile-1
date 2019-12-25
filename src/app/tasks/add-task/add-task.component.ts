@@ -36,6 +36,8 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     public taskType: string;
     public categories: any;
     public contactReason: string;
+    public template: object;
+    public processWorkFlow: any;
 
     constructor() {}
 
@@ -82,14 +84,11 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     // }
 
     // private onFormValueChange3(data: any) {
-    //     console.log(data);
     // }
     //
     // onSubmit3(formData: any) {
-    //     console.log(formData);
     //     this.taskService.edit(this.task.id, formData).subscribe(
     //         (task) => {
-    //             console.log(task);
     //         }
     //     );
     // }
@@ -107,7 +106,6 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     //         .descending())
     //         .subscribe(dossiers => {
     //             this.openDossiers = dossiers;
-    //             console.log(this.openDossiers);
     //         });
     //     this.router.navigate(['dashboard']);
     // }
@@ -121,5 +119,13 @@ export class AddTaskComponent implements OnInit, OnDestroy {
 
     public getContactReason(contactReason: string) {
         this.contactReason = contactReason;
+    }
+
+    public getTemplate(template: object) {
+        this.template = template;
+    }
+
+    public getProcessWorkflow(workflow: any) {
+        this.processWorkFlow = workflow;
     }
 }

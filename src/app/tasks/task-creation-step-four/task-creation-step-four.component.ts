@@ -23,7 +23,6 @@ export class TaskCreationStepFourComponent implements OnInit, OnDestroy {
   @Input()
   public set clientId(val: number) {
     this.currentClientId = val;
-    console.log(this.currentClientId);
     this.getOpenDossiers();
     this.createDossierForm();
   }
@@ -80,14 +79,11 @@ export class TaskCreationStepFourComponent implements OnInit, OnDestroy {
   }
 
   private onFormValueChange3(data: any) {
-    console.log(data);
   }
 
   onSubmit3(formData: any) {
-    console.log(formData);
     this.tasksService.edit(this.task.id, formData).subscribe(
         (task) => {
-          console.log(task);
         }
     );
     this.router.navigate(['dashboard']);
@@ -101,7 +97,6 @@ export class TaskCreationStepFourComponent implements OnInit, OnDestroy {
         .descending())
         .subscribe(dossiers => {
           this.openDossiers = dossiers;
-          console.log(this.openDossiers);
         });
   }
 

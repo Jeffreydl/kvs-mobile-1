@@ -14,11 +14,13 @@
         <mat-step [stepControl]="formStepTwo">
             <ng-template matStepLabel>Taak aanmaken</ng-template>
             <app-task-creation-step-two [taskType]="taskType"
-                                        (task)="getTask($event)"
+                                        (taskEmitter)="getTask($event)"
                                         (action)="getAction($event)"
                                         (categoriesEmitter)="getCategories($event)"
                                         (typesEmitter)="getTypes($event)"
-                                        (contactReasonEmitter)="getContactReason($event)">
+                                        (contactReasonEmitter)="getContactReason($event)"
+                                        (templateEmitter)="getTemplate($event)"
+                                        (processWorkflowEmitter)="getProcessWorkflow($event)">
             </app-task-creation-step-two>
         </mat-step>
 
@@ -26,7 +28,9 @@
             <ng-template matStepLabel>Toewijzen/Beantwoorden</ng-template>
             <app-task-creation-step-three [task]="task"
                                           [action]="action"
-                                          [categoriesList]="categories">
+                                          [categoriesList]="categories"
+                                          [template]="template"
+                                          [workflow]="processWorkFlow">
             </app-task-creation-step-three>
         </mat-step>
 

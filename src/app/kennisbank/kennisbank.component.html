@@ -5,8 +5,9 @@
         <div class="items" *ngFor="let category of kennisbankItems">
             <h3>{{category.title}}</h3>
             <mat-expansion-panel *ngFor="let subject of category.children"
-                                 class="panel">
-                <mat-expansion-panel-header (click)="toggleContent(subject.id)">
+                                 class="panel"
+            #mep="matExpansionPanel">
+                <mat-expansion-panel-header (click)="toggleContent(subject.id, mep.id)">
                     <mat-panel-title class="title">
                         {{subject.title}}
                     </mat-panel-title>
@@ -15,7 +16,7 @@
                 <div *ngIf="contentId === subject.id">
                     <span [innerHTML]="subject.descriptionExternal"></span>
                     <div *ngFor="let item of kennisbankItem">
-                        <p class="sub-title" (click)="toggleSubContent(item.id, item.websiteLink)">{{item.title}}</p>
+                        <p class="sub-title" (click)="toggleSubContent(item.id, item.websiteLink, mep.id)">{{item.title}}</p>
                         <p *ngIf="subTitleId == item.id && item.websiteLink" [innerHTML]="kennisbankWebsiteItem?.descriptionExternal"></p>
                         <p *ngIf="subTitleId == item.id && !item.websiteLink" [innerHTML]="item?.descriptionExternal"></p>
                     </div>

@@ -7,6 +7,10 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {ICustomer} from '../../customers/ICustomer';
 import {MatStepper} from '@angular/material';
 import {ITask} from '../ITask';
+import {TemplatesService} from '../../templates.service';
+import {EmployeesService} from '../../employees/employees.service';
+import {ITemplate} from '../../ITemplate';
+import {IEmployee} from '../../employees/IEmployee';
 
 @AutoUnsubscribe()
 @Component({
@@ -22,8 +26,13 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
     public types: any;
     public taskId: number;
 
-  __taskType: string;
     public contactReason: any;
+    public employee: any;
+    public template: ITemplate;
+
+    @Output() templateEmitter = new EventEmitter<object>();
+
+  __taskType: string;
   public get taskType(): string {
     return this.__taskType;
   }
@@ -43,19 +52,24 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
     public clientSelected: boolean;
     @ViewChild('stepper', {static: false}) stepper: MatStepper;
     public formData: any;
-    @Output() task = new EventEmitter<ITask>();
+    @Output() taskEmitter = new EventEmitter<ITask>();
     @Output() action = new EventEmitter<string>();
 
     @Input() currentTask: ITask;
 
+    public task: ITask;
+
   @Output() categoriesEmitter = new EventEmitter<any>();
   @Output() typesEmitter = new EventEmitter<any>();
   @Output() contactReasonEmitter = new EventEmitter<string>();
+  @Output() processWorkflowEmitter = new EventEmitter<any>();
 
   constructor(private tasksService: TasksService,
               private customersService: CustomersService,
               private formBuilder: FormBuilder,
               private authService: AuthService,
+              private templatesService: TemplatesService,
+              private employeesService: EmployeesService,
   ) {}
 
     ngOnInit() {
@@ -82,7 +96,6 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
     }
 
     selectPreset() {
-        console.log(this.__taskType);
         if (this.__taskType === 'email') {
             this.formStepTwo.controls.messageChannelId.setValue(2);
             this.formStepTwo.controls.messageCategoryId.setValue(1);
@@ -115,7 +128,6 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
 
     this.contactReasonId = data.contactReasonId;
     this.taskSubject = data.subject;
-    console.log(this.currentTask);
   }
 
   public submit(action: string, formData: any) {
@@ -128,34 +140,43 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
     this.categoriesEmitter.emit(this.categories);
     this.typesEmitter.emit(this.types);
     this.contactReasonEmitter.emit(this.contactReason);
+
+    if (action === 'beantwoorden') {
+        this.getEmployee();
+    }
   }
 
   public addTask(formData: any) {
       this.tasksService.new(formData).subscribe(
           (task: ITask) => {
-              console.log(task.id);
               this.taskId = task.id;
-              this.task.emit(task);
+              this.processTask(task);
           }
-      )
+      );
   }
 
   public editTask(formData: any) {
       if (this.taskId) {
           this.tasksService.edit(this.taskId, formData).subscribe(
               (task: ITask) => {
-                  console.log(task);
-                  this.task.emit(task);
+                  this.processTask(task);
               }
           );
       } else {
           this.tasksService.edit(this.currentTask.id, formData).subscribe(
               (task: ITask) => {
-                  console.log(task);
-                  this.task.emit(task);
+                  this.processTask(task);
               }
           );
       }
+  }
+
+  public processTask(task: ITask) {
+      this.taskEmitter.emit(task);
+      this.tasksService.processWorkflow(task).subscribe((data) => {
+          console.log(data);
+          this.processWorkflowEmitter.emit(data);
+      });
   }
 
   public updateSubject() {
@@ -182,6 +203,21 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
       }
   }
 
+  public getEmployee() {
+    this.employeesService.getByToken(this.authService.getToken()).subscribe((employee) => {
+        this.employee = employee.user;
+        this.getTemplate();
+    });
+  }
+
+    public getTemplate() {
+        this.templatesService.postById(this.currentClient, this.employee).subscribe((template) => {
+            this.template = template;
+            this.templateEmitter.emit(template);
+            console.log(template);
+        });
+    }
+
     public getClient(id: number) {
         this.customersService.getById(id).subscribe(
             (client) => {
@@ -195,8 +231,8 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
         this.clientSelected = false;
     }
 
-    public getClientId(id: number) {
-        this.getClient(id);
+    public getSelectedClient(client: ICustomer) {
+        this.currentClient = client;
         this.clientSelected = true;
     }
 
@@ -216,6 +252,9 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
           if (this.currentTask.subject) {
               this.formStepTwo.controls.subject.setValue(this.currentTask.subject);
               this.contactReason = this.currentTask.subject;
+          }
+          if (this.currentTask.body) {
+              this.formStepTwo.controls.body.setValue(this.currentTask.body);
           }
           if (this.currentTask.messageChannelId) {
               this.formStepTwo.controls.messageChannelId.setValue(this.currentTask.messageChannelId);

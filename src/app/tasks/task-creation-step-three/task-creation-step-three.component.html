@@ -33,5 +33,25 @@
 
 <div class="beantwoorden" *ngIf="__action === 'beantwoorden' && formStepThree">
     beantwoorden
-    Onderwerp: <input type="text" [value]="currentTask.subject">
+
+    <mat-form-field class="form-field-100">
+        <input matInput placeholder="Onderwerp" [value]="currentTask?.subject">
+    </mat-form-field>
+
+    <div class="message" contenteditable="true" [innerHTML]="templateValue?.response.body"></div>
+
+    <mat-checkbox [checked]="emailIsChecked" (change)="emailIsChecked = !emailIsChecked">
+        Verstuur e-mail na verwerking
+    </mat-checkbox>
+
+    <!--<mat-form-field class="form-field">-->
+        <!--<input matInput placeholder="Aan">-->
+    <!--</mat-form-field>-->
+
+    <mat-checkbox [checked]="emailIsChecked" (change)="closeDossierIsChecked = !closeDossierIsChecked">
+        Sluit dossier na verwerking
+    </mat-checkbox>
+
+    <button (click)="test()">submit</button>
+
 </div>

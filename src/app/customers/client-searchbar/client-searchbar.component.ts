@@ -17,7 +17,7 @@ export class ClientSearchbarComponent implements OnInit, OnDestroy {
     public autoCompleteFormControl = new FormControl();
     public clients: ICustomer[];
     private currentClient$: Subscription;
-    @Output() clientId = new EventEmitter<number>();
+    @Output() client = new EventEmitter<ICustomer>();
     @Input() formStepTwo: FormGroup;
 
     constructor(private router: Router, private customersService: CustomersService) {
@@ -53,10 +53,10 @@ export class ClientSearchbarComponent implements OnInit, OnDestroy {
         }
     }
 
-    public selectClient(id: number) {
+    public selectClient(client: ICustomer) {
         // if (this.router.url === '/taak-aanmaken') {
-            this.formStepTwo.controls.relatieId.setValue(id);
-            this.clientId.emit(id);
+            this.formStepTwo.controls.relatieId.setValue(client.id);
+            this.client.emit(client);
         // } else {
         //     this.router.navigate(['klantkaart', id]);
         // }

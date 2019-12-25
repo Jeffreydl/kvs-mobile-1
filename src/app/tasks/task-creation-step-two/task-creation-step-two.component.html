@@ -1,6 +1,6 @@
 <form [formGroup]="formStepTwo">
 
-    <app-client-searchbar [formStepTwo]="formStepTwo" (clientId)="getClientId($event)" *ngIf="!clientSelected"></app-client-searchbar>
+    <app-client-searchbar [formStepTwo]="formStepTwo" (client)="getSelectedClient($event)" *ngIf="!clientSelected"></app-client-searchbar>
 
     <div class="current-client" *ngIf="currentClient">
         <mat-icon class="md-default-theme-theme material-icons action-icon close-button" role="img" aria-hidden="true" (click)="deselectClient()">close</mat-icon>
@@ -52,7 +52,6 @@
     </mat-form-field>
 
     <mat-checkbox [checked]="isChecked"
-                  class="example-margin"
                   (change)="updateSubject()">
         Gebruik contactreden als onderwerp
     </mat-checkbox>
@@ -70,6 +69,7 @@
                               class="message-body"
                               placeholder="Bericht (optioneel)"
                               matInput matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5>
+
                     </textarea>
     </mat-form-field>
 

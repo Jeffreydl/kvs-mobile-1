@@ -2,6 +2,7 @@
     <div class="header">
         <h3>Taak bewerken</h3>
         <span>
+            <mat-icon (click)=saveTask() class="ng-scope md-default-theme-theme material-icons save" role="img" aria-hidden="true">save</mat-icon>
             <mat-icon (click)=deleteTask() class="ng-scope md-default-theme-theme material-icons delete" role="img" aria-hidden="true">delete</mat-icon>
             <mat-icon (click)="onNoClick()" class="ng-scope md-default-theme-theme material-icons close-dialog" role="img" aria-hidden="true">close</mat-icon>
         </span>
@@ -12,16 +13,20 @@
         <mat-step [stepControl]="formStepTwo">
             <ng-template matStepLabel>Taak bewerken</ng-template>
             <app-task-creation-step-two [taskType]="taskType"
-                                        (task)="getTask($event)"
+                                        (taskEmitter)="getTask($event)"
                                         (action)="getAction($event)"
-                                        [currentTask]="currentTask">
+                                        [currentTask]="currentTask"
+                                        (templateEmitter)="getTemplate($event)"
+                                        (processWorkflowEmitter)="getProcessWorkflow($event)">
             </app-task-creation-step-two>
         </mat-step>
 
         <mat-step [stepControl]="formStepThree">
             <ng-template matStepLabel>Toewijzen/Beantwoorden</ng-template>
             <app-task-creation-step-three [task]="task"
-                                          [action]="action">
+                                          [action]="action"
+                                          [template]="template"
+                                          [workflow]="processWorkFlow">
             </app-task-creation-step-three>
         </mat-step>
 

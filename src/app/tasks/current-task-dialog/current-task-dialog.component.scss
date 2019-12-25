@@ -19,22 +19,32 @@
       margin: 0;
     }
 
+    span {
+      position: absolute;
+      right: 0;
+
+      .save, .delete, .close-dialog {
+        position: relative;
+        font-size: 34px;
+        height: 34px;
+        width: 34px;
+      }
+
+      .save {
+        margin-right: 3px;
+        top: -3px;
+      }
+
       .delete {
-        font-size: 32px;
-        height: 32px;
-        width: 32px;
-        position: absolute;
-        top: 4px;
-        right: 36px;
+        top: -3px;
       }
 
       .close-dialog {
         font-size: 40px;
         height: 40px;
         width: 40px;
-        position: absolute;
-        right: 0;
       }
+    }
   }
 
   .task-stepper {

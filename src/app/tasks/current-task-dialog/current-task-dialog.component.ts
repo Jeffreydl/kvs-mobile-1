@@ -40,6 +40,9 @@ export class CurrentTaskDialogComponent implements OnInit, OnDestroy {
     @ViewChild(TaskCreationStepFourComponent, {static: false}) taskCreationStepFourComponent: TaskCreationStepFourComponent;
     public taskType: string;
 
+    public template: object;
+    public processWorkFlow: any;
+
 
   constructor(
       public dialogRef: MatDialogRef<CurrentTaskDialogComponent>,
@@ -82,12 +85,18 @@ export class CurrentTaskDialogComponent implements OnInit, OnDestroy {
 
     public getTask(task: ITask) {
         this.task = task;
-        console.log(this.task);
     }
 
     getAction(action: string) {
         this.action = action;
-        console.log(action);
+    }
+
+    public getTemplate(template: object) {
+        this.template = template;
+    }
+
+    public getProcessWorkflow(workflow: any) {
+        this.processWorkFlow = workflow;
     }
 
     public deleteTask() {

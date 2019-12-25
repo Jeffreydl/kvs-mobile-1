@@ -90,14 +90,12 @@ export class ClientCardComponent implements OnInit, OnDestroy {
             .descending())
             .subscribe(dossiers => {
                 this.closedDossiers = dossiers;
-                console.log(this.closedDossiers);
                 this.dataSourceClosedDossiers = new MatTableDataSource(this.closedDossiers);
                 this.filterService.filterNestedObjects(this.dataSourceClosedDossiers);
             });
     }
 
     private getClient() {
-        console.log('one');
         this.customersService.getById(+this.id).subscribe(
             (data) => {
                 this.currentClient = data;

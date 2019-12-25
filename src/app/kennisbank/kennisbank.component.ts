@@ -24,7 +24,6 @@ export class KennisbankComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.kennisbankService.getAll().subscribe(
             (data) => {
-                console.log(data);
                 this.kennisbankItems = data;
             }
         );
@@ -37,41 +36,48 @@ export class KennisbankComponent implements OnInit, OnDestroy {
         this.searching = $event;
     }
 
-    public toggleContent(id: string) {
-        console.log(this.contentId);
+    public toggleContent(id: string, test) {
+        console.log(test);
         if (this.contentId === id) {
             this.contentId = '';
-            console.log('close');
         } else {
             this.contentId = id;
-            console.log('open');
             this.kennisbankService.getById(id).subscribe(
                 (data) => {
                     this.kennisbankItem = data;
-                    console.log(this.kennisbankItem);
                 }
             );
+
+            setTimeout(() => {
+                const el = document.getElementById(test);
+                // el.scrollIntoView({behavior: 'smooth', block: 'start'});
+                const yOffset = -105;
+                const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                window.scrollTo({top: y, behavior: 'smooth'});
+            }, 100);
         }
     }
 
-    public toggleSubContent(id: string, websiteId: string) {
+    public toggleSubContent(id: string, websiteId: string, test) {
         if (this.subTitleId === id) {
             this.subTitleId = '';
             this.show = false;
         } else {
             this.subTitleId = id;
             this.show = true;
-            console.log(this.subTitleId);
+            setTimeout(() => {
+                const el = document.getElementById(test);
+                const yOffset = -105;
+                const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                window.scrollTo({top: y, behavior: 'smooth'});
+            }, 100);
         }
-        console.log('toggleSubContent');
 
         if (websiteId) {
             websiteId = websiteId.replace(':', '');
-            console.log(id);
             this.kennisbankService.getByWebsiteId(websiteId).subscribe(
                 (data) => {
                     this.kennisbankWebsiteItem = data;
-                    console.log(this.kennisbankWebsiteItem);
                 }
             );
         }

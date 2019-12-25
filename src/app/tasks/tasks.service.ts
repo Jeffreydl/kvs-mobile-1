@@ -205,7 +205,6 @@ export class TasksService {
     }
 
     public delete(id: number) {
-        console.log(id);
         return this.http.delete<any>(url + 'Messages/' + id + '/deleteWithReason/0');
     }
 
@@ -229,4 +228,30 @@ export class TasksService {
         return this.http.get(url + 'Dossiercategories');
     }
 
+    public processWorkflow(message) {
+        const dossier = null;
+        const reply = {subject: 'RE: ' + message.subject};
+        const data = {message, reply, dossier};
+        return this.http.post(url + 'Messages/processMessageWorkflow', data);
+    }
+
+    public finalizeWorkflow() {
+        // const dossier;
+        // const message;
+        // const reply;
+        // const sendEmail = true;
+        // const emailTemplateId = 7;
+        // const employeeProfile;
+        // const closeDossierAfterProcess = true;
+        // const publishtoWbs;
+        // const recipients;
+
+        // const tasks;
+        // const messageComment;
+        // const knowledgeBaseAns;
+
+        // const data;
+
+        // return this.http.post(url + 'Messages/finalizeMessageWorkflow', data);
+    }
 }

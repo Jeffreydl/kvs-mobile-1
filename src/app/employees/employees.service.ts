@@ -49,9 +49,9 @@ export class EmployeesService {
 
   constructor(private http: HttpClient) { }
 
-  public getAll(filter: EmployeeFilter): Observable<IEmployee[]> {
+  public getAll(filter: EmployeeFilter): Observable<any[]> {
 
-    return this.http.get<IEmployee[]>(baseUrl + 'api/Employees?filter=' + filter).pipe(
+    return this.http.get<any[]>(baseUrl + 'api/Employees?filter=' + filter).pipe(
         map((employees) => {
           employees.map((employee) => {
             this.getFullName(employee);
@@ -61,9 +61,12 @@ export class EmployeesService {
     );
   }
 
-  public getById(id: number): Observable<any> {
-    console.log(id);
+  public getById(id: number): Observable<IEmployee> {
     return this.http.get<any>(baseUrl + 'api/Employees/' + id);
+  }
+
+  public getByToken(token: string): Observable<any> {
+      return this.http.get<any>(baseUrl + 'api/Employees/get-user-by-token/' + token);
   }
 
   public getFullName(employee: IEmployee): IEmployee {

@@ -44,11 +44,9 @@ export class AuthService {
     }
 
     public get isLoggedIn() {
-        console.log(this.loggedIn);
         if (JSON.parse(localStorage.getItem('hasPermission'))) {
             this.loggedIn.next(true);
         }
-        console.log(this.loggedIn.value);
         return this.loggedIn.asObservable();
     }
 

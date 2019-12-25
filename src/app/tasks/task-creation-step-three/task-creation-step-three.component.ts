@@ -2,6 +2,8 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {TasksService} from '../tasks.service';
+import {TemplatesService} from '../../templates.service';
+import {ITask} from '../ITask';
 
 @AutoUnsubscribe()
 @Component({
@@ -22,7 +24,6 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
   @Input()
   public set task(val: any) {
     this.currentTask = val;
-    console.log(this.currentTask);
     this.createAssigneeForm();
   }
 
@@ -44,17 +45,37 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
     this.categories = val;
   }
 
+    templateValue: any;
+    public get template(): any {
+      console.log(this.templateValue);
+      return this.templateValue;
+    }
+    @Input()
+    public set template(val: any) {
+        this.templateValue = val;
+    }
+
+    processWorkflow: any;
+    public get workflow(): any {
+        console.log(this.templateValue);
+        return this.templateValue;
+    }
+    @Input()
+    public set workflow(val: any) {
+        this.processWorkflow = val;
+    }
+
+    public emailIsChecked = true;
+    public closeDossierIsChecked = true;
+
   constructor(private formBuilder: FormBuilder, private tasksService: TasksService) { }
 
   ngOnInit() {
-    console.log(this.currentTask);
-    // this.tasksService.getCategories().subscribe((data) => {
-    //   this.categories = data;
-    // });
   }
 
   ngOnDestroy(): void {
   }
+
 
   public createAssigneeForm() {
     if (this.currentTask) {
@@ -74,14 +95,16 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
   }
 
   onSubmit2(formData: any) {
-    console.log(formData);
     this.tasksService.edit(this.currentTask.id, formData).subscribe(
         (task) => {
-          console.log(task);
         }
     );
     // this.createDossierForm();
     // this.getOpenDossiers();
+  }
+
+  test() {
+    console.log(this.processWorkflow);
   }
 
 }

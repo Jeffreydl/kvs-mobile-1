@@ -41,7 +41,6 @@ export class ClientListComponent implements OnInit, OnDestroy {
 
     public filterClients(value: string) {
         if (value.length > 1) {
-            console.log(value);
             const regex = new RegExp(value, 'i');
             this.filteredClients = this.clients.filter(({fullname}) => regex.test(fullname));
             this.isSearching = true;
@@ -64,7 +63,6 @@ export class ClientListComponent implements OnInit, OnDestroy {
             const firstLetter = client.lastname.substr(0, 1);
             this.alphabet.push(firstLetter);
         }
-        console.log([...new Set(this.alphabet)].sort());
         this.filteredFirstLetters = [...new Set(this.alphabet)].sort();
     }
 
