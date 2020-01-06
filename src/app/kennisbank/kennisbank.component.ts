@@ -24,7 +24,6 @@ export class KennisbankComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.kennisbankService.getAll().subscribe(
             (data) => {
-                console.log(data);
                 this.kennisbankItems = data;
             }
         );
@@ -37,43 +36,44 @@ export class KennisbankComponent implements OnInit, OnDestroy {
         this.searching = $event;
     }
 
-    public toggleContent(id: string) {
-        console.log(this.contentId);
+    public toggleContent(id: string, elementId: string) {
         if (this.contentId === id) {
             this.contentId = '';
-            console.log('close');
         } else {
+            this.subTitleId = '';
+            this.show = false;
             this.contentId = id;
-            console.log('open');
             this.kennisbankService.getById(id).subscribe(
                 (data) => {
                     this.kennisbankItem = data;
-                    console.log(this.kennisbankItem);
+                }
+            );
+            this.scrollToElement(elementId);
+        }
+    }
+
+    public toggleSubContent(id: string, websiteId: string, elementId: string) {
+        if (this.subTitleId !== id) {
+            this.subTitleId = id;
+            this.show = true;
+            this.scrollToElement(elementId);
+        }
+        if (websiteId) {
+            websiteId = websiteId.replace(':', '');
+            this.kennisbankService.getByWebsiteId(websiteId).subscribe(
+                (data) => {
+                    this.kennisbankWebsiteItem = data;
                 }
             );
         }
     }
 
-    public toggleSubContent(id: string, websiteId: string) {
-        if (this.subTitleId === id) {
-            this.subTitleId = '';
-            this.show = false;
-        } else {
-            this.subTitleId = id;
-            this.show = true;
-            console.log(this.subTitleId);
-        }
-        console.log('toggleSubContent');
-
-        if (websiteId) {
-            websiteId = websiteId.replace(':', '');
-            console.log(id);
-            this.kennisbankService.getByWebsiteId(websiteId).subscribe(
-                (data) => {
-                    this.kennisbankWebsiteItem = data;
-                    console.log(this.kennisbankWebsiteItem);
-                }
-            );
-        }
+    public scrollToElement(elementId) {
+        setTimeout(() => {
+            const el = document.getElementById(elementId);
+            const yOffset = -105;
+            const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo(0, y);
+        }, 100);
     }
 }

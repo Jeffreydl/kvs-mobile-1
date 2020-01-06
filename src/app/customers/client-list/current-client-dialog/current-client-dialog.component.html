@@ -56,39 +56,23 @@
                 <h3>E-mailadressen:</h3>
             </ng-template>
             <mat-list-item class="list-item" *ngFor="let email of client.emailaddress" class="list-item">
-                <a [href]="sendMail(email, client)"><mat-icon class="action-icon">email</mat-icon></a>
                 <p matLine>
                     <span>{{email.address}}</span>
                 </p>
             </mat-list-item>
         </div>
+        <div class="task-actions">
+            <h3 class="task-actions" matLine>Taak aanmaken</h3>
+
+            <button class="no-button" mat-icon-button>
+                <mat-icon class="ng-binding md-default-theme-theme material-icons task-preset"
+                          role="img" aria-hidden="true" (click)="selectTaskType('telefoon')">phone</mat-icon>
+            </button>
+            <button class="no-button" mat-icon-button>
+                <mat-icon class="ng-binding md-default-theme-theme material-icons task-preset"
+                          role="img" (click)="selectTaskType('email')">email</mat-icon>
+            </button>
+        </div>
     </mat-list>
 
-
-
-<!--    <div class="actions">-->
-<!--        <div class="action">-->
-<!--            <a [href]="call(client.phonenumber) | safeUrl">-->
-<!--                <mat-icon class="md-default-theme-theme material-icons action-icon" role="img" aria-hidden="true">call</mat-icon>-->
-<!--            </a>-->
-<!--        </div>-->
-<!--        <div class="action">-->
-<!--            <a [href]="sendSms(client.phonenumber) | safeUrl">-->
-<!--                <mat-icon class="md-default-theme-theme material-icons action-icon" role="img" aria-hidden="true">sms-->
-<!--                </mat-icon>-->
-<!--            </a>-->
-<!--       </div>-->
-<!--        <div class="action">-->
-<!--            <a href="mailto:{{client.emailaddress}}?&subject={{emailSubject}}&body={{emailBody}}">-->
-<!--                <mat-icon class="md-default-theme-theme material-icons action-icon" role="img" aria-hidden="true">email-->
-<!--                </mat-icon>-->
-<!--            </a>-->
-<!--       </div>-->
-
-<!--        <div class="action">-->
-<!--            <a href="https://www.google.com/maps/search/?api=1&query={{client.address}}">-->
-<!--                <img src="assets/google-maps.svg" height="25px" width="25px" class="action-icon">-->
-<!--            </a>-->
-<!--        </div>-->
-<!--    </div>-->
 </div>

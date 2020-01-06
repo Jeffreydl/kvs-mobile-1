@@ -28,7 +28,6 @@ export class CustomersService {
     }
 
     public create(formData: ICustomer) {
-        console.log(formData);
         return this.http.post(baseUrl + 'api/relaties/createRelation', formData);
     }
 
@@ -48,7 +47,6 @@ export class CustomersService {
     }
 
     public getById(id: number): Observable<ICustomer> {
-        console.log(id);
         return this.http.get<ICustomer>(baseUrl + 'api/relaties/' + id).pipe(
             map((client) => {
                 this.getFullName(client);

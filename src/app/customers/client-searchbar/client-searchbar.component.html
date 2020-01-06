@@ -8,7 +8,7 @@
     </mat-form-field>
     <div class="found-clients">
         <ng-container *ngFor="let client of clients">
-            <mat-option (click)="selectClient(client.id)" class="found-client">
+            <mat-option (click)="selectClient(client)" class="found-client">
                 {{ client.initials }} ({{ client.firstname }}) {{ client.lastname }}<span *ngIf="client.dateofbirth">, {{ client.dateofbirth | date: 'dd-MM-yyyy' }} ({{ client.age }})</span>
                 <mat-divider></mat-divider>
             </mat-option>

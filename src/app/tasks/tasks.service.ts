@@ -153,7 +153,6 @@ const url = baseUrl + 'api/';
     providedIn: 'root'
 })
 export class TasksService {
-    data;
     public tasks: Observable<ITask[]>;
     public tasksLength = new BehaviorSubject<number>(null);
 
@@ -180,24 +179,8 @@ export class TasksService {
         return this.http.post<any>(url + 'Messages', formData);
     }
 
-    public edit(id: number, formData: any) {
-
-        // const formData = {
-            // body: 'a',
-            // contactReasonId: 3,
-            // createdDateTime: new Date(),
-            // dossierId: 62,
-            // id: id,
-            // relatieId: 26,
-            // typeId: 1,
-            // parentContactReason: {
-            //     name: 'Algemeen',
-            //     id: 3,
-            //     parentId: null,
-            //     deletedAt: null
-            // },
-        // };
-        return this.http.patch(url + 'Messages/' + id, formData);
+    public edit(id: number, formData: any): Observable<ITask> {
+        return this.http.patch<ITask>(url + 'Messages/' + id, formData);
     }
 
     public getById(id: number) {
@@ -205,8 +188,11 @@ export class TasksService {
     }
 
     public delete(id: number) {
-        console.log(id);
         return this.http.delete<any>(url + 'Messages/' + id + '/deleteWithReason/0');
+    }
+
+    public assign(data: any) {
+        return this.http.post(url + 'Messages/messageAssignment', data);
     }
 
     public getCategories() {
@@ -229,4 +215,31 @@ export class TasksService {
         return this.http.get(url + 'Dossiercategories');
     }
 
+    public processWorkflow(message) {
+        const dossier = null;
+        const reply = {subject: 'RE: ' + message.subject};
+        const data = {message, reply, dossier};
+        return this.http.post(url + 'Messages/processMessageWorkflow', message);
+    }
+
+    public finalizeWorkflow(data) {
+        console.log(data);
+        // const dossier;
+        // const message;
+        // const reply;
+        // const sendEmail = true;
+        // const emailTemplateId = 7;
+        // const employeeProfile;
+        // const closeDossierAfterProcess = true;
+        // const publishtoWbs;
+        // const recipients;
+
+        // const tasks;
+        // const messageComment;
+        // const knowledgeBaseAns;
+
+        // const data;
+
+        return this.http.post(url + 'Messages/finalizeMessageWorkflow', data);
+    }
 }

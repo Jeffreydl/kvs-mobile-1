@@ -1,4 +1,5 @@
-<div class="container" (swipe)="onSwipe($event)">
-<router-outlet></router-outlet>
+<!--<app-splash-screen></app-splash-screen>-->
+<div class="container" (swipe)="onSwipe($event)" [@fadeAnimation]="o.isActivated ? o.activatedRoute : ''">
+<router-outlet #o="outlet"></router-outlet>
     <app-navigation *ngIf="isLoggedIn$ | async"></app-navigation>
 </div>

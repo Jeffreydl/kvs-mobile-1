@@ -12,34 +12,20 @@ export class TaskCreationStepOneComponent implements OnInit, OnDestroy {
   public formStepOne: FormGroup;
   @Output() taskType = new EventEmitter<string>();
 
-
   constructor(private formBuilder: FormBuilder) {
-    this.formStepOne = this.formBuilder.group({
-      taskType: this.formBuilder.control('', Validators.compose([Validators.required])),
-    });
   }
 
   ngOnInit() {
-    // this.formStepOne = this.formBuilder.group({
-    //   taskType: this.formBuilder.control('', Validators.compose([Validators.required])),
-    // });
+    this.formStepOne = this.formBuilder.group({
+      taskType: this.formBuilder.control('', Validators.compose([Validators.required])),
+    });
   }
 
   ngOnDestroy(): void {
   }
 
   public selectTaskType(type: string) {
-    if (type === 'email') {
-      this.formStepOne.controls.taskType.setValue('email');
-    } else if (type === 'telefoon') {
-      this.formStepOne.controls.taskType.setValue('telefoon');
-    }
-    this.selectType(type);
-
+    this.formStepOne.controls.taskType.setValue(type);
+    this.taskType.emit(type);
   }
-
-  selectType(value: string) {
-    this.taskType.emit(value);
-  }
-
 }

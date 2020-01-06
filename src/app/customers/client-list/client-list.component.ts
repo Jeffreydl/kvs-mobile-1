@@ -41,7 +41,6 @@ export class ClientListComponent implements OnInit, OnDestroy {
 
     public filterClients(value: string) {
         if (value.length > 1) {
-            console.log(value);
             const regex = new RegExp(value, 'i');
             this.filteredClients = this.clients.filter(({fullname}) => regex.test(fullname));
             this.isSearching = true;
@@ -64,15 +63,15 @@ export class ClientListComponent implements OnInit, OnDestroy {
             const firstLetter = client.lastname.substr(0, 1);
             this.alphabet.push(firstLetter);
         }
-        console.log([...new Set(this.alphabet)].sort());
         this.filteredFirstLetters = [...new Set(this.alphabet)].sort();
     }
 
     public openDetailsDialog(client: ICustomer): void {
         this.dialog.open(CurrentClientDialogComponent, {
-            height: '85%',
-            width: '90%',
-            maxWidth: '90%',
+            position: {top: '0'},
+            height: 'calc(100% - 80px)',
+            width: '100%',
+            maxWidth: '100%',
             panelClass: 'client-dialog',
             data: {client}
         });
@@ -80,9 +79,10 @@ export class ClientListComponent implements OnInit, OnDestroy {
 
     openNewClientDialog(): void {
         this.dialog.open(AddClientDialogComponent, {
-            height: '85%',
-            width: '90%',
-            maxWidth: '90%',
+            position: {top: '0'},
+            height: 'calc(100% - 80px)',
+            width: '100%',
+            maxWidth: '100%',
             panelClass: 'client-dialog',
         });
     }

@@ -1,5 +1,4 @@
 <div class="container">
-
     <table mat-table [dataSource]="dataSourceTasks" class="mat-elevation-z8 table">
         <ng-container matColumnDef="category">
             <th mat-header-cell *matHeaderCellDef> Categorie </th>
@@ -20,5 +19,5 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumnsTasks;"></tr>
     </table>
 
-    <button (click)="logOut()">Logout</button>
+<!--    <button (click)="logOut()">Logout</button>-->
 </div>

@@ -1,58 +1,47 @@
-import {Component, OnInit, OnDestroy, ViewChild, ChangeDetectionStrategy} from '@angular/core';
-import {TasksService} from '../tasks.service';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {CustomersService} from '../../customers/customers.service';
+import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import {ICustomer} from '../../customers/ICustomer';
-import {AuthService} from '../../auth/auth.service';
 import {MatStepper} from '@angular/material';
-import {DossierFilter, DossierService} from '../../dossiers/dossier.service';
 import {IDossier} from '../../dossiers/IDossier';
-import {Router} from '@angular/router';
 import {TaskCreationStepOneComponent} from '../task-creation-step-one/task-creation-step-one.component';
 import {TaskCreationStepTwoComponent} from '../task-creation-step-two/task-creation-step-two.component';
 import {ITask} from '../ITask';
 import {TaskCreationStepThreeComponent} from '../task-creation-step-three/task-creation-step-three.component';
 import {TaskCreationStepFourComponent} from '../task-creation-step-four/task-creation-step-four.component';
+import { ChangeDetectorRef} from '@angular/core';
 
 @AutoUnsubscribe()
 @Component({
     selector: 'app-add-task',
     templateUrl: './add-task.component.html',
     styleUrls: ['./add-task.component.scss'],
-    // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddTaskComponent implements OnInit, OnDestroy {
-    public types: any;
-
-    public currentClient: ICustomer;
     @ViewChild('stepper', {static: false}) stepper: MatStepper;
     public action: string;
-    public assigneeForm: FormGroup;
     public task: ITask;
-    public openDossiers: IDossier[];
-    public dossierForm: FormGroup;
+    public dossier: IDossier;
+    public clientId: number;
 
     @ViewChild(TaskCreationStepOneComponent, {static: false}) taskCreationStepOneComponent: TaskCreationStepOneComponent;
     @ViewChild(TaskCreationStepTwoComponent, {static: false}) taskCreationStepTwoComponent: TaskCreationStepTwoComponent;
     @ViewChild(TaskCreationStepThreeComponent, {static: false}) taskCreationStepThreeComponent: TaskCreationStepThreeComponent;
     @ViewChild(TaskCreationStepFourComponent, {static: false}) taskCreationStepFourComponent: TaskCreationStepFourComponent;
+    public types: any;
     public taskType: string;
+    public categories: any;
+    public contactReason: string;
+    public template: object;
+    public processWorkFlow: any;
+    public test;
 
-    constructor(private taskService: TasksService,
-                private customersService: CustomersService,
-                private formBuilder: FormBuilder,
-                private authService: AuthService,
-                private dossiersService: DossierService,
-                private router: Router,
-    ) {}
+    constructor(private cdRef: ChangeDetectorRef) {}
 
     public get formStepOne() {
         return this.taskCreationStepOneComponent ? this.taskCreationStepOneComponent.formStepOne : null;
     }
 
     public get formStepTwo() {
-        return this.taskCreationStepTwoComponent ? this.taskCreationStepTwoComponent.formStepTwo : null;
+            return this.taskCreationStepTwoComponent ? this.taskCreationStepTwoComponent.formStepTwo : null;
     }
 
     public get formStepThree() {
@@ -64,6 +53,14 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.cdRef.detectChanges();
+        const state = window.history.state;
+        if (state.action) {
+            console.log(state);
+            this.taskType = state.action;
+            this.stepper.selectedIndex = 1;
+            this.test = state.client;
+        }
     }
 
     ngOnDestroy(): void {
@@ -75,49 +72,33 @@ export class AddTaskComponent implements OnInit, OnDestroy {
 
     public getTask(task: ITask) {
         this.task = task;
-        console.log(this.task);
+        this.clientId = task.relatieId;
     }
 
+    public getDossier(dossier: IDossier) {
+        this.dossier = dossier;
+    }
     getAction(action: string) {
         this.action = action;
-        console.log(action);
     }
 
-    public createDossierForm() {
-        this.dossierForm = this.formBuilder.group({
-            dossierId: '',
-        });
-        this.dossierForm.valueChanges.subscribe(data => this.onFormValueChange3(data));
+    public getCategories(categories: any) {
+        this.categories = categories;
     }
 
-    private onFormValueChange3(data: any) {
-        console.log(data);
+    public getTypes(types: any) {
+        this.types = types;
     }
 
-    onSubmit3(formData: any) {
-        console.log(formData);
-        this.taskService.edit(this.task.id, formData).subscribe(
-            (task) => {
-                console.log(task);
-            }
-        );
+    public getContactReason(contactReason: string) {
+        this.contactReason = contactReason;
     }
 
-
-    private createResponseForm() {
-
+    public getTemplate(template: object) {
+        this.template = template;
     }
 
-    public getOpenDossiers() {
-        this.dossiersService.getAll(new DossierFilter()
-            .forRelation(this.currentClient.id)
-            .openDossiers()
-            .orderByCreationDate()
-            .descending())
-            .subscribe(dossiers => {
-                this.openDossiers = dossiers;
-                console.log(this.openDossiers);
-            });
-        this.router.navigate(['dashboard']);
+    public getProcessWorkflow(workflow: any) {
+        this.processWorkFlow = workflow;
     }
 }

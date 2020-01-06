@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.innerWidth = window.innerWidth;
         this.innerHeight = window.innerHeight;
 
-        if (this.innerWidth > this.innerHeight) {
+        if (this.innerWidth > this.innerHeight + 100) {
             this.breakpoint = 2;
             this.rowspanForm = 1;
             this.rowspanLogo = 1;

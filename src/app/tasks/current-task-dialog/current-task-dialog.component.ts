@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, ViewChild, Inject} from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild, Inject, ChangeDetectorRef} from '@angular/core';
 import {TasksService} from '../tasks.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CustomersService} from '../../customers/customers.service';
@@ -40,6 +40,9 @@ export class CurrentTaskDialogComponent implements OnInit, OnDestroy {
     @ViewChild(TaskCreationStepFourComponent, {static: false}) taskCreationStepFourComponent: TaskCreationStepFourComponent;
     public taskType: string;
 
+    public template: object;
+    public processWorkFlow: any;
+
 
   constructor(
       public dialogRef: MatDialogRef<CurrentTaskDialogComponent>,
@@ -50,11 +53,12 @@ export class CurrentTaskDialogComponent implements OnInit, OnDestroy {
       private authService: AuthService,
       private dossiersService: DossierService,
       private router: Router,
+      private cdRef: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-
     this.currentTask = this.data.task;
+    this.cdRef.detectChanges();
   }
 
   ngOnDestroy(): void {
@@ -82,50 +86,31 @@ export class CurrentTaskDialogComponent implements OnInit, OnDestroy {
 
     public getTask(task: ITask) {
         this.task = task;
-        console.log(this.task);
     }
 
     getAction(action: string) {
         this.action = action;
-        console.log(action);
     }
 
-    public createDossierForm() {
-        this.dossierForm = this.formBuilder.group({
-            dossierId: '',
+    public getTemplate(template: object) {
+        this.template = template;
+    }
+
+    public getProcessWorkflow(workflow: any) {
+        this.processWorkFlow = workflow;
+    }
+
+    public deleteTask() {
+        this.taskService.delete(this.currentTask.id).subscribe((task) => {
+            this.dialogRef.close();
+            this.router.navigate(['dashboard']);
         });
-        this.dossierForm.valueChanges.subscribe(data => this.onFormValueChange3(data));
+        if (this.currentTask.dossierId) {
+            this.dossiersService.close(this.currentTask.dossierId).subscribe();
+        }
     }
 
-    private onFormValueChange3(data: any) {
-        console.log(data);
+    public saveTask() {
+      console.log('savetask');
     }
-
-    onSubmit3(formData: any) {
-        console.log(formData);
-        this.taskService.edit(this.task.id, formData).subscribe(
-            (task) => {
-                console.log(task);
-            }
-        );
-    }
-
-
-    private createResponseForm() {
-
-    }
-
-    public getOpenDossiers() {
-        this.dossiersService.getAll(new DossierFilter()
-            .forRelation(this.currentClient.id)
-            .openDossiers()
-            .orderByCreationDate()
-            .descending())
-            .subscribe(dossiers => {
-                this.openDossiers = dossiers;
-                console.log(this.openDossiers);
-            });
-        this.router.navigate(['dashboard']);
-    }
-
 }

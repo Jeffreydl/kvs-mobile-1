@@ -44,7 +44,6 @@ export class AddClientDialogComponent implements OnInit, OnDestroy {
     public form: FormGroup;
 
     private static onFormValueChange(data: any) {
-      // console.log(data);
     }
 
   ngOnInit() {
@@ -73,11 +72,7 @@ export class AddClientDialogComponent implements OnInit, OnDestroy {
   }
 
     public onSubmit(relation: any) {
-        console.log(relation);
         const array1 = {data: {relation}};
-
-        console.log(array1);
-
         this.newClient(array1);
     }
 

@@ -25,7 +25,6 @@ export class HousesComponent implements OnInit, OnDestroy {
         this.housesService.getHouses(this.id).subscribe(
             (data) => {
                 this.houses = data;
-                console.log(this.houses);
             }
         );
     }

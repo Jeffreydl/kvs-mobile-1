@@ -1,15 +1,26 @@
 .container {
-    position: fixed;
+    position: relative;
     top: 0;
     width: 100vw;
     z-index: 999;
+    //margin-bottom: 80px;
 
-    .kennisbankSearchbar {
-        box-sizing: border-box;
-        height: 45px;
+    .search-bar {
+        position: fixed;
         width: 100%;
-        padding: 5px;
-        font-size: 18px;
+        height: 45px;
     }
 
+    .kennisbank-search-bar {
+        box-sizing: border-box;
+        padding: 5px;
+        font-size: 18px;
+        height: 100%;
+        width: 100%;
+    }
+
+    .found-articles {
+        position: relative;
+        top: 45px;
+    }
 }
