@@ -16,7 +16,7 @@
                 <div *ngIf="contentId === subject.id">
                     <span [innerHTML]="subject.descriptionExternal"></span>
                     <div *ngFor="let item of kennisbankItem">
-                        <p class="sub-title" (click)="toggleSubContent(item.id, item.websiteLink, mep.id)">{{item.title}}</p>
+                        <p class="sub-title" id="{{'item-' + mep.id}}" (click)="toggleSubContent(item.id, item.websiteLink, 'item-'+ mep.id)">{{item.title}}</p>
                         <p *ngIf="subTitleId == item.id && item.websiteLink" [innerHTML]="kennisbankWebsiteItem?.descriptionExternal"></p>
                         <p *ngIf="subTitleId == item.id && !item.websiteLink" [innerHTML]="item?.descriptionExternal"></p>
                     </div>

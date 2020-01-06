@@ -100,35 +100,18 @@ export class DossierService {
     }
 
     public new(formData: any) {
-        return this.http.post(url + 'Dossiers', formData);
+        const data = {
+            relatieId: formData.relatieId,
+            dossierCategoryId: formData.messageCategoryId,
+            dossierTypeId: formData.typeId,
+            createdById: formData.createdById,
+            subject: formData.subject,
+            description: formData.description
+        };
+        return this.http.post(url + 'Dossiers', data);
+    }
 
-
-        // createdById
-        // description
-        // dossierCategoryId
-        // dossierTypeId
-        // relatieId
-        // subject
-
-
-    //     createdById: "13"
-    //     description: ""
-    //     dossierCategory: {name: "Buurt", sla: "4h", defaultAssigneeId: 2, dueDate: "5h", isSystem: false, id: 1,…}
-    //     defaultAssigneeId: 2
-    //     deletedAt: null
-    //     dueDate: "5h"
-    //     id: 1
-    //     isSystem: false
-    //     name: "Buurt"
-    //     sla: "4h"
-    //     dossierType: {name: "Klacht", default: null, icon: null, id: 1, deletedAt: null}
-    // default: null
-    //     deletedAt: null
-    //     icon: null
-    //     id: 1
-    //     name: "Klacht"
-    //     relatieId: 26
-    //     subject: "Contract"
-        return this.http.post(url + 'Dossiers', formData);
+    public close(id: number) {
+        return this.http.put(url + 'Dossiers/' + id + '/close', '');
     }
 }

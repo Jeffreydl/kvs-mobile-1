@@ -36,43 +36,28 @@ export class KennisbankComponent implements OnInit, OnDestroy {
         this.searching = $event;
     }
 
-    public toggleContent(id: string, test) {
-        console.log(test);
+    public toggleContent(id: string, elementId: string) {
         if (this.contentId === id) {
             this.contentId = '';
         } else {
+            this.subTitleId = '';
+            this.show = false;
             this.contentId = id;
             this.kennisbankService.getById(id).subscribe(
                 (data) => {
                     this.kennisbankItem = data;
                 }
             );
-
-            setTimeout(() => {
-                const el = document.getElementById(test);
-                // el.scrollIntoView({behavior: 'smooth', block: 'start'});
-                const yOffset = -105;
-                const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                window.scrollTo({top: y, behavior: 'smooth'});
-            }, 100);
+            this.scrollToElement(elementId);
         }
     }
 
-    public toggleSubContent(id: string, websiteId: string, test) {
-        if (this.subTitleId === id) {
-            this.subTitleId = '';
-            this.show = false;
-        } else {
+    public toggleSubContent(id: string, websiteId: string, elementId: string) {
+        if (this.subTitleId !== id) {
             this.subTitleId = id;
             this.show = true;
-            setTimeout(() => {
-                const el = document.getElementById(test);
-                const yOffset = -105;
-                const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                window.scrollTo({top: y, behavior: 'smooth'});
-            }, 100);
+            this.scrollToElement(elementId);
         }
-
         if (websiteId) {
             websiteId = websiteId.replace(':', '');
             this.kennisbankService.getByWebsiteId(websiteId).subscribe(
@@ -81,5 +66,14 @@ export class KennisbankComponent implements OnInit, OnDestroy {
                 }
             );
         }
+    }
+
+    public scrollToElement(elementId) {
+        setTimeout(() => {
+            const el = document.getElementById(elementId);
+            const yOffset = -105;
+            const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo(0, y);
+        }, 100);
     }
 }

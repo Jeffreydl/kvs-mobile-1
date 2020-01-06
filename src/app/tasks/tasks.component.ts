@@ -31,10 +31,10 @@ export class TasksComponent implements OnInit, OnDestroy {
     public getTasks() {
       this.tasksService.getAll(new TaskFilter()
       // See TasksService.ts for all filter methods
-          // .openTasks()
+          .openTasks()
           .inboundTasks()
           .assignedTo(Number(this.authService.getUserId()))
-          .limitTo(10)
+          .limitTo(20)
           .descending()
           .includeDrafts(true))
           .subscribe(tasks => {

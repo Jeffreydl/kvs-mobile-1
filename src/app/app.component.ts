@@ -59,12 +59,12 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
     getTasksPeriodically() {
-        this.subscription = timer(10000, 100000).pipe(
+        this.subscription = timer(10000, 1000000).pipe(
             switchMap(() => this.tasksService.getAll(new TaskFilter()
-            // .openTasks()
+            .openTasks()
                 .inboundTasks()
                 .assignedTo(Number(this.authService.getUserId()))
-                .limitTo(10)
+                .limitTo(20)
                 .descending()
                 .includeDrafts(true)))
         ).subscribe(result => {

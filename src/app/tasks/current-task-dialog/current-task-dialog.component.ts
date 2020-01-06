@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, ViewChild, Inject} from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild, Inject, ChangeDetectorRef} from '@angular/core';
 import {TasksService} from '../tasks.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CustomersService} from '../../customers/customers.service';
@@ -53,11 +53,12 @@ export class CurrentTaskDialogComponent implements OnInit, OnDestroy {
       private authService: AuthService,
       private dossiersService: DossierService,
       private router: Router,
+      private cdRef: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-
     this.currentTask = this.data.task;
+    this.cdRef.detectChanges();
   }
 
   ngOnDestroy(): void {
@@ -104,6 +105,12 @@ export class CurrentTaskDialogComponent implements OnInit, OnDestroy {
             this.dialogRef.close();
             this.router.navigate(['dashboard']);
         });
+        if (this.currentTask.dossierId) {
+            this.dossiersService.close(this.currentTask.dossierId).subscribe();
+        }
+    }
 
+    public saveTask() {
+      console.log('savetask');
     }
 }

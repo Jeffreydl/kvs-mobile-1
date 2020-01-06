@@ -1,10 +1,9 @@
 <form [formGroup]="formStepTwo">
 
-    <app-client-searchbar [formStepTwo]="formStepTwo" (client)="getSelectedClient($event)" *ngIf="!clientSelected"></app-client-searchbar>
+    <app-client-searchbar [formStepTwo]="formStepTwo" (client)="selectClient($event)" *ngIf="!clientSelected"></app-client-searchbar>
 
     <div class="current-client" *ngIf="currentClient">
         <mat-icon class="md-default-theme-theme material-icons action-icon close-button" role="img" aria-hidden="true" (click)="deselectClient()">close</mat-icon>
-
         {{currentClient.fullname}}
         <div *ngFor="let email of currentClient.emailaddress">
             {{email.address}}
@@ -79,7 +78,7 @@
     <input formControlName="direction" hidden>
     <input formControlName="isDraft" hidden>
 
-    <button matStepperNext type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple submit-step-2" (click)="submit('toewijzen', formStepTwo.value)">Toewijzen</button>
-    <button matStepperNext type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple submit-step-2" (click)="submit('beantwoorden', formStepTwo.value)">Beantwoorden</button>
+    <button matStepperNext type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple submit-step-2" (click)="submitAssignee('toewijzen', formStepTwo.value)">Toewijzen</button>
+    <button matStepperNext type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple submit-step-2" (click)="submitResponse('beantwoorden', formStepTwo.value)">Beantwoorden</button>
 
 </form>

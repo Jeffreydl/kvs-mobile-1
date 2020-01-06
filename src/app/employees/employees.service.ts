@@ -69,6 +69,11 @@ export class EmployeesService {
       return this.http.get<any>(baseUrl + 'api/Employees/get-user-by-token/' + token);
   }
 
+  public getEmployeeCategories(id: number) {
+      return this.http.get(baseUrl + 'api/Employees/' + id + '/categories');
+      // after - get the ids of all categories and use them in the gettasks call to get correct tasks
+}
+
   public getFullName(employee: IEmployee): IEmployee {
       if (employee.profile.middlename) {
           employee.profile.fullname = employee.profile.firstname + ' ' + employee.profile.middlename + ' ' + employee.profile.lastname;

@@ -82,7 +82,7 @@ export class TaskCreationStepFourComponent implements OnInit, OnDestroy {
   }
 
   onSubmit3(formData: any) {
-    this.tasksService.edit(this.task.id, formData).subscribe(
+    this.tasksService.edit(this.currentTask.id, formData).subscribe(
         (task) => {
         }
     );

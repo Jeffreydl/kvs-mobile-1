@@ -6,7 +6,7 @@
 
     <mat-vertical-stepper linear #stepper>
 
-        <mat-step [stepControl]="formStepOne">
+        <mat-step>
             <ng-template matStepLabel>Type taak kiezen</ng-template>
             <app-task-creation-step-one (taskType)="getPreset($event)"></app-task-creation-step-one>
         </mat-step>
@@ -14,7 +14,9 @@
         <mat-step [stepControl]="formStepTwo">
             <ng-template matStepLabel>Taak aanmaken</ng-template>
             <app-task-creation-step-two [taskType]="taskType"
+                                        [test]="test"
                                         (taskEmitter)="getTask($event)"
+                                        (dossierEmitter)="getDossier($event)"
                                         (action)="getAction($event)"
                                         (categoriesEmitter)="getCategories($event)"
                                         (typesEmitter)="getTypes($event)"
@@ -27,20 +29,12 @@
         <mat-step [stepControl]="formStepThree">
             <ng-template matStepLabel>Toewijzen/Beantwoorden</ng-template>
             <app-task-creation-step-three [task]="task"
+                                          [dossier]="dossier"
                                           [action]="action"
                                           [categoriesList]="categories"
                                           [template]="template"
                                           [workflow]="processWorkFlow">
             </app-task-creation-step-three>
-        </mat-step>
-
-        <mat-step [stepControl]="formStepFour">
-          <ng-template matStepLabel>Dossier aanmaken/toewijzen</ng-template>
-            <app-task-creation-step-four [clientId]="clientId"
-                                         [categoriess]="categories"
-                                         [typess]="types"
-                                         [contactReasonn]="contactReason">
-            </app-task-creation-step-four>
         </mat-step>
     </mat-vertical-stepper>
 </div>

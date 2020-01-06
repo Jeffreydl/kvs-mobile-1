@@ -16,7 +16,7 @@ html, body {
 body {
   //background: url("/assets/kvs-back-min.jpg") center no-repeat;
   //background-size: cover;
-
+  overscroll-behavior-y: contain;
 }
 
 @media (min-width: 768px) {
