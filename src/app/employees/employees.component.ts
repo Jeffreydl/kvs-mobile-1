@@ -44,8 +44,7 @@ export class EmployeesComponent implements OnInit {
     }
 
     public selectEmployee(employee: IEmployee) {
-        this.formStepThree.addControl('assigneeId',  new FormControl(Validators.compose([Validators.required])));
-        this.formStepThree.controls.assigneeId.setValue(employee.id);
-
+        this.formStepThree.addControl('assignee',  new FormControl(Validators.compose([Validators.required])));
+        this.formStepThree.controls.assignee.setValue(employee);
     }
 }

@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TaskFilter, TasksService} from './tasks.service';
 import {AuthService} from '../auth/auth.service';
 import {ITask} from './ITask';
@@ -6,7 +6,7 @@ import {MatDialog, MatTableDataSource} from '@angular/material';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {CurrentTaskDialogComponent} from './current-task-dialog/current-task-dialog.component';
 import {Router} from '@angular/router';
-import {BehaviorSubject} from 'rxjs';
+import {FilterTableService} from '../filterTable.service';
 
 @AutoUnsubscribe()
 @Component({
@@ -16,10 +16,14 @@ import {BehaviorSubject} from 'rxjs';
 })
 export class TasksComponent implements OnInit, OnDestroy {
   public tasks: ITask[];
-  public displayedColumnsTasks: string[] = ['category', 'subject', 'sla'];
+  public displayedColumnsTasks: string[] = ['werknemer', 'category', 'subject', 'sla'];
   public dataSourceTasks = new MatTableDataSource<ITask>();
 
-  constructor(private tasksService: TasksService, private authService: AuthService, public dialog: MatDialog, private router: Router) { }
+  constructor(private tasksService: TasksService,
+              private authService: AuthService,
+              public dialog: MatDialog,
+              private router: Router,
+              private filterTableService: FilterTableService) { }
 
   ngOnInit() {
       this.getTasks();
@@ -28,18 +32,23 @@ export class TasksComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
   }
 
+    applyFilter(filterValue: string) {
+        this.dataSourceTasks.filter = filterValue.trim().toLowerCase();
+    }
+
     public getTasks() {
       this.tasksService.getAll(new TaskFilter()
-      // See TasksService.ts for all filter methods
           .openTasks()
           .inboundTasks()
           .assignedTo(Number(this.authService.getUserId()))
+          .forCategories([8, 1, 2, 3, 4, 7])
           .limitTo(20)
-          .descending()
-          .includeDrafts(true))
-          .subscribe(tasks => {
+          .ascending()
+          // .includeDrafts(true))
+      ).subscribe(tasks => {
               this.tasks = tasks;
               this.dataSourceTasks.data = tasks;
+              this.filterTableService.filterNestedObjects(this.dataSourceTasks);
           });
   }
 
@@ -62,19 +71,45 @@ export class TasksComponent implements OnInit, OnDestroy {
         this.router.navigate(['/dashboard']);
     }
 
-  // getSla(slaDateTime) {
-  //   const currentDate = new Date();
-  //   const slaDate = new Date(slaDateTime);
-  //   const timeTilSla = Math.abs(currentDate.getTime() - slaDate.getTime());
-  //   if ((timeTilSla / 1000 / 60 / 60 / 24) < 1 && currentDate.getDay() === slaDate.getDay()) {
-  //     const hours = slaDate.getHours();
-  //     const minutes = slaDate.getMinutes();
-  //   } else {
-  //
-  //   }
-  // }
+  getSla(slaDateTime, taskId) {
+      const currentDate = new Date();
+      const slaDate = new Date(slaDateTime);
+      const timeTilSla = Math.abs(currentDate.getTime() - slaDate.getTime());
+
+      const days = Math.floor(timeTilSla / 1000 / 60 / 60 / 24);
+      const hours = Math.floor(timeTilSla / 1000 / 60 / 60) % 24;
+      const minutes = Math.floor(timeTilSla / 1000 / 60) % 60;
+
+      if (currentDate > slaDate) {
+          (document.getElementById('sla-date-' + taskId) as HTMLElement).style.backgroundColor = '#f3263f';
+          if (days > 0) {
+              return '-' + days + 'd';
+          } else if (hours > 0) {
+              return '-' + hours + 'u';
+          } else {
+              return '-' + minutes + 'm';
+          }
+      } else {
+          if (days > 0) {
+              (document.getElementById('sla-date-' + taskId) as HTMLElement).style.backgroundColor = '#89bd51';
+              return days + 'd';
+          } else if (hours > 0) {
+              (document.getElementById('sla-date-' + taskId) as HTMLElement).style.backgroundColor = '#89bd51';
+              return hours + 'u';
+          } else {
+              (document.getElementById('sla-date-' + taskId) as HTMLElement).style.backgroundColor = '#f5a623';
+              return minutes + 'm';
+          }
+      }
+  }
 
     logOut() {
       this.authService.logOut();
+    }
+
+    getName(profile: any) {
+      if (profile) {
+          return profile.firstname.substring(0, 1) + profile.lastname.substring(0, 1);
+      }
     }
 }

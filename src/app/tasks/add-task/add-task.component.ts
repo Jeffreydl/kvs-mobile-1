@@ -32,7 +32,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     public contactReason: string;
     public template: object;
     public processWorkFlow: any;
-    public test;
+    public selectedClient;
 
     constructor(private cdRef: ChangeDetectorRef) {}
 
@@ -59,7 +59,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
             console.log(state);
             this.taskType = state.action;
             this.stepper.selectedIndex = 1;
-            this.test = state.client;
+            this.selectedClient = state.client;
         }
     }
 

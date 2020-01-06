@@ -62,11 +62,14 @@ export class AppComponent implements OnInit, OnDestroy {
         this.subscription = timer(10000, 1000000).pipe(
             switchMap(() => this.tasksService.getAll(new TaskFilter()
             .openTasks()
+                .openTasks()
                 .inboundTasks()
                 .assignedTo(Number(this.authService.getUserId()))
+                .forCategories([8, 1, 2, 3, 4, 7])
                 .limitTo(20)
-                .descending()
-                .includeDrafts(true)))
+                .ascending()
+                // .includeDrafts(true)))
+            ))
         ).subscribe(result => {
             if (JSON.stringify(result) !== JSON.stringify(this.result)) {
               this.emitter.emit(result);
@@ -77,9 +80,8 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
   onSwipe(event) {
-    const x = Math.abs(event.deltaX) > 40 ? (event.deltaX > 0 ? 'right' : 'left') : '';
+    const direction = Math.abs(event.deltaX) > 40 ? (event.deltaX > 0 ? 'right' : 'left') : '';
     this.currentRoute = this.router.url;
-    const direction = x;
 
     if (direction === 'left') {
       if (this.currentRoute === '/dashboard') {

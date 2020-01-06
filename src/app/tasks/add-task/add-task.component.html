@@ -14,7 +14,7 @@
         <mat-step [stepControl]="formStepTwo">
             <ng-template matStepLabel>Taak aanmaken</ng-template>
             <app-task-creation-step-two [taskType]="taskType"
-                                        [test]="test"
+                                        [createWithClient]="selectedClient"
                                         (taskEmitter)="getTask($event)"
                                         (dossierEmitter)="getDossier($event)"
                                         (action)="getAction($event)"

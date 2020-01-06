@@ -14,9 +14,6 @@ import {Router} from '@angular/router';
 })
 export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
   public formStepThree: FormGroup;
-  public category = '';
-  public taskSubject = '';
-  // public categories: any;
 
   currentTask: ITask;
   public get task(): any {
@@ -101,16 +98,12 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
   }
 
   private onFormValueChange2(data: any) {
-    this.category = data.category.name;
-    this.taskSubject = data.subject;
   }
 
   onSubmit2(formData: any) {
-    this.tasksService.edit(this.currentTask.id, formData).subscribe(
-        (task: ITask) => {
-          this.assignTask(formData, task);
-        }
-    );
+      console.log(formData);
+      this.assignTask(formData, this.currentTask);
+
   }
 
   public assignTask(formData: any, task: ITask) {
@@ -120,12 +113,13 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
         subject: formData.subject,
         body: formData.body
       },
-      assignee: task.assignee,
-      messageCategory: task.messageCategory
+      assignee: formData.assignee,
+      messageCategory: formData.messageCategory
     };
     console.log(data);
-    this.tasksService.assign(data).subscribe();
-    this.router.navigate(['dashboard']);
+    this.tasksService.assign(data).subscribe(() => {
+        this.router.navigate(['dashboard']);
+    });
   }
 
   public onSubmitResponse(test) {

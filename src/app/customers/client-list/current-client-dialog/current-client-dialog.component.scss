@@ -45,6 +45,13 @@
   .list-item {
     height: 35px;
     margin-bottom: 10px;
+
+    .client-phonenumber {
+      margin-left: 50px;
+    }
+    span {
+      white-space: normal;
+    }
   }
 
   .action-icon {

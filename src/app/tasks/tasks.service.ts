@@ -17,6 +17,7 @@ export class TaskFilter {
     private assigneeId: number;
     private endDate: string;
     private relatieId: number;
+    private categoryIds: number[];
 
     public openTasks() {
         this.state = 'open';
@@ -93,6 +94,11 @@ export class TaskFilter {
         return this;
     }
 
+    public forCategories(categoryIds: number[]) {
+        this.categoryIds = categoryIds;
+        return this;
+    }
+
     public toString(): string {
         const filter = {
             where: {
@@ -120,9 +126,14 @@ export class TaskFilter {
                 direction: this.direction
             });
         }
-        if (this.assigneeId) {
+        if (this.categoryIds && this.assigneeId) {
             filter.where.and.push({
-                assigneeId: this.assigneeId
+                or: [{
+                    messageCategoryId: {
+                        inq: this.categoryIds
+                    },
+                    // assigneeId: this.assigneeId
+                }]
             });
         }
         if (this.endDate) {
@@ -135,14 +146,17 @@ export class TaskFilter {
                 relatieId: this.relatieId
             });
         }
-
-        filter.where.and.push({
-            isDraft: this.isDraft
-        });
+        if (this.isDraft) {
+            filter.where.and.push({
+                isDraft: this.isDraft
+            });
+        }
 
         if (this.order && this.mailDirection) {
             filter.order.push(this.order + ' ' + this.mailDirection);
         }
+        // "ignoreDefaultIncludes":true,"includeGroup":"listview","include":["sender","relatie"]
+
         return JSON.stringify(filter);
     }
 }
@@ -243,3 +257,9 @@ export class TasksService {
         return this.http.post(url + 'Messages/finalizeMessageWorkflow', data);
     }
 }
+
+
+
+//
+// {"where":{"and":[{"state":"open"},{"direction":"inbound"},{"or":[{"messageCategoryId":{"inq":[8,1,2,3,4,7]},"assigneeId":15}]}]},"order":["createdDateTime DESC"],"limit":20}
+// {"where":{"and":[{"state":"open"},{"direction":"inbound"},{"or":[{"messageCategoryId":{"inq":[8,1,2,3,4,7]}},{"assigneeId":15}]}]},"order":["slaDateTime  ASC","createdDateTime  ASC"],"limit":20,"ignoreDefaultIncludes":true,"includeGroup":"listview","include":["sender","relatie"]}

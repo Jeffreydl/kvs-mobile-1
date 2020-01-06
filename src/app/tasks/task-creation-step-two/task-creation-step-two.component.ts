@@ -62,9 +62,9 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
     @Output() processWorkflowEmitter = new EventEmitter<any>();
 
     @Input()
-    public set test(val) {
+    public set createWithClient(val) {
         if (val) {
-            this.currentClient = val;
+            this.selectClient(val);
         }
 }
 

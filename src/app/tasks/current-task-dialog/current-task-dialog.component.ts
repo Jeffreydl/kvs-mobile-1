@@ -68,20 +68,12 @@ export class CurrentTaskDialogComponent implements OnInit, OnDestroy {
     this.dialogRef.close();
   }
 
-    public get formStepOne() {
-        return this.taskCreationStepOneComponent ? this.taskCreationStepOneComponent.formStepOne : null;
-    }
-
     public get formStepTwo() {
         return this.taskCreationStepTwoComponent ? this.taskCreationStepTwoComponent.formStepTwo : null;
     }
 
     public get formStepThree() {
         return this.taskCreationStepThreeComponent ? this.taskCreationStepThreeComponent.formStepThree : null;
-    }
-
-    public get formStepFour() {
-        return this.taskCreationStepFourComponent ? this.taskCreationStepFourComponent.formStepFour : null;
     }
 
     public getTask(task: ITask) {
@@ -101,7 +93,7 @@ export class CurrentTaskDialogComponent implements OnInit, OnDestroy {
     }
 
     public deleteTask() {
-        this.taskService.delete(this.currentTask.id).subscribe((task) => {
+        this.taskService.delete(this.currentTask.id).subscribe(() => {
             this.dialogRef.close();
             this.router.navigate(['dashboard']);
         });
