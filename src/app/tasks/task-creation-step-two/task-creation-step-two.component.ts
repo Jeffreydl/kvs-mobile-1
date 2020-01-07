@@ -80,10 +80,10 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
   ) {}
 
     ngOnInit() {
-        this.tasksService.getMessageChannels().subscribe(data => this.messageChannels = data);
-        this.tasksService.getCategories().subscribe(data => this.categories = data);
-        this.tasksService.getTypes().subscribe(data => this.types = data);
-        this.tasksService.getContactReasons().subscribe(data => this.contactReasons = data);
+        this.tasksService.channels.subscribe(data => this.messageChannels = data);
+        this.tasksService.categories.subscribe(data => this.categories = data);
+        this.tasksService.types.subscribe(data => this.types = data);
+        this.tasksService.contactReasons.subscribe(data => this.contactReasons = data);
         this.createAddTaskForm();
     }
 
@@ -290,37 +290,39 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
     }
 
   public checkCurrentTask() {
-      if (this.currentTask) {
-          if (this.currentTask.relatieId) {
-              this.clientSelected = true;
-              this.getClient(this.currentTask.relatieId);
-              this.formStepTwo.controls.relatieId.setValue(this.currentTask.relatieId);
-          }
-          if (this.currentTask.assigneeId) {
-              this.formStepTwo.controls.assigneeId.setValue(this.currentTask.assigneeId);
-          }
-          if (this.currentTask.assignedById) {
-              this.formStepTwo.controls.assignedById.setValue(this.currentTask.assignedById);
-          }
-          if (this.currentTask.subject) {
-              this.formStepTwo.controls.subject.setValue(this.currentTask.subject);
-              this.contactReason = this.currentTask.subject;
-          }
-          if (this.currentTask.body) {
-              this.formStepTwo.controls.body.setValue(this.currentTask.body);
-          }
-          if (this.currentTask.messageChannelId) {
-              this.formStepTwo.controls.messageChannelId.setValue(this.currentTask.messageChannelId);
-          }
-          if (this.currentTask.messageCategoryId) {
-              this.formStepTwo.controls.messageCategoryId.setValue(this.currentTask.messageCategoryId);
-          }
-          if (this.currentTask.typeId) {
-              this.formStepTwo.controls.typeId.setValue(this.currentTask.typeId);
-          }
-          if (this.currentTask.contactReasonId) {
-              this.formStepTwo.controls.contactReasonId.setValue(this.currentTask.contactReasonId);
-          }
+
+      if (this.currentTask.dossierId) {
+          this.dossierId = this.currentTask.dossierId;
+      }
+      if (this.currentTask.relatieId) {
+          this.clientSelected = true;
+          this.getClient(this.currentTask.relatieId);
+          this.formStepTwo.controls.relatieId.setValue(this.currentTask.relatieId);
+      }
+      if (this.currentTask.assigneeId) {
+          this.formStepTwo.controls.assigneeId.setValue(this.currentTask.assigneeId);
+      }
+      if (this.currentTask.assignedById) {
+          this.formStepTwo.controls.assignedById.setValue(this.currentTask.assignedById);
+      }
+      if (this.currentTask.subject) {
+          this.formStepTwo.controls.subject.setValue(this.currentTask.subject);
+          this.contactReason = this.currentTask.subject;
+      }
+      if (this.currentTask.body) {
+          this.formStepTwo.controls.body.setValue(this.currentTask.body);
+      }
+      if (this.currentTask.messageChannelId) {
+          this.formStepTwo.controls.messageChannelId.setValue(this.currentTask.messageChannelId);
+      }
+      if (this.currentTask.messageCategoryId) {
+          this.formStepTwo.controls.messageCategoryId.setValue(this.currentTask.messageCategoryId);
+      }
+      if (this.currentTask.typeId) {
+          this.formStepTwo.controls.typeId.setValue(this.currentTask.typeId);
+      }
+      if (this.currentTask.contactReasonId) {
+          this.formStepTwo.controls.contactReasonId.setValue(this.currentTask.contactReasonId);
       }
   }
 }

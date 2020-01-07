@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {baseUrl} from '../base-api.service';
 import {ITask} from './ITask';
-import {map} from 'rxjs/operators';
+import {map, shareReplay} from 'rxjs/operators';
 
 export class TaskFilter {
     private state: string;
@@ -155,8 +155,6 @@ export class TaskFilter {
         if (this.order && this.mailDirection) {
             filter.order.push(this.order + ' ' + this.mailDirection);
         }
-        // "ignoreDefaultIncludes":true,"includeGroup":"listview","include":["sender","relatie"]
-
         return JSON.stringify(filter);
     }
 }
@@ -169,16 +167,50 @@ const url = baseUrl + 'api/';
 export class TasksService {
     public tasks: Observable<ITask[]>;
     public tasksLength = new BehaviorSubject<number>(null);
+    private categories$;
+    private channels$;
+    private types$;
+    private contactReasons$;
 
     constructor(private http: HttpClient) {}
 
+    get categories() {
+        if (!this.categories$) {
+            this. categories$ = this.requestCategories();
+        }
+        return this.categories$;
+    }
+
+    get channels() {
+        if (!this.channels$) {
+            this. channels$ = this.requestMessageChannels();
+        }
+        return this.channels$;
+    }
+
+    get types() {
+        if (!this.types$) {
+            this. types$ = this.requestTypes();
+        }
+        return this.types$;
+    }
+
+    get contactReasons() {
+        if (!this.contactReasons$) {
+            this. contactReasons$ = this.requestContactReasons();
+        }
+        return this.contactReasons$;
+    }
+
     public getAll(filter: TaskFilter): Observable<ITask[]> {
         this.tasks = this.http.get<ITask[]>(url + 'Messages?filter=' + filter).pipe(
+            // shareReplay(),
             map((tasks) => {
                 this.tasksLength.next(tasks.length);
                 return tasks;
             })
         );
+        console.log(this.tasks);
         return this.tasks;
     }
 
@@ -209,24 +241,28 @@ export class TasksService {
         return this.http.post(url + 'Messages/messageAssignment', data);
     }
 
-    public getCategories() {
-        return this.http.get(url + 'Categories');
+    public requestCategories() {
+        return this.http.get(url + 'Categories').pipe(
+            shareReplay(1)
+        );
     }
 
-    public getMessageChannels() {
-        return this.http.get(url + 'MessageChannels');
+    public requestMessageChannels() {
+        return this.http.get(url + 'MessageChannels').pipe(
+            shareReplay(1)
+        );
     }
 
-    public getTypes() {
-        return this.http.get(url + 'Types');
+    public requestTypes() {
+        return this.http.get(url + 'Types').pipe(
+            shareReplay(1)
+        );
     }
 
-    public getContactReasons() {
-        return this.http.get(url + 'ContactReasons');
-    }
-
-    public getDossierCategories() {
-        return this.http.get(url + 'Dossiercategories');
+    public requestContactReasons() {
+        return this.http.get(url + 'ContactReasons').pipe(
+            shareReplay(1)
+        );
     }
 
     public processWorkflow(message) {

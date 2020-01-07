@@ -8,6 +8,7 @@ import {map} from 'rxjs/operators';
 export class EmployeeFilter {
   private status: string;
   private isSystemUser: boolean;
+  private id;
 
   public activeStatus() {
     this.status = 'active';
@@ -18,14 +19,16 @@ export class EmployeeFilter {
     return this;
   }
 
-  // [where][and][0][status]=active&filter[where][and][1][isSystemUser]=false'
+  public forEmployee(id) {
+      this.id = id;
+      return this;
+  }
 
   public toString(): string {
     const filter = {
-      where: {
-        and: []
-      },
-
+        where: {
+            and: []
+        },
     };
 
     if (this.status) {
@@ -37,6 +40,11 @@ export class EmployeeFilter {
       filter.where.and.push({
         isSystemUser: this.isSystemUser
       });
+    }
+    if (this.id) {
+        filter.where.and.push({
+            employeeId: this.id
+        });
     }
     return JSON.stringify(filter);
   }
@@ -69,18 +77,18 @@ export class EmployeesService {
       return this.http.get<any>(baseUrl + 'api/Employees/get-user-by-token/' + token);
   }
 
-  public getEmployeeCategories(id: number) {
-      return this.http.get(baseUrl + 'api/Employees/' + id + '/categories');
-      // after - get the ids of all categories and use them in the gettasks call to get correct tasks
+  public getCategories(filter?: EmployeeFilter) {
+    return this.http.get(baseUrl + 'api/EmployeeCategories?filter=' + filter);
 }
 
   public getFullName(employee: IEmployee): IEmployee {
-      if (employee.profile.middlename) {
-          employee.profile.fullname = employee.profile.firstname + ' ' + employee.profile.middlename + ' ' + employee.profile.lastname;
-          employee.filterByNameAndEmail = employee.profile.firstname + ' ' + employee.profile.middlename + ' ' + employee.profile.lastname + ' ' + employee.email;
+      const e = employee.profile;
+      if (e.middlename) {
+          e.fullname = e.firstname + ' ' + e.middlename + ' ' + e.lastname;
+          employee.filterByNameAndEmail = e.firstname + ' ' + e.middlename + ' ' + e.lastname + ' ' + employee.email;
       } else {
-          employee.profile.fullname = employee.profile.firstname + ' ' + employee.profile.lastname;
-          employee.filterByNameAndEmail = employee.profile.firstname + ' ' + employee.profile.lastname + ' ' + employee.email;
+          e.fullname = e.firstname + ' ' + e.lastname;
+          employee.filterByNameAndEmail = e.firstname + ' ' + e.lastname + ' ' + employee.email;
       }
       return employee;
   }

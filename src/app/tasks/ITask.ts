@@ -73,10 +73,58 @@ export interface ITask {
             {
                 id: number;
                 name: string;
-                description: null
+                description: null;
                 created: string;
                 modified: string;
             }
             ];
+    };
+    relatie: {
+        address: [
+            {
+                city: string
+                country: string
+                houseletter: string;
+                housenumber: number;
+                housenumberaddition: string;
+                id: number;
+                postalcode: string;
+                relatieId: number;
+                searchIndex: string;
+                state: null;
+                street: string;
+                type: string;
+            }
+        ]
+        createdAt: string;
+        dateofbirth: string;
+        deletedAt: string;
+        emailaddress: [
+            {
+                address: string;
+                id: number;
+                relatieId: number;
+                type: string;
+            }
+        ]
+        externalRelationIdentifier: number;
+        firstname: string;
+        gender: string;
+        id: number;
+        initials: string;
+        lastname: string;
+        middlename: string;
+        personsnumber: number;
+        phonenumber: [
+            {
+                id: number;
+                number: string;
+                relatieId: number;
+                type: string;
+            }
+        ]
+        salutation: null;
+        type: string;
+        updatedAt: string;
     };
 }
