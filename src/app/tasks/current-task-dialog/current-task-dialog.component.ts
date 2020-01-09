@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, ViewChild, Inject, ChangeDetectorRef} from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild, Inject, ChangeDetectorRef, Output} from '@angular/core';
 import {TasksService} from '../tasks.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CustomersService} from '../../customers/customers.service';
@@ -26,7 +26,7 @@ export class CurrentTaskDialogComponent implements OnInit, OnDestroy {
   public currentTask: ITask;
     public types: any;
 
-    public currentClient: ICustomer;
+    currentClient: ICustomer;
     @ViewChild('stepper', {static: false}) stepper: MatStepper;
     public action: string;
     public assigneeForm: FormGroup;
@@ -104,5 +104,9 @@ export class CurrentTaskDialogComponent implements OnInit, OnDestroy {
 
     public saveTask() {
       console.log('savetask');
+    }
+
+    public openClient(client: ICustomer) {
+        this.dialogRef.close();
     }
 }

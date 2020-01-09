@@ -39,7 +39,7 @@ export class CurrentClientDialogComponent implements OnInit, OnDestroy {
     }
 
     public selectTaskType(action: string) {
-      this.dialogRef.close();
-      this.router.navigate(['taak-aanmaken'], { state: {action, client: this.client}});
+        this.dialogRef.close();
+        this.router.navigate(['taak-aanmaken'], { state: {action, client: this.client}});
     }
 }

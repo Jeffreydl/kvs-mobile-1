@@ -17,7 +17,8 @@
                                         (action)="getAction($event)"
                                         [currentTask]="currentTask"
                                         (templateEmitter)="getTemplate($event)"
-                                        (processWorkflowEmitter)="getProcessWorkflow($event)">
+                                        (processWorkflowEmitter)="getProcessWorkflow($event)"
+                                        (clientEmitter)="openClient($event)">
             </app-task-creation-step-two>
         </mat-step>
 

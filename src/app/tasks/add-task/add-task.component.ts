@@ -54,6 +54,13 @@ export class AddTaskComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.cdRef.detectChanges();
+        this.getRouteState();
+    }
+
+    ngOnDestroy(): void {
+    }
+
+    getRouteState(): void {
         const state = window.history.state;
         if (state.action) {
             console.log(state);
@@ -61,9 +68,6 @@ export class AddTaskComponent implements OnInit, OnDestroy {
             this.stepper.selectedIndex = 1;
             this.selectedClient = state.client;
         }
-    }
-
-    ngOnDestroy(): void {
     }
 
     getPreset(type: string) {

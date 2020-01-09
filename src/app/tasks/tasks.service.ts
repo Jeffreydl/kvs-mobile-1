@@ -111,7 +111,7 @@ export class TaskFilter {
             this.limit = 20;
         }
         if (!this.order) {
-            this.order = 'createdDateTime';
+            this.order = 'slaDateTime';
         }
         if (!this.direction) {
             this.direction = 'ASC';
