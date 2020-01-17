@@ -139,7 +139,7 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
 
     const data = {
         dossier: this.dossier,
-        message: this.task,
+        message: this.processWorkflow.response.message,
         reply: this.processWorkflow.response.reply,
         tasks: [],
         messageComment: {createdBy: '15'},
@@ -165,6 +165,20 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
     };
     data.dossier.comments = [];
     data.dossier.messages = [];
+    data.message.parentContactReason = this.processWorkflow.response.message.contactReason;
+    data.message.lockedBy = {
+        blockedUntil: null,
+        createdById: null,
+        deletedAt: null,
+        email: 'jlooper@zig.nl',
+        emailOptIn: false,
+        emailVerified: null,
+        employeeGroupId: null,
+        id: 16,
+        invalidLoginAttempts: 0,
+        isExternal: false,
+        isSystemUser: false
+    };
     this.tasksService.finalizeWorkflow(data).subscribe();
   }
 }
