@@ -4,6 +4,15 @@
   margin-bottom: 80px;
   top: 45px;
 
+    .close-dialog {
+      position: absolute;
+      right: 0;
+      top: 0;
+      font-size: 40px;
+      width: 40px;
+      height: 40px;
+    }
+
   .items {
 
     .panel {

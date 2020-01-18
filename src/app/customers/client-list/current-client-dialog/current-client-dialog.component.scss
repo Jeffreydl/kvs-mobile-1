@@ -45,6 +45,13 @@
   .list-item {
     height: 35px;
     margin-bottom: 10px;
+
+    .client-phonenumber {
+      margin-left: 50px;
+    }
+    span {
+      white-space: normal;
+    }
   }
 
   .action-icon {
@@ -76,7 +83,7 @@
       font-size: 32px;
       height: 32px;
       width: 32px;
-      margin-top: 5px;
+      margin-top: 10px;
       color: white;
     }
   }

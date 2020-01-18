@@ -32,7 +32,6 @@
 </div>
 
 <div class="beantwoorden" *ngIf="__action === 'beantwoorden' && formStepThree">
-    beantwoorden
 
     <mat-form-field class="form-field-100">
         <input matInput placeholder="Onderwerp" [value]="currentTask?.subject">
@@ -40,18 +39,20 @@
 
     <div class="message" contenteditable="true" [innerHTML]="templateValue?.response.body" #messageBody></div>
 
-    <mat-checkbox [checked]="emailIsChecked" (change)="emailIsChecked = !emailIsChecked">
-        Verstuur e-mail na verwerking
-    </mat-checkbox>
+    <div class="checkboxes">
+        <mat-checkbox [checked]="emailIsChecked" (change)="emailIsChecked = !emailIsChecked">
+            Verstuur e-mail na verwerking
+        </mat-checkbox>
 
-    <!--<mat-form-field class="form-field">-->
-        <!--<input matInput placeholder="Aan">-->
-    <!--</mat-form-field>-->
+        <!--<mat-form-field class="form-field">-->
+            <!--<input matInput placeholder="Aan">-->
+        <!--</mat-form-field>-->
 
-    <mat-checkbox [checked]="emailIsChecked" (change)="closeDossierIsChecked = !closeDossierIsChecked">
-        Sluit dossier na verwerking
-    </mat-checkbox>
+        <mat-checkbox [checked]="emailIsChecked" (change)="closeDossierIsChecked = !closeDossierIsChecked">
+            Sluit dossier na verwerking
+        </mat-checkbox>
+    </div>
 
-    <button (click)="onSubmitResponse(messageBody.innerHTML)">submit</button>
+    <button (click)="onSubmitResponse(messageBody.innerHTML)" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple">submit</button>
 
 </div>

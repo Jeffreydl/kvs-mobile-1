@@ -32,7 +32,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     public contactReason: string;
     public template: object;
     public processWorkFlow: any;
-    public test;
+    public selectedClient;
 
     constructor(private cdRef: ChangeDetectorRef) {}
 
@@ -54,16 +54,20 @@ export class AddTaskComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.cdRef.detectChanges();
+        this.getRouteState();
+    }
+
+    ngOnDestroy(): void {
+    }
+
+    getRouteState(): void {
         const state = window.history.state;
         if (state.action) {
             console.log(state);
             this.taskType = state.action;
             this.stepper.selectedIndex = 1;
-            this.test = state.client;
+            this.selectedClient = state.client;
         }
-    }
-
-    ngOnDestroy(): void {
     }
 
     getPreset(type: string) {

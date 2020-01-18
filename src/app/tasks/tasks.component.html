@@ -1,21 +1,35 @@
 <div class="container">
+    <mat-form-field floatLabel="never" class="task-filter">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Zoeken in taken">
+    </mat-form-field>
     <table mat-table [dataSource]="dataSourceTasks" class="mat-elevation-z8 table">
+
+        <ng-container matColumnDef="werknemer">
+            <th class="task-table-th" mat-header-cell *matHeaderCellDef> Werkn. </th>
+            <td class="task-table-td" (click)="openCurrentTask(task)" mat-cell *matCellDef="let task">
+                <span *ngIf="task.assignee; else noAssignee" class="circle">{{getName(task?.assignee?.profile)}}</span>
+                <ng-template #noAssignee>
+                    <mat-icon aria-hidden="true" class="inbox" role="img">inbox</mat-icon>
+                </ng-template>
+            </td>
+        </ng-container>
+
         <ng-container matColumnDef="category">
-            <th mat-header-cell *matHeaderCellDef> Categorie </th>
-            <td (click)="openCurrentTask(task)" mat-cell *matCellDef="let task"> {{task.messageCategory.name}} </td>
+            <th class="task-table-th" mat-header-cell *matHeaderCellDef> Categorie </th>
+            <td class="task-table-td" (click)="openCurrentTask(task)" mat-cell *matCellDef="let task"> {{task.messageCategory.name}} </td>
         </ng-container>
 
         <ng-container matColumnDef="subject">
-            <th mat-header-cell *matHeaderCellDef> Onderwerp </th>
-            <td (click)="openCurrentTask(task)" mat-cell *matCellDef="let task"> {{task.subject}} </td>
+            <th class="task-table-th" mat-header-cell *matHeaderCellDef> Onderwerp </th>
+            <td class="task-table-td" (click)="openCurrentTask(task)" mat-cell *matCellDef="let task"> {{task.subject}} </td>
         </ng-container>
 
         <ng-container matColumnDef="sla">
-            <th mat-header-cell *matHeaderCellDef> SLA-datum </th>
-            <td (click)="openCurrentTask(task)" mat-cell *matCellDef="let task"> {{task.slaDateTime | date:'HH:mm, dd-MM-yyy'}} </td>
+            <th class="task-table-th" mat-header-cell *matHeaderCellDef> SLA-datum </th>
+            <td class="task-table-td" (click)="openCurrentTask(task)" mat-cell *matCellDef="let task"> <span class="sla-date" id="{{'sla-date-' + task.id}}">{{getSla(task.slaDateTime, task.id)}}</span></td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumnsTasks"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsTasks; sticky: true" class="task-table-header"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumnsTasks;"></tr>
     </table>
 

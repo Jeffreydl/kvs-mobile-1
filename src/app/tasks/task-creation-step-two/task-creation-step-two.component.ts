@@ -12,6 +12,7 @@ import {EmployeesService} from '../../employees/employees.service';
 import {ITemplate} from '../../ITemplate';
 import {DossierService} from '../../dossiers/dossier.service';
 import {IDossier} from '../../dossiers/IDossier';
+import {Router} from '@angular/router';
 
 @AutoUnsubscribe()
 @Component({
@@ -44,6 +45,7 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
     public isChecked = true;
     public taskSubject = '';
 
+    @Output() clientEmitter = new EventEmitter<ICustomer>();
     public currentClient: ICustomer;
     public clientSelected: boolean;
     @ViewChild('stepper', {static: false}) stepper: MatStepper;
@@ -62,9 +64,9 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
     @Output() processWorkflowEmitter = new EventEmitter<any>();
 
     @Input()
-    public set test(val) {
+    public set createWithClient(val) {
         if (val) {
-            this.currentClient = val;
+            this.selectClient(val);
         }
 }
 
@@ -77,13 +79,14 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
               private templatesService: TemplatesService,
               private employeesService: EmployeesService,
               private dossiersService: DossierService,
+              private router: Router,
   ) {}
 
     ngOnInit() {
-        this.tasksService.getMessageChannels().subscribe(data => this.messageChannels = data);
-        this.tasksService.getCategories().subscribe(data => this.categories = data);
-        this.tasksService.getTypes().subscribe(data => this.types = data);
-        this.tasksService.getContactReasons().subscribe(data => this.contactReasons = data);
+        this.tasksService.channels.subscribe(data => this.messageChannels = data);
+        this.tasksService.categories.subscribe(data => this.categories = data);
+        this.tasksService.types.subscribe(data => this.types = data);
+        this.tasksService.contactReasons.subscribe(data => this.contactReasons = data);
         this.createAddTaskForm();
     }
 
@@ -290,7 +293,12 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
     }
 
   public checkCurrentTask() {
+
       if (this.currentTask) {
+          if (this.currentTask.dossierId) {
+              console.log(this.currentTask.dossierId);
+              this.dossierId = this.currentTask.dossierId;
+          }
           if (this.currentTask.relatieId) {
               this.clientSelected = true;
               this.getClient(this.currentTask.relatieId);
@@ -323,4 +331,10 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
           }
       }
   }
+
+    lol(client: ICustomer) {
+        // output to current-task and close expansion panel
+        this.clientEmitter.emit(client);
+        this.router.navigate(['klanten'], {state: {client}});
+    }
 }

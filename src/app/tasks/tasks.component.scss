@@ -1,5 +1,17 @@
 .container {
   height: 100%;
+  position: relative;
+  margin-bottom: 80px;
+
+  .task-filter {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 10px;
+
+    input {
+      padding-left: 10px;
+    }
+  }
 
   p {
     margin-right: 5px;
@@ -12,5 +24,39 @@
 
   .table {
     width: 100vw;
+
+    .circle {
+      border: 1px solid #929292;
+      border-radius: 50%;
+      padding: 8px;
+      color: #929292;
+      font-weight: 500;
+    }
+
+    .inbox {
+      color: #929292;
+      font-size: 28px;
+      height: 28px;
+      width: 28px;
+      margin-left: 4px;
+    }
+
+    .sla-date {
+      color: white;
+      padding: 5px 10px;
+      border-radius: 24px;
+    }
   }
+}
+
+.task-table-header {
+  height: 44px;
+}
+
+.task-table-th {
+  padding-left: 10px !important;
+}
+.task-table-td {
+  //padding-right: 10px;
+  padding-left: 10px !important;
 }

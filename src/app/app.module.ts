@@ -20,8 +20,6 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { KennisbankComponent } from './kennisbank/kennisbank.component';
 import { AddTaskComponent } from './tasks/add-task/add-task.component';
 import { ClientSearchbarComponent } from './customers/client-searchbar/client-searchbar.component';
-import { ClientCardComponent } from './customers/client-card/client-card.component';
-import { HousesComponent } from './houses/houses.component';
 import { DossiersComponent } from './dossiers/dossiers.component';
 import { ClientListComponent } from './customers/client-list/client-list.component';
 import { SanitizeHtmlPipe } from './sanitize-html.pipe';
@@ -52,8 +50,6 @@ import { SplashScreenComponent } from './splash-screen/splash-screen.component';
     AddTaskComponent,
     OrderByPipe,
     ClientSearchbarComponent,
-    ClientCardComponent,
-    HousesComponent,
     DossiersComponent,
     ClientListComponent,
     SanitizeHtmlPipe,

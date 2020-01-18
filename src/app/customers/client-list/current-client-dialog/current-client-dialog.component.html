@@ -45,7 +45,7 @@
                 <a [href]="call(phone?.number) | safeUrl"><mat-icon matListIcon class="action-icon">call</mat-icon></a>
                 <a [href]="sendSms(phone?.number) | safeUrl"><mat-icon matListIcon class="action-icon sms">sms</mat-icon></a>
                 <p matLine>
-                    <span>{{phone.number}}</span>
+                    <span class="client-phonenumber">{{phone.number}}</span>
                 </p>
             </mat-list-item>
         </div>

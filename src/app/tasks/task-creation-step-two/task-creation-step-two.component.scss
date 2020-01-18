@@ -22,4 +22,15 @@
 
 .current-client {
   margin-bottom: 5px;
+  border: 1px solid #929292;
+  padding: 5px;
+
+  .close-button {
+    font-size: 30px;
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    right: 10px;
+    top: 0;
+  }
 }

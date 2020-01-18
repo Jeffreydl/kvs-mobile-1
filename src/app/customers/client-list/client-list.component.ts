@@ -35,6 +35,11 @@ export class ClientListComponent implements OnInit, OnDestroy {
         ).subscribe((value) => {
             this.filterClients(value);
         });
+
+        const state = window.history.state;
+        if (state.client) {
+            this.openDetailsDialog(state.client);
+        }
     }
     ngOnDestroy(): void {
     }
