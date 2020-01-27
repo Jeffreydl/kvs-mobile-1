@@ -63,13 +63,7 @@
                (keyup)="isChecked = false">
     </mat-form-field>
 
-    <mat-form-field class="form-field-100">
-                    <textarea formControlName="body"
-                              class="message-body"
-                              placeholder="Bericht (optioneel)"
-                              matInput matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5>
-                    </textarea>
-    </mat-form-field>
+    <div class="message" contenteditable="true" [innerHTML]="currentTask?.body" #messageBody></div>
 
     <input formControlName="assignedById" hidden>
     <input formControlName="assigneeId" hidden>
@@ -77,7 +71,7 @@
     <input formControlName="direction" hidden>
     <input formControlName="isDraft" hidden>
 
-    <button matStepperNext type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple submit-step-2" (click)="submitAssignee('toewijzen', formStepTwo.value)">Toewijzen</button>
-    <button matStepperNext type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple submit-step-2" (click)="submitResponse('beantwoorden', formStepTwo.value)">Beantwoorden</button>
+    <button matStepperNext type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple submit-step-2" (click)="submitForm('toewijzen', messageBody)">Toewijzen</button>
+    <button matStepperNext type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple submit-step-2" (click)="submitForm('beantwoorden', messageBody)">Beantwoorden</button>
 
 </form>

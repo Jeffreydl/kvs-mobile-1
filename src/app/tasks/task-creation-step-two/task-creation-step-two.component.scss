@@ -2,10 +2,6 @@
   width: 40%;
   margin-right: 15px;
 
-  .message-body {
-    min-height: 40px !important;
-    max-height: 90px !important;
-  }
 }
 .form-field-50 {
   width: 50%;
@@ -14,6 +10,12 @@
 
 .form-field-100 {
   width: 100%;
+}
+
+.message {
+  border: 2px solid rgba(0,0,0,.2);
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
 .submit-step-2 {

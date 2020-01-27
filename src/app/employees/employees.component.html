@@ -4,7 +4,7 @@
         <input type="text" placeholder="Medewerker kiezen" matInput [formControl]="myControl" [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let employee of filteredEmployees | async" [value]="employee.email" (click)="selectEmployee(employee)">
-                {{employee.profile.fullname}} ({{employee.email}}
+                {{employee.profile.fullname}} ({{employee?.email}})
                 <mat-divider></mat-divider>
             </mat-option>
         </mat-autocomplete>

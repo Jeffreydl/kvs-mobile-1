@@ -18,7 +18,8 @@
                                         [currentTask]="currentTask"
                                         (templateEmitter)="getTemplate($event)"
                                         (processWorkflowEmitter)="getProcessWorkflow($event)"
-                                        (clientEmitter)="openClient($event)">
+                                        (clientEmitter)="openClient($event)"
+                                        [isSaved]="isSaved">
             </app-task-creation-step-two>
         </mat-step>
 
@@ -27,7 +28,8 @@
             <app-task-creation-step-three [task]="task"
                                           [action]="action"
                                           [template]="template"
-                                          [workflow]="processWorkFlow">
+                                          [workflow]="processWorkFlow"
+                                          (assigneeEmitter)="dialogRef.close();">
             </app-task-creation-step-three>
         </mat-step>
     </mat-vertical-stepper>

@@ -50,7 +50,9 @@
                     <mat-form-field class="form-field" class="email">
                         <input formControlName="address"
                                matInput
-                               placeholder="E-mailadres">
+                               placeholder="E-mailadres"
+                               type="text"
+                               inputmode="email">
                         <mat-icon class="md-default-theme-theme material-icons action-icon remove-icon" role="img" aria-hidden="true" (click)="removeEmailAddress(i)">cancel
                         </mat-icon>
                     </mat-form-field>
@@ -63,7 +65,9 @@
                         <mat-form-field class="form-field" class="phone-number">
                         <input formControlName="number"
                                matInput
-                               placeholder="Telefoonnummer">
+                               placeholder="Telefoonnummer"
+                               type="text"
+                               inputmode="tel">
                             <mat-icon class="md-default-theme-theme material-icons action-icon remove-icon" role="img" aria-hidden="true" (click)="removePhoneNumber(i)">cancel
                             </mat-icon>
 

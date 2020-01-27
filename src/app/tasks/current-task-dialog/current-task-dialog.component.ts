@@ -42,6 +42,8 @@ export class CurrentTaskDialogComponent implements OnInit, OnDestroy {
 
     public template: object;
     public processWorkFlow: any;
+    public isSaved: boolean;
+
 
 
   constructor(
@@ -103,7 +105,7 @@ export class CurrentTaskDialogComponent implements OnInit, OnDestroy {
     }
 
     public saveTask() {
-      console.log('savetask');
+      this.isSaved = true;
     }
 
     public openClient(client: ICustomer) {

@@ -210,7 +210,6 @@ export class TasksService {
                 return tasks;
             })
         );
-        console.log(this.tasks);
         return this.tasks;
     }
 
@@ -273,29 +272,7 @@ export class TasksService {
     }
 
     public finalizeWorkflow(data) {
-        console.log(data);
-        // const dossier;
-        // const message;
-        // const reply;
-        // const sendEmail = true;
-        // const emailTemplateId = 7;
-        // const employeeProfile;
-        // const closeDossierAfterProcess = true;
-        // const publishtoWbs;
-        // const recipients;
-
-        // const tasks;
-        // const messageComment;
-        // const knowledgeBaseAns;
-
-        // const data;
 
         return this.http.post(url + 'Messages/finalizeMessageWorkflow', data);
     }
 }
-
-
-
-//
-// {"where":{"and":[{"state":"open"},{"direction":"inbound"},{"or":[{"messageCategoryId":{"inq":[8,1,2,3,4,7]},"assigneeId":15}]}]},"order":["createdDateTime DESC"],"limit":20}
-// {"where":{"and":[{"state":"open"},{"direction":"inbound"},{"or":[{"messageCategoryId":{"inq":[8,1,2,3,4,7]}},{"assigneeId":15}]}]},"order":["slaDateTime  ASC","createdDateTime  ASC"],"limit":20,"ignoreDefaultIncludes":true,"includeGroup":"listview","include":["sender","relatie"]}

@@ -22,10 +22,9 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     public dossier: IDossier;
     public clientId: number;
 
-    @ViewChild(TaskCreationStepOneComponent, {static: false}) taskCreationStepOneComponent: TaskCreationStepOneComponent;
     @ViewChild(TaskCreationStepTwoComponent, {static: false}) taskCreationStepTwoComponent: TaskCreationStepTwoComponent;
     @ViewChild(TaskCreationStepThreeComponent, {static: false}) taskCreationStepThreeComponent: TaskCreationStepThreeComponent;
-    @ViewChild(TaskCreationStepFourComponent, {static: false}) taskCreationStepFourComponent: TaskCreationStepFourComponent;
+
     public types: any;
     public taskType: string;
     public categories: any;
@@ -36,20 +35,12 @@ export class AddTaskComponent implements OnInit, OnDestroy {
 
     constructor(private cdRef: ChangeDetectorRef) {}
 
-    public get formStepOne() {
-        return this.taskCreationStepOneComponent ? this.taskCreationStepOneComponent.formStepOne : null;
-    }
-
     public get formStepTwo() {
             return this.taskCreationStepTwoComponent ? this.taskCreationStepTwoComponent.formStepTwo : null;
     }
 
     public get formStepThree() {
         return this.taskCreationStepThreeComponent ? this.taskCreationStepThreeComponent.formStepThree : null;
-    }
-
-    public get formStepFour() {
-        return this.taskCreationStepFourComponent ? this.taskCreationStepFourComponent.formStepFour : null;
     }
 
     ngOnInit() {
@@ -63,7 +54,6 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     getRouteState(): void {
         const state = window.history.state;
         if (state.action) {
-            console.log(state);
             this.taskType = state.action;
             this.stepper.selectedIndex = 1;
             this.selectedClient = state.client;

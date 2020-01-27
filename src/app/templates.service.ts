@@ -16,7 +16,6 @@ export class TemplatesService {
 
   public postById(relatie: ICustomer, employee: any): Observable<ITemplate> {
     const data = {id: 7, replacement: {employee, relatie}};
-    console.log(data);
     return this.http.post<ITemplate>(baseUrl + 'api/Templates/getById/7', data);
   }
 
