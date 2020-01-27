@@ -1,11 +1,6 @@
 .form-field {
   width: 40%;
   margin-right: 15px;
-
-  .message-body {
-    min-height: 40px !important;
-    max-height: 90px !important;
-  }
 }
 
 .form-field-100 {
@@ -15,6 +10,7 @@
 .message {
   border: 2px solid rgba(0,0,0,.2);
   padding: 10px;
+  margin-bottom: 10px;
 }
 
 .checkboxes {

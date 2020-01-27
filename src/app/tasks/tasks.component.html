@@ -1,6 +1,6 @@
 <div class="container">
     <mat-form-field floatLabel="never" class="task-filter">
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Zoeken in taken">
+        <input matInput type="search" (keyup)="applyFilter($event.target.value)" placeholder="Zoeken in taken">
     </mat-form-field>
     <table mat-table [dataSource]="dataSourceTasks" class="mat-elevation-z8 table">
 

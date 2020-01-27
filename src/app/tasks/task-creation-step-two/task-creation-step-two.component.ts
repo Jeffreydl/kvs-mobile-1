@@ -33,6 +33,7 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
     public template: ITemplate;
 
     @Output() templateEmitter = new EventEmitter<object>();
+
     @Input()
     public set taskType(val: string) {
         if (val) {
@@ -68,19 +69,27 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
         if (val) {
             this.selectClient(val);
         }
-}
+    }
+
+    @Input()
+    public set isSaved(val) {
+        if (val) {
+            this.editTask(this.formStepTwo.value);
+        }
+    }
+
 
     public dossierId: number;
 
-  constructor(private tasksService: TasksService,
-              private customersService: CustomersService,
-              private formBuilder: FormBuilder,
-              private authService: AuthService,
-              private templatesService: TemplatesService,
-              private employeesService: EmployeesService,
-              private dossiersService: DossierService,
-              private router: Router,
-  ) {}
+    constructor(private tasksService: TasksService,
+                private customersService: CustomersService,
+                private formBuilder: FormBuilder,
+                private authService: AuthService,
+                private templatesService: TemplatesService,
+                private employeesService: EmployeesService,
+                private dossiersService: DossierService,
+                private router: Router,
+    ) {}
 
     ngOnInit() {
         this.tasksService.channels.subscribe(data => this.messageChannels = data);
@@ -134,24 +143,9 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
         this.taskSubject = data.subject;
     }
 
-  public submitAssignee(action: string, formData: any) {
-    if (!this.dossierId) {
-        this.newDossier(formData, action);
-    } else {
-      this.editTask(formData, action);
-    }
-    this.action.emit(action);
-    this.categoriesEmitter.emit(this.categories);
-    this.typesEmitter.emit(this.types);
-    this.contactReasonEmitter.emit(this.contactReason);
-
-    if (action === 'beantwoorden') {
-        this.getEmployee();
-        // this.processTask();
-    }
-  }
-
-    public submitResponse(action: string, formData: any) {
+    public submitForm(action: string, messageBody: HTMLElement) {
+        this.formStepTwo.controls.body.setValue(messageBody.innerHTML);
+        const formData = this.formStepTwo.value;
         if (!this.dossierId) {
             this.newDossier(formData, action);
         } else {
@@ -161,111 +155,107 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
         this.categoriesEmitter.emit(this.categories);
         this.typesEmitter.emit(this.types);
         this.contactReasonEmitter.emit(this.contactReason);
-        this.getEmployee();
+
+        if (action === 'beantwoorden') {
+            this.getEmployee();
+        }
     }
 
-  public addTask(formData: any) {
-      this.tasksService.new(formData).subscribe(
-          (task: ITask) => {
-              this.taskId = task.id;
-          }
-      );
-  }
+    public addTask(formData: any) {
+        this.tasksService.new(formData).subscribe(
+            (task: ITask) => {
+                this.taskId = task.id;
+            }
+        );
+    }
 
-  public editTask(formData: ITask, action?: string) {
-      if (this.taskId) {
-          this.tasksService.edit(this.taskId, formData).subscribe((task) => {
-              this.taskEmitter.emit(task);
-              if (action === 'beantwoorden') {
-                  this.task = task;
-                  this.processTask();
-              }
-          });
-      } else {
-          this.tasksService.edit(this.currentTask.id, formData).subscribe((task) => {
-              this.taskEmitter.emit(task);
-              if (action === 'beantwoorden') {
-                  this.task = task;
-                  this.processTask();
-              }
-          });
-      }
-  }
+    public editTask(formData: ITask, action?: string) {
+        let taskId: number;
+        if (this.taskId) {
+            taskId = this.taskId;
+        } else {
+            taskId = this.currentTask.id;
+        }
+        this.tasksService.edit(taskId, formData).subscribe((task) => {
+            this.taskEmitter.emit(task);
+            if (action === 'beantwoorden') {
+                this.task = task;
+                this.processTask();
+            }
+        });
+    }
 
-  public newDossier(formData: ITask, action?: string) {
-      this.dossiersService.new(formData).subscribe((dossier: IDossier) => {
-          this.dossierId = dossier.id;
-          formData.dossierId = dossier.id;
-          this.editTask(formData, action);
-          this.dossierEmitter.emit(dossier);
-          this.dossier = dossier;
-      });
-  }
+    public newDossier(formData: ITask, action?: string) {
+        this.dossiersService.new(formData).subscribe((dossier: IDossier) => {
+            this.dossierId = dossier.id;
+            formData.dossierId = dossier.id;
+            this.editTask(formData, action);
+            this.dossierEmitter.emit(dossier);
+            this.dossier = dossier;
+        });
+    }
 
-  public processTask() {
-      console.log('processtask');
-      const data = {
-          // dossier: this.dossier,
-          message: this.task,
-          reply: {
-              subject: 'RE: ' + this.task.subject
-          },
-          draftInfo: {
-              selectedDossierOption: this.dossier.id,
-              recipients: {
-                  to: [
-                      {
-                          email: this.currentClient.emailaddress[0].address,
-                          display: this.currentClient.initials + ' (' + this.currentClient.firstname + ') ' + this.currentClient.middlename
-                              + ' ' + this.currentClient.lastname + ' (' + this.currentClient.emailaddress[0].address + ')',
-                          name: this.currentClient.initials + ' (' + this.currentClient.firstname + ') ' + this.currentClient.middlename
-                              + ' ' + this.currentClient.lastname
-                      }],
-                  cc: null,
-                  bcc: null,
-                  sendEmailAfterProcess: true,
-                  closeDossierAfterProcess: true
-              //     // comment: {createdBy: "15"}
-              //     // tasks: []
-              //     //     }
-              }
-          }
-      };
-      this.tasksService.processWorkflow(data).subscribe((response) => {
-          this.processWorkflowEmitter.emit(response);
-      });
-  }
+    public processTask() {
+        const client = this.currentClient;
+        const data = {
+            // dossier: this.dossier,
+            message: this.task,
+            reply: {
+                subject: 'RE: ' + this.task.subject
+            },
+            draftInfo: {
+                selectedDossierOption: this.dossier.id,
+                recipients: {
+                    to: [
+                        {
+                            email: client.emailaddress[0].address,
+                            display: client.initials + ' (' + client.firstname + ') ' + client.middlename
+                                + ' ' + client.lastname + ' (' + client.emailaddress[0].address + ')',
+                            name: client.initials + ' (' + client.firstname + ') ' + client.middlename
+                                + ' ' + client.lastname
+                        }],
+                    cc: null,
+                    bcc: null,
+                    sendEmailAfterProcess: true,
+                    closeDossierAfterProcess: true
+                }
+            }
+        };
+        this.tasksService.processWorkflow(data).subscribe((response) => {
+            this.processWorkflowEmitter.emit(response);
+        });
+    }
 
-  public updateSubject() {
-      this.isChecked = !this.isChecked;
-      if (this.isChecked && this.contactReasonId) {
-          this.contactReason = this.contactReasons[this.contactReasonId - 1].name;
-          this.formStepTwo.patchValue({
-              subject: this.contactReason
-          });
-      } else {
-          this.formStepTwo.patchValue({
-              subject: this.taskSubject
-          });
-      }
-  }
+    public updateSubject() {
+        this.isChecked = !this.isChecked;
+        if (this.isChecked && this.contactReasonId) {
+            this.contactReason = this.contactReasons[this.contactReasonId - 1].name;
+            this.formStepTwo.patchValue({
+                subject: this.contactReason
+            });
+        } else {
+            this.formStepTwo.patchValue({
+                subject: this.taskSubject
+            });
+        }
+    }
 
-  public contactReasonToSubject() {
-      if (this.isChecked) {
-          this.contactReason = this.contactReasons[this.contactReasonId - 1].name;
+    public contactReasonToSubject() {
+        if (this.isChecked) {
+            this.contactReason = this.contactReasons[this.contactReasonId - 1].name;
 
-          this.formStepTwo.patchValue({
-              subject: this.contactReason
-          });
-      }
-  }
+            this.formStepTwo.patchValue({
+                subject: this.contactReason
+            });
+        }
+    }
 
-  public getEmployee() {
-    this.employeesService.getByToken(this.authService.getToken()).subscribe((employee) => {
-        this.employee = employee.user;
-        this.getTemplate();
-    });
-  }
+    public getEmployee() {
+        this.employeesService.getByToken(this.authService.getToken()).subscribe((employee) => {
+            this.employee = employee.user;
+            this.getTemplate();
+        });
+    }
 
     public getTemplate() {
         this.templatesService.postById(this.currentClient, this.employee).subscribe((template) => {
@@ -292,45 +282,44 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
         this.clientSelected = true;
     }
 
-  public checkCurrentTask() {
+    public checkCurrentTask() {
 
-      if (this.currentTask) {
-          if (this.currentTask.dossierId) {
-              console.log(this.currentTask.dossierId);
-              this.dossierId = this.currentTask.dossierId;
-          }
-          if (this.currentTask.relatieId) {
-              this.clientSelected = true;
-              this.getClient(this.currentTask.relatieId);
-              this.formStepTwo.controls.relatieId.setValue(this.currentTask.relatieId);
-          }
-          if (this.currentTask.assigneeId) {
-              this.formStepTwo.controls.assigneeId.setValue(this.currentTask.assigneeId);
-          }
-          if (this.currentTask.assignedById) {
-              this.formStepTwo.controls.assignedById.setValue(this.currentTask.assignedById);
-          }
-          if (this.currentTask.subject) {
-              this.formStepTwo.controls.subject.setValue(this.currentTask.subject);
-              this.contactReason = this.currentTask.subject;
-          }
-          if (this.currentTask.body) {
-              this.formStepTwo.controls.body.setValue(this.currentTask.body);
-          }
-          if (this.currentTask.messageChannelId) {
-              this.formStepTwo.controls.messageChannelId.setValue(this.currentTask.messageChannelId);
-          }
-          if (this.currentTask.messageCategoryId) {
-              this.formStepTwo.controls.messageCategoryId.setValue(this.currentTask.messageCategoryId);
-          }
-          if (this.currentTask.typeId) {
-              this.formStepTwo.controls.typeId.setValue(this.currentTask.typeId);
-          }
-          if (this.currentTask.contactReasonId) {
-              this.formStepTwo.controls.contactReasonId.setValue(this.currentTask.contactReasonId);
-          }
-      }
-  }
+        if (this.currentTask) {
+            if (this.currentTask.dossierId) {
+                this.dossierId = this.currentTask.dossierId;
+            }
+            if (this.currentTask.relatieId) {
+                this.clientSelected = true;
+                this.getClient(this.currentTask.relatieId);
+                this.formStepTwo.controls.relatieId.setValue(this.currentTask.relatieId);
+            }
+            if (this.currentTask.assigneeId) {
+                this.formStepTwo.controls.assigneeId.setValue(this.currentTask.assigneeId);
+            }
+            if (this.currentTask.assignedById) {
+                this.formStepTwo.controls.assignedById.setValue(this.currentTask.assignedById);
+            }
+            if (this.currentTask.subject) {
+                this.formStepTwo.controls.subject.setValue(this.currentTask.subject);
+                this.contactReason = this.currentTask.subject;
+            }
+            if (this.currentTask.body) {
+                this.formStepTwo.controls.body.setValue(this.currentTask.body);
+            }
+            if (this.currentTask.messageChannelId) {
+                this.formStepTwo.controls.messageChannelId.setValue(this.currentTask.messageChannelId);
+            }
+            if (this.currentTask.messageCategoryId) {
+                this.formStepTwo.controls.messageCategoryId.setValue(this.currentTask.messageCategoryId);
+            }
+            if (this.currentTask.typeId) {
+                this.formStepTwo.controls.typeId.setValue(this.currentTask.typeId);
+            }
+            if (this.currentTask.contactReasonId) {
+                this.formStepTwo.controls.contactReasonId.setValue(this.currentTask.contactReasonId);
+            }
+        }
+    }
 
     lol(client: ICustomer) {
         // output to current-task and close expansion panel
