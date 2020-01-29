@@ -35,8 +35,10 @@ import { EmployeesComponent } from './employees/employees.component';
 import { TaskCreationStepOneComponent } from './tasks/task-creation-step-one/task-creation-step-one.component';
 import { TaskCreationStepTwoComponent } from './tasks/task-creation-step-two/task-creation-step-two.component';
 import { TaskCreationStepThreeComponent } from './tasks/task-creation-step-three/task-creation-step-three.component';
-import { TaskCreationStepFourComponent } from './tasks/task-creation-step-four/task-creation-step-four.component';
 import { SplashScreenComponent } from './splash-screen/splash-screen.component';
+import { HeaderComponent } from './header/header.component';
+import { ProfileComponent } from './employees/profile/profile.component';
+import { TasksSearchbarComponent } from './tasks/tasks-searchbar/tasks-searchbar.component';
 
 @NgModule({
   declarations: [
@@ -61,10 +63,12 @@ import { SplashScreenComponent } from './splash-screen/splash-screen.component';
     TaskCreationStepOneComponent,
     TaskCreationStepTwoComponent,
     TaskCreationStepThreeComponent,
-    TaskCreationStepFourComponent,
     SplashScreenComponent,
+    HeaderComponent,
+    ProfileComponent,
+    TasksSearchbarComponent,
   ],
-  entryComponents: [CurrentClientDialogComponent, AddClientDialogComponent, CurrentTaskDialogComponent],
+  entryComponents: [CurrentClientDialogComponent, AddClientDialogComponent, CurrentTaskDialogComponent, ProfileComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

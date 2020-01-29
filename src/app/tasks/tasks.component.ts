@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {TaskFilter, TasksService} from './tasks.service';
 import {AuthService} from '../auth/auth.service';
 import {ITask} from './ITask';
@@ -7,7 +7,6 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {CurrentTaskDialogComponent} from './current-task-dialog/current-task-dialog.component';
 import {Router} from '@angular/router';
 import {FilterTableService} from '../filterTable.service';
-import {EmployeesService} from '../employees/employees.service';
 
 @AutoUnsubscribe()
 @Component({
@@ -19,6 +18,7 @@ export class TasksComponent implements OnInit, OnDestroy {
     public tasks: ITask[];
     public displayedColumnsTasks: string[] = ['werknemer', 'category', 'subject', 'sla'];
     public dataSourceTasks = new MatTableDataSource<ITask>();
+    public isSearching: boolean;
 
     constructor(private tasksService: TasksService,
                 private authService: AuthService,
@@ -107,13 +107,16 @@ export class TasksComponent implements OnInit, OnDestroy {
         }
     }
 
-    logOut() {
-        this.authService.logOut();
-    }
-
-    getName(profile: any) {
+    public getName(profile: any) {
         if (profile) {
             return profile.firstname.substring(0, 1) + profile.lastname.substring(0, 1);
+        }
+    }
+
+    public getIsSearching(isSearching: boolean) {
+        this.isSearching = isSearching;
+        if (!this.isSearching) {
+            this.applyFilter('');
         }
     }
 }

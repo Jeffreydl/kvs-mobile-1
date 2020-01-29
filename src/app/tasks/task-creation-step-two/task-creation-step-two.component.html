@@ -4,7 +4,7 @@
 
     <div class="current-client" *ngIf="currentClient">
         <mat-icon class="md-default-theme-theme material-icons action-icon close-button" role="img" aria-hidden="true" (click)="deselectClient()">close</mat-icon>
-        <span (click)="lol(currentClient)">{{currentClient.fullname}}</span>
+        <span class="redirect" (click)="lol(currentClient)">{{currentClient.fullname}}</span>
         <div *ngFor="let email of currentClient.emailaddress">
             {{email.address}}
         </div>

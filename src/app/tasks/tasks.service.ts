@@ -204,7 +204,6 @@ export class TasksService {
 
     public getAll(filter: TaskFilter): Observable<ITask[]> {
         this.tasks = this.http.get<ITask[]>(url + 'Messages?filter=' + filter).pipe(
-            // shareReplay(),
             map((tasks) => {
                 this.tasksLength.next(tasks.length);
                 return tasks;

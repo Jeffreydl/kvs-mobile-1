@@ -27,6 +27,11 @@
   border: 1px solid #929292;
   padding: 5px;
 
+  .redirect {
+    text-decoration: underline;
+    color: blue;
+  }
+
   .close-button {
     font-size: 30px;
     height: 30px;

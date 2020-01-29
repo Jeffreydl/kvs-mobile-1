@@ -5,6 +5,7 @@ import {TasksService} from '../tasks.service';
 import {TemplatesService} from '../../templates.service';
 import {ITask} from '../ITask';
 import {Router} from '@angular/router';
+import {MatSnackBar} from '@angular/material';
 
 @AutoUnsubscribe()
 @Component({
@@ -89,7 +90,8 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
 
     constructor(private formBuilder: FormBuilder,
                 private tasksService: TasksService,
-                private router: Router) {
+                private router: Router,
+                private snackBar: MatSnackBar) {
     }
 
     ngOnInit() {
@@ -105,11 +107,8 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
                 subject: this.formBuilder.control(this.task.subject, Validators.compose([Validators.required])),
                 body: this.formBuilder.control('', Validators.compose([Validators.required])),
             });
-            this.formStepThree.valueChanges.subscribe(data => this.onFormValueChange2(data));
+            this.formStepThree.valueChanges.subscribe();
         }
-    }
-
-    private onFormValueChange2(data: any) {
     }
 
     onSubmit2(formData: any) {
@@ -129,6 +128,10 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
         };
         this.tasksService.assign(data).subscribe(() => {
             this.router.navigate(['dashboard']);
+            this.snackBar.open('Taak toegewezen', 'Sluiten', {
+                duration: 3000,
+                panelClass: 'snack-bar'
+            });
         });
         this.assigneeEmitter.emit(true);
 
@@ -139,23 +142,23 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
         data.body = test;
         data.template = this.template.response;
 
-        this.tasksService.edit(data.id, data).subscribe((lol) => {
-            this.finalizeMessageWorkflow(lol);
+        this.tasksService.edit(data.id, data).subscribe((task) => {
+            this.finalizeMessageWorkflow(task);
         });
     }
 
-    public finalizeMessageWorkflow(lol) {
-        const relation = lol.relatie;
+    public finalizeMessageWorkflow(task) {
+        const relation = task.relatie;
 
         const data = {
             dossier: this.processWorkflow.response.dossier,
             message: this.task,
             reply: this.processWorkflow.response.reply,
             tasks: [],
-            messageComment: {createdBy: 16},
+            messageComment: {createdBy: this.task.createdById},
             knowledgeBaseAns: [],
             sendEmail: true,
-            emailTemplateId: 7,
+            emailTemplateId: this.template.response.id,
             employeeProfile: {},
             closeDossierAfterProcess: true,
             publishToWbs: false,
@@ -175,8 +178,12 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
             }
         };
 
-        this.tasksService.finalizeWorkflow(data).subscribe((response) => {
+        this.tasksService.finalizeWorkflow(data).subscribe(() => {
                 this.router.navigate(['dashboard']);
+                this.snackBar.open('Antwoord verzonden', 'Sluiten', {
+                    duration: 3000,
+                    panelClass: 'snack-bar'
+                });
             }
         );
     }

@@ -33,6 +33,7 @@ export class KennisbankService {
     }
 
     public search(keyword: string): Observable<IKennisbankSearchItem[]> {
+        console.log('fiets');
         return this.http.get<IKennisbankSearchItem[]>(baseUrl + 'search/' + keyword).pipe(
            map((data: any) => data.KbaseItems)
         );

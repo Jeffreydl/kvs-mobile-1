@@ -1,0 +1,46 @@
+.header {
+  background-color: #3f464b;
+  position: fixed;
+  top: 0;
+  height: 45px;
+  width: 100%;
+  color: white;
+  margin-bottom: 10px;
+  z-index: 999;
+
+  h3 {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    font-size: 22px;
+  }
+
+  .search-icon, .account-info {
+    position: absolute;
+    font-size: 43px;
+    width: 43px;
+    height: 43px;
+  }
+
+  .account-info {
+    right: 4px;
+    top: 0;
+
+  }
+
+  .search-icon {
+    width: 43px;
+    height: 43px;
+    font-size: 43px;
+    transition: .5s;
+    color: lightgray;
+  }
+
+  .search-icon-active {
+    color: white;
+    text-shadow: 0 0 3px white;
+  }
+
+}

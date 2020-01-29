@@ -15,7 +15,6 @@ export class EmployeesComponent implements OnInit {
     public myControl = new FormControl();
     public filteredEmployees: Observable<IEmployee[]>;
     @Input() formStepThree: FormGroup;
-    public selectedEmployee = '';
 
   constructor(private employeesService: EmployeesService) { }
 

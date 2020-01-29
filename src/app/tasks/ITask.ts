@@ -128,3 +128,36 @@ export interface ITask {
         updatedAt: string;
     };
 }
+
+export interface IType {
+    name: string;
+    default?: null;
+    icon?: null;
+    id: number;
+    deletedAt: string;
+}
+
+export interface ICategory {
+    name: string;
+    id: number;
+    MessageCategoryId: number;
+    dossierCategoryId: number;
+    deletedAt: string;
+    MessageCategory: {
+        name: string;
+        sla: string;
+        dueDate: string;
+        isSystem: boolean;
+        id: number;
+        deletedAt: string;
+    };
+    dossierCategory: {
+        name: string;
+        sla: string;
+        defaultAssigneeId: number;
+        dueDate: string;
+        isSystem: boolean;
+        id: number;
+        deletedAt: string;
+    };
+}

@@ -14,7 +14,6 @@ import {ITask} from '../ITask';
 import {TaskCreationStepOneComponent} from '../task-creation-step-one/task-creation-step-one.component';
 import {TaskCreationStepTwoComponent} from '../task-creation-step-two/task-creation-step-two.component';
 import {TaskCreationStepThreeComponent} from '../task-creation-step-three/task-creation-step-three.component';
-import {TaskCreationStepFourComponent} from '../task-creation-step-four/task-creation-step-four.component';
 
 @AutoUnsubscribe()
 @Component({
@@ -24,20 +23,13 @@ import {TaskCreationStepFourComponent} from '../task-creation-step-four/task-cre
 })
 export class CurrentTaskDialogComponent implements OnInit, OnDestroy {
   public currentTask: ITask;
-    public types: any;
-
-    currentClient: ICustomer;
     @ViewChild('stepper', {static: false}) stepper: MatStepper;
     public action: string;
-    public assigneeForm: FormGroup;
     public task: ITask;
-    public openDossiers: IDossier[];
-    public dossierForm: FormGroup;
 
     @ViewChild(TaskCreationStepOneComponent, {static: false}) taskCreationStepOneComponent: TaskCreationStepOneComponent;
     @ViewChild(TaskCreationStepTwoComponent, {static: false}) taskCreationStepTwoComponent: TaskCreationStepTwoComponent;
     @ViewChild(TaskCreationStepThreeComponent, {static: false}) taskCreationStepThreeComponent: TaskCreationStepThreeComponent;
-    @ViewChild(TaskCreationStepFourComponent, {static: false}) taskCreationStepFourComponent: TaskCreationStepFourComponent;
     public taskType: string;
 
     public template: object;

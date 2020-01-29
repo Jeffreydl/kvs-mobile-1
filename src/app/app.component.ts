@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnDestroy} from '@angular/core';
 import {OnInit} from '@angular/core';
 import {AuthService} from './auth/auth.service';
 import {Router} from '@angular/router';
-import {Observable, Subscription, timer} from 'rxjs';
+import {fromEvent, Observable, Subscription, timer} from 'rxjs';
 import {Meta} from '@angular/platform-browser';
 import {fadeAnimation} from './animation';
 import {switchMap} from 'rxjs/operators';
@@ -19,17 +19,19 @@ import {EmployeeFilter, EmployeesService} from './employees/employees.service';
     animations: [fadeAnimation]
 })
 export class AppComponent implements OnInit, OnDestroy {
-    public title = 'KVS Mobile';
     public currentRoute: string;
     public isLoggedIn$: Observable<boolean>;
 
     public subscription: Subscription;
     public result;
 
-    private readonly mobHeight: number;
-    private readonly mobWidth: number;
+    private mobHeight: number;
+    private mobWidth: number;
 
     emitter = new EventEmitter<ITask[]>();
+
+    private resizeObservable$: Observable<Event>;
+    private resizeSubscription$: Subscription;
 
     constructor(private authService: AuthService,
                 public router: Router,
@@ -49,10 +51,20 @@ export class AppComponent implements OnInit, OnDestroy {
             this.router.navigate(['dashboard']);
             this.getTasksPeriodically();
             this.getEmployeeCategories();
+            this.onWindowResize();
         }
     }
 
     ngOnDestroy(): void {
+    }
+
+    public onWindowResize() {
+        this.resizeObservable$ = fromEvent(window, 'resize');
+        this.resizeSubscription$ = this.resizeObservable$.subscribe( (evt: any) => {
+            this.mobHeight = evt.target.screen.height;
+            this.mobWidth = evt.target.screen.width;
+            this.injectMetaTag();
+        });
     }
 
     public injectMetaTag() {
@@ -68,13 +80,13 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     getTasksPeriodically() {
-        this.subscription = timer(10000, 1000000).pipe(
+        this.subscription = timer(10000, 300000).pipe(
             switchMap(() => this.tasksService.getAll(new TaskFilter()
                     .openTasks()
                     .openTasks()
                     .inboundTasks()
                     .assignedTo(Number(this.authService.getUserId()))
-                    .forCategories([8, 1, 2, 3, 4, 7])
+                    .forCategories(this.employeesService.getCategories())
                     .limitTo(20)
                     .ascending()
                 // .includeDrafts(true)))
@@ -85,16 +97,11 @@ export class AppComponent implements OnInit, OnDestroy {
             } else {
             }
             this.result = result;
+            console.log(result);
         });
     }
-    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     public getEmployeeCategories() {
-        this.employeesService.getCategories(new EmployeeFilter()
-            .forEmployee(this.authService.getUserId())
-        )
-        .subscribe((data) => {
-            console.log(data);
-        });
+        this.employeesService.getCategories(new EmployeeFilter().forEmployee(this.authService.getUserId()));
     }
 
     onSwipe(event) {

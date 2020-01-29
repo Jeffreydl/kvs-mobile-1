@@ -37,3 +37,11 @@ export interface IEmployee {
     ];
     filterByNameAndEmail: string;
 }
+
+export interface IEmployeeCategory {
+    showOnDashboard: boolean;
+    canBeAssigned: boolean;
+    id: number;
+    employeeId: number;
+    categoryId: number;
+}

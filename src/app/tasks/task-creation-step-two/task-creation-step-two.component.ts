@@ -6,7 +6,7 @@ import {AuthService} from '../../auth/auth.service';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {ICustomer} from '../../customers/ICustomer';
 import {MatStepper} from '@angular/material';
-import {ITask} from '../ITask';
+import {ICategory, ITask, IType} from '../ITask';
 import {TemplatesService} from '../../templates.service';
 import {EmployeesService} from '../../employees/employees.service';
 import {ITemplate} from '../../ITemplate';
@@ -22,10 +22,10 @@ import {Router} from '@angular/router';
 })
 export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterViewInit {
 
-    public categories: any;
+    public categories: ICategory[];
     public contactReasons: any;
     public messageChannels: any;
-    public types: any;
+    public types: IType[];
     public taskId: number;
 
     public contactReason = '';
