@@ -12,8 +12,8 @@
 
           <mat-form-field>
             <input type="password" matInput placeholder="Wachtwoord" name="passwordVield" formControlName="password" [type]="hide ? 'password' : 'text'" autocomplete="password">
-            <span mat-icon-button matSuffix (click)="hide = !hide" class="hidePassword">
-              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            <span mat-icon-button matSuffix (click)="hide = !hide" class="hide-password">
+              <mat-icon class="hide-password">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </span>
           </mat-form-field>
 

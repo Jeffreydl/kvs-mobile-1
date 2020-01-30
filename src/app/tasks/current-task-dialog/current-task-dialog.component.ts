@@ -5,7 +5,7 @@ import {CustomersService} from '../../customers/customers.service';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {ICustomer} from '../../customers/ICustomer';
 import {AuthService} from '../../auth/auth.service';
-import {MatStepper} from '@angular/material';
+import {MatDialog, MatStepper} from '@angular/material';
 import {DossierService} from '../../dossiers/dossier.service';
 import {Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
@@ -14,15 +14,16 @@ import {TaskCreationStepOneComponent} from '../task-creation-step-one/task-creat
 import {TaskCreationStepTwoComponent} from '../task-creation-step-two/task-creation-step-two.component';
 import {TaskCreationStepThreeComponent} from '../task-creation-step-three/task-creation-step-three.component';
 import {IDossier} from '../../dossiers/IDossier';
+import {DeletionDialogComponent} from '../../deletion-dialog/deletion-dialog.component';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-current-task-dialog',
-  templateUrl: './current-task-dialog.component.html',
-  styleUrls: ['./current-task-dialog.component.scss']
+    selector: 'app-current-task-dialog',
+    templateUrl: './current-task-dialog.component.html',
+    styleUrls: ['./current-task-dialog.component.scss']
 })
 export class CurrentTaskDialogComponent implements OnInit, OnDestroy {
-  public currentTask: ITask;
+    public currentTask: ITask;
     @ViewChild('stepper', {static: false}) stepper: MatStepper;
     public action: string;
     public task: ITask;
@@ -38,29 +39,31 @@ export class CurrentTaskDialogComponent implements OnInit, OnDestroy {
     public categories: ICategory[];
     public dossier: IDossier;
 
-  constructor(
-      public dialogRef: MatDialogRef<CurrentTaskDialogComponent>,
-      @Inject(MAT_DIALOG_DATA) public data: any,
-      private taskService: TasksService,
-      private customersService: CustomersService,
-      private formBuilder: FormBuilder,
-      private authService: AuthService,
-      private dossiersService: DossierService,
-      private router: Router,
-      private cdRef: ChangeDetectorRef
-  ) {}
+    constructor(
+        public dialogRef: MatDialogRef<CurrentTaskDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any,
+        private taskService: TasksService,
+        private customersService: CustomersService,
+        private formBuilder: FormBuilder,
+        private authService: AuthService,
+        private dossiersService: DossierService,
+        private router: Router,
+        private cdRef: ChangeDetectorRef,
+        private dialog: MatDialog
+    ) {
+    }
 
-  ngOnInit() {
-    this.currentTask = this.data.task;
-    this.cdRef.detectChanges();
-  }
+    ngOnInit() {
+        this.currentTask = this.data.task;
+        this.cdRef.detectChanges();
+    }
 
-  ngOnDestroy(): void {
-  }
+    ngOnDestroy(): void {
+    }
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
+    onNoClick(): void {
+        this.dialogRef.close();
+    }
 
     public get formStepTwo() {
         return this.taskCreationStepTwoComponent ? this.taskCreationStepTwoComponent.formStepTwo : null;
@@ -76,7 +79,6 @@ export class CurrentTaskDialogComponent implements OnInit, OnDestroy {
 
     public getCategories(categories: ICategory[]) {
         this.categories = categories;
-        console.log(this.categories);
     }
 
     getAction(action: string) {
@@ -96,20 +98,30 @@ export class CurrentTaskDialogComponent implements OnInit, OnDestroy {
     }
 
     public deleteTask() {
-        this.taskService.delete(this.currentTask.id).subscribe(() => {
-            this.dialogRef.close();
-            this.router.navigate(['dashboard']);
+        const dialogRef = this.dialog.open(DeletionDialogComponent, {
+            width: '275px',
+            data: {title: 'Taak verwijderen?', response: false}
         });
-        if (this.currentTask.dossierId) {
-            this.dossiersService.close(this.currentTask.dossierId).subscribe();
-        }
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.taskService.delete(this.currentTask.id).subscribe(() => {
+                    this.dialogRef.close();
+                    this.router.navigate(['dashboard']);
+                });
+                if (this.currentTask.dossierId) {
+                    this.dossiersService.close(this.currentTask.dossierId).subscribe();
+                }
+            }
+        });
     }
 
     public saveTask() {
-      this.isSaved = true;
+        this.isSaved = true;
     }
 
     public openClient(client: ICustomer) {
         this.dialogRef.close();
+        this.router.navigate(['klanten'], {state: {client}});
     }
 }

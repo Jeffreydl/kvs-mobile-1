@@ -31,11 +31,15 @@
     }
   }
 
+  input {
+    background-color: lightgrey;
+    height: 20px;
+    padding: 5px;
+    box-sizing: border-box;
+  }
+
   h3 {
     margin-top: 5px;
-  }
-  p {
-    font-size: 16px;
   }
 
   .addresses {

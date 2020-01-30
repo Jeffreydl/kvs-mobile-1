@@ -25,7 +25,7 @@
                    placeholder="Omschrijving">
         </mat-form-field>
 
-        <button type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple" (click)="onSubmit2(formStepThree.value)" matStepperNext>Toewijzen</button>
+        <button type="submit" mat-raised-button class="md-primary md-raised md-button md-default-theme-theme md-ink-ripple" (click)="onSubmit(formStepThree.value)" matStepperNext>Toewijzen</button>
 
 
     </form>
@@ -48,7 +48,7 @@
             <!--<input matInput placeholder="Aan">-->
         <!--</mat-form-field>-->
 
-        <mat-checkbox [checked]="emailIsChecked" (change)="closeDossierIsChecked = !closeDossierIsChecked">
+        <mat-checkbox [checked]="closeDossierIsChecked" (change)="closeDossierIsChecked = !closeDossierIsChecked">
             Sluit dossier na verwerking
         </mat-checkbox>
     </div>

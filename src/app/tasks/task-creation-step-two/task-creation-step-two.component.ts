@@ -27,7 +27,6 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
     public contactReasons: IContactReason[];
     public messageChannels: IMessageChannel[];
     public types: IType[];
-    public taskId: number;
 
     public contactReason = '';
     public employee: IEmployeeByToken;
@@ -55,9 +54,8 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
     @Output() dossierEmitter = new EventEmitter<IDossier>();
     @Output() action = new EventEmitter<string>();
 
-    @Input() currentTask: ITask;
+    @Input() currentTask: any;
 
-    public task: ITask;
     public dossier: IDossier;
 
     @Output() categoriesEmitter = new EventEmitter<any>();
@@ -66,9 +64,10 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
     @Output() processWorkflowEmitter = new EventEmitter<any>();
 
     @Input()
-    public set createWithClient(val) {
-        if (val) {
-            this.selectClient(val);
+    public set createWithClient(client) {
+        if (client) {
+            this.selectClient(client);
+            this.formStepTwo.controls.relatieId.setValue(client.id);
         }
     }
 
@@ -78,6 +77,13 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
             this.editTask(this.formStepTwo.value);
         }
     }
+
+    @Input()
+    public set selectedClient(val) {
+        this.currentClient = val;
+    }
+
+
     public dossierId: number;
 
     constructor(private tasksService: TasksService,
@@ -115,7 +121,7 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
             this.formStepTwo.controls.messageCategoryId.setValue(4);
             this.formStepTwo.controls.typeId.setValue(2);
         }
-        if (!this.taskId) {
+        if (!this.currentTask) {
             this.addTask(this.formStepTwo.getRawValue());
         }
     }
@@ -163,22 +169,22 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
     public addTask(formData: any) {
         this.tasksService.new(formData).subscribe(
             (task: ITask) => {
-                this.taskId = task.id;
+                this.currentTask = task;
             }
         );
     }
 
-    public editTask(formData: ITask, action?: string) {
-        let taskId: number;
-        if (this.taskId) {
-            taskId = this.taskId;
-        } else {
-            taskId = this.currentTask.id;
+    public editTask(formData: any, action?: string) {
+
+        for (const key in formData) {
+            if (formData.hasOwnProperty(key)) {
+                this.currentTask[key] = formData[key];
+            }
         }
-        this.tasksService.edit(taskId, formData).subscribe((task) => {
+        this.tasksService.edit(this.currentTask.id, this.currentTask).subscribe((task) => {
             this.taskEmitter.emit(task);
             if (action === 'beantwoorden') {
-                this.task = task;
+                this.currentTask = task;
                 this.processTask();
             }
         });
@@ -197,12 +203,12 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
     public processTask() {
         const client = this.currentClient;
         const data = {
-            message: this.task,
+            message: this.currentTask,
             reply: {
-                subject: 'RE: ' + this.task.subject
+                subject: 'RE: ' + this.currentTask.subject
             },
             draftInfo: {
-                selectedDossierOption: this.task.dossierId,
+                selectedDossierOption: this.currentTask.dossierId,
                 recipients: {
                     to: [
                         {
@@ -322,6 +328,5 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
     redirectToClientCard(client: ICustomer) {
         // output to current-task and close expansion panel
         this.clientEmitter.emit(client);
-        this.router.navigate(['klanten'], {state: {client}});
     }
 }

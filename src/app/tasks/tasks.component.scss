@@ -13,6 +13,40 @@
     margin-right: 5px;
   }
 
+  .mat-column-werknemer, .mat-column-category, .mat-column-subject, .mat-column-sla {
+    font-weight: 300;
+    word-break: break-word;
+  }
+
+  .mat-column-werknemer {
+    width: 15%;
+  }
+  .mat-column-category {
+    width: 25%;
+  }
+  .mat-column-subject {
+    width: 40%;
+  }
+  .mat-column-sla {
+    width: 20%;
+    padding-right: 10px;
+  }
+
+  @media screen and (max-width: 360px) {
+    .mat-column-werknemer {
+      width: 18%;
+    }
+    .mat-column-category {
+      width: 25%;
+    }
+    .mat-column-subject {
+      width: 35%;
+    }
+    .mat-column-sla {
+      width: 22%;
+    }
+  }
+
   .table {
     width: 100vw;
 
@@ -34,8 +68,11 @@
     }
 
     .sla-date {
+      display: inline-block;
+      box-sizing: border-box;
+      width: 55px;
       color: white;
-      padding: 5px 10px;
+      padding: 6px 10px;
       border-radius: 24px;
     }
   }

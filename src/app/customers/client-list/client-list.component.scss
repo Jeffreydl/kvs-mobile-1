@@ -13,15 +13,18 @@
     .search-client {
       height: 40px;
       width: 100vw;
-      font-size: 18px;
+      font-size: 1.15rem;
+      font-weight: 500;
       box-sizing: border-box;
       padding-left: 16px;
+      box-shadow: 0 3px 13px 0 rgba(0, 0, 0, .26);
+      border-top: 0;
     }
 
     .add-icon {
       position: absolute;
       right: 0;
-      margin-right: 5px;
+      margin-right: 7px;
       color: rgba(0, 0, 0, 0.54);
       font-size: 40px;
       height: 40px;
@@ -32,6 +35,17 @@
       margin: 0;
       top: 0 !important;
     }
+
+    .not-found {
+      font-size: 24px;
+      font-weight: 600;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      color: grey;
+    }
   }
 
   .mat-list {
@@ -41,7 +55,7 @@
     margin-bottom: 80px;
 
     .contacts {
-      font-size: 20px;
+      font-size: 1.15rem;
       font-weight: 300;
     }
   }

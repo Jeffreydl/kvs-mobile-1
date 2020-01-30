@@ -37,6 +37,7 @@ import {TaskCreationStepThreeComponent} from './tasks/task-creation-step-three/t
 import {HeaderComponent} from './header/header.component';
 import {ProfileComponent} from './employees/profile/profile.component';
 import {TasksSearchbarComponent} from './tasks/tasks-searchbar/tasks-searchbar.component';
+import { DeletionDialogComponent } from './deletion-dialog/deletion-dialog.component';
 
 @NgModule({
   declarations: [
@@ -63,8 +64,9 @@ import {TasksSearchbarComponent} from './tasks/tasks-searchbar/tasks-searchbar.c
     HeaderComponent,
     ProfileComponent,
     TasksSearchbarComponent,
+    DeletionDialogComponent,
   ],
-  entryComponents: [CurrentClientDialogComponent, AddClientDialogComponent, CurrentTaskDialogComponent, ProfileComponent],
+  entryComponents: [CurrentClientDialogComponent, AddClientDialogComponent, CurrentTaskDialogComponent, ProfileComponent, DeletionDialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

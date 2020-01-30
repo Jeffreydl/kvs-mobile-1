@@ -18,7 +18,6 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
     currentTask: ITask;
 
     public get task(): any {
-        console.log(this.currentTask);
         return this.currentTask;
     }
 
@@ -54,7 +53,6 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
 
     @Input()
     public set categoriesList(val: any) {
-        console.log(val);
         this.categories = val;
     }
 
@@ -98,7 +96,7 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
             this.formStepThree = this.formBuilder.group({
                 category: this.formBuilder.control(this.currentTask.messageCategory.id, Validators.compose([Validators.required])),
                 subject: this.formBuilder.control(this.task.subject, Validators.compose([Validators.required])),
-                body: this.formBuilder.control('', Validators.compose([Validators.required])),
+                body: this.formBuilder.control(''),
             });
             this.formStepThree.valueChanges.subscribe(data => this.onFormValueChange(data));
         }
@@ -108,7 +106,7 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
         }
 
 
-    onSubmit2(formData: any) {
+    onSubmit(formData: any) {
         this.assignTask(formData, this.currentTask);
 
     }
@@ -169,8 +167,8 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
                     }],
                 cc: [],
                 bcc: [],
-                sendEmailAfterProcess: true,
-                closeDossierAfterProcess: true
+                sendEmailAfterProcess: this.emailIsChecked,
+                closeDossierAfterProcess: this.closeDossierIsChecked
             }
         };
 

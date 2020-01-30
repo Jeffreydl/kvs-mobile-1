@@ -16,3 +16,10 @@
 .checkboxes {
   margin-bottom: 10px;
 }
+
+mat-checkbox ::ng-deep .mat-checkbox-inner-container {
+  height: 30px;
+  width: 30px;
+  margin-bottom: 15px;
+}
+
