@@ -6,6 +6,10 @@
 .actions {
   margin: 0;
 
+  .confirm-button {
+    border: 1px solid rgb(243, 38, 63);
+  }
+
   .cancel-button {
     color: #0070c0;
     border: 2px solid #0070c0;
