@@ -1,5 +1,4 @@
-import {Component, EventEmitter, OnDestroy} from '@angular/core';
-import {OnInit} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from './auth/auth.service';
 import {Router} from '@angular/router';
 import {fromEvent, Observable, Subscription, timer} from 'rxjs';
@@ -41,7 +40,6 @@ export class AppComponent implements OnInit, OnDestroy {
         this.mobHeight = (window.innerHeight);
         this.mobWidth = (window.innerWidth);
     }
-
 
     ngOnInit(): void {
         this.isLoggedIn$ = this.authService.isLoggedIn;
@@ -97,7 +95,6 @@ export class AppComponent implements OnInit, OnDestroy {
             } else {
             }
             this.result = result;
-            console.log(result);
         });
     }
     public getEmployeeCategories() {

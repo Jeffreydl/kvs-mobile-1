@@ -10,7 +10,7 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        // Add Authorization token to every request
+        // Adds Authorization token to every request
         if (this.authService.checkPermission()) {
             const loginToken = this.authService.getToken();
             const modifiedHeader = request.clone({setHeaders: {Authorization: loginToken}});

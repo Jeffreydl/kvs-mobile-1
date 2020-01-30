@@ -83,21 +83,16 @@ export class EmployeesService {
 
     public retrieveCategories(filter?: EmployeeFilter) {
         this.http.get(baseUrl + 'api/EmployeeCategories?filter=' + filter).subscribe((data: IEmployeeCategory[]) => {
-            console.log(data);
             for (const i of data) {
                 this.categoryIds.push(i.categoryId);
             }
-
-            console.log(this.categoryIds);
         });
     }
 
     public getCategories(filter?: EmployeeFilter) {
-        console.log(this.categoryIds);
         if (this.categoryIds.length === 0) {
             this.retrieveCategories(filter);
         }
-        console.log(this.categoryIds);
 
         return this.categoryIds;
     }

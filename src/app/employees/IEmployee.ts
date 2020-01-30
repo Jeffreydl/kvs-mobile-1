@@ -45,3 +45,7 @@ export interface IEmployeeCategory {
     employeeId: number;
     categoryId: number;
 }
+
+export interface IEmployeeByToken {
+    user: IEmployee;
+}

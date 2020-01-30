@@ -17,10 +17,10 @@ export class CustomersService {
         return this.http.get<ICustomer[]>(baseUrl + 'api/relaties').pipe(
             map((clients) => {
                 clients.map((client) => {
-                this.getFullName(client);
-                this.getTitle(client);
-                this.getFullAddress(client);
-                this.getAge(client);
+                    this.getFullName(client);
+                    this.getTitle(client);
+                    this.getFullAddress(client);
+                    this.getAge(client);
                 });
                 return clients;
             })
@@ -35,7 +35,7 @@ export class CustomersService {
         return this.http.get<ICustomer[]>(baseUrl + 'search/' + keyword).pipe(
             map((clients: any) => {
                 clients = clients.Relations;
-                clients.map((client) => {
+                clients.map((client: ICustomer) => {
                     this.getFullName(client);
                     this.getTitle(client);
                     this.getFullAddress(client);
@@ -88,9 +88,9 @@ export class CustomersService {
                 houseNumber = address.housenumber + '-' + address.housenumberaddition;
             }
             fullAddress = address.street + ' '
-                        + houseNumber + ', '
-                        + address.postalcode + ' '
-                        + address.city;
+                + houseNumber + ', '
+                + address.postalcode + ' '
+                + address.city;
             address.fullAddress = fullAddress;
         }
         return client;

@@ -58,8 +58,10 @@ export class IPhoneNumber {
         public number: string,
         public type: string,
         public id: number
-    ) {}
+    ) {
+    }
 }
+
 export interface IRelatieCluster {
     name: string;
     isSystem: boolean;

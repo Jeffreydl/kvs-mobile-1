@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {KennisbankService} from '../kennisbank.service';
 import {FormControl} from '@angular/forms';
 import {IKennisbankSearchItem} from '../IKennisbank';

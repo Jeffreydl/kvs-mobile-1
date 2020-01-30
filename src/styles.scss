@@ -14,17 +14,8 @@ html, body {
 }
 
 body {
-  //background: url("/assets/kvs-back-min.jpg") center no-repeat;
-  //background-size: cover;
   overscroll-behavior-y: contain;
 }
-
-@media (min-width: 768px) {
-  body {
-  }
-}
-
-
 
 .example-h2 {
   margin: 10px;
@@ -41,30 +32,15 @@ body {
   margin: 0 10px;
 }
 
-.kvs {
-  bottom: 0;
-  height: 175px;
-  left: 0;
-  margin: auto;
-  position: relative;
-  right: 0;
-  top: 0;
-  width: 175px;
-  text-align: center;
-  font-size: 45px;
-  color: white;
-  margin-top: 150px;
-}
-
 #loader {
   bottom: 0;
-  height: 175px;
+  height: 260px;
   left: 0;
   margin: auto;
   position: absolute;
   right: 0;
   top: 0;
-  width: 175px;
+  width: 260px;
 }
 
 #loader .dot {
@@ -75,19 +51,19 @@ body {
   position: absolute;
   right: 0;
   top: 0;
-  width: 87.5px;
+  width: 130px;
 }
 
 #loader .dot::before {
   border-radius: 100%;
   content: "";
-  height: 87.5px;
+  height: 130px;
   left: 0;
   position: absolute;
   right: 0;
   top: 0;
   transform: scale(0);
-  width: 87.5px;
+  width: 130px;
 }
 
 #loader .dot:nth-child(7n+1) {
@@ -163,8 +139,7 @@ body {
 }
 
 #loader .loading {
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
+  background: no-repeat 50% 50%;
   bottom: -40px;
   height: 20px;
   left: 0;
@@ -253,4 +228,12 @@ router-outlet ~ * {
 .snack-bar {
   background-color: white;
   color: #0070c0;
+
+  span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    font-size: 16px;
+    transform: translate(-50%, -50%);
+  }
 }

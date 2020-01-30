@@ -1,11 +1,10 @@
-import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {MatStepper} from '@angular/material';
 import {IDossier} from '../../dossiers/IDossier';
 import {TaskCreationStepTwoComponent} from '../task-creation-step-two/task-creation-step-two.component';
 import {ICategory, ITask, IType} from '../ITask';
 import {TaskCreationStepThreeComponent} from '../task-creation-step-three/task-creation-step-three.component';
-import { ChangeDetectorRef} from '@angular/core';
 
 @AutoUnsubscribe()
 @Component({
@@ -74,8 +73,9 @@ export class AddTaskComponent implements OnInit, OnDestroy {
         this.action = action;
     }
 
-    public getCategories(categories: any) {
+    public getCategories(categories: ICategory[]) {
         this.categories = categories;
+        console.log(this.categories);
     }
 
     public getTypes(types: IType[]) {

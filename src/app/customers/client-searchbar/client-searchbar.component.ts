@@ -34,6 +34,11 @@ export class ClientSearchbarComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
     }
 
+    public selectClient(client: ICustomer) {
+        this.formStepTwo.controls.relatieId.setValue(client.id);
+        this.client.emit(client);
+    }
+
     private searchCustomers(value: string) {
         if (value.length > 1) {
             this.customersService.search(value).subscribe(
@@ -44,10 +49,5 @@ export class ClientSearchbarComponent implements OnInit, OnDestroy {
         } else {
             this.clients = null;
         }
-    }
-
-    public selectClient(client: ICustomer) {
-        this.formStepTwo.controls.relatieId.setValue(client.id);
-        this.client.emit(client);
     }
 }

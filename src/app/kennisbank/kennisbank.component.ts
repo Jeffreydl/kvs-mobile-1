@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {KennisbankService} from './kennisbank.service';
-import {IKennisbankItems, IkennisbankItemsChildren} from './IKennisbank';
+import {IKennisbankItem, IKennisbankItemChildren} from './IKennisbank';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
 @AutoUnsubscribe()
@@ -10,13 +10,13 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
     styleUrls: ['./kennisbank.component.scss']
 })
 export class KennisbankComponent implements OnInit, OnDestroy {
-    public kennisbankItems: IKennisbankItems[];
-    public kennisbankItem: IkennisbankItemsChildren[];
+    public kennisbankItems: IKennisbankItem[];
+    public kennisbankItem: IKennisbankItemChildren[];
     private show = false;
     public searching = false;
     public subTitleId: string;
     public contentId: string;
-    public kennisbankWebsiteItem: IkennisbankItemsChildren;
+    public kennisbankWebsiteItem: IKennisbankItemChildren;
     public isSearching: boolean;
 
     constructor(private kennisbankService: KennisbankService) {

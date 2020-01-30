@@ -6,13 +6,14 @@ import {AuthService} from '../../auth/auth.service';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {ICustomer} from '../../customers/ICustomer';
 import {MatStepper} from '@angular/material';
-import {ICategory, ITask, IType} from '../ITask';
+import {ICategory, IContactReason, IMessageChannel, ITask, IType} from '../ITask';
 import {TemplatesService} from '../../templates.service';
 import {EmployeesService} from '../../employees/employees.service';
 import {ITemplate} from '../../ITemplate';
 import {DossierService} from '../../dossiers/dossier.service';
 import {IDossier} from '../../dossiers/IDossier';
 import {Router} from '@angular/router';
+import {IEmployeeByToken} from '../../employees/IEmployee';
 
 @AutoUnsubscribe()
 @Component({
@@ -23,13 +24,13 @@ import {Router} from '@angular/router';
 export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     public categories: ICategory[];
-    public contactReasons: any;
-    public messageChannels: any;
+    public contactReasons: IContactReason[];
+    public messageChannels: IMessageChannel[];
     public types: IType[];
     public taskId: number;
 
     public contactReason = '';
-    public employee: any;
+    public employee: IEmployeeByToken;
     public template: ITemplate;
 
     @Output() templateEmitter = new EventEmitter<object>();
@@ -77,8 +78,6 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
             this.editTask(this.formStepTwo.value);
         }
     }
-
-
     public dossierId: number;
 
     constructor(private tasksService: TasksService,
@@ -185,7 +184,7 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
         });
     }
 
-    public newDossier(formData: ITask, action?: string) {
+    public newDossier(formData: any, action?: string) {
         this.dossiersService.new(formData).subscribe((dossier: IDossier) => {
             this.dossierId = dossier.id;
             formData.dossierId = dossier.id;
@@ -198,13 +197,12 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
     public processTask() {
         const client = this.currentClient;
         const data = {
-            // dossier: this.dossier,
             message: this.task,
             reply: {
                 subject: 'RE: ' + this.task.subject
             },
             draftInfo: {
-                selectedDossierOption: this.dossier.id,
+                selectedDossierOption: this.task.dossierId,
                 recipients: {
                     to: [
                         {
@@ -321,7 +319,7 @@ export class TaskCreationStepTwoComponent implements OnInit, OnDestroy, AfterVie
         }
     }
 
-    lol(client: ICustomer) {
+    redirectToClientCard(client: ICustomer) {
         // output to current-task and close expansion panel
         this.clientEmitter.emit(client);
         this.router.navigate(['klanten'], {state: {client}});

@@ -2,8 +2,7 @@ import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angula
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {TasksService} from '../tasks.service';
-import {TemplatesService} from '../../templates.service';
-import {ITask} from '../ITask';
+import {ICategory, ITask} from '../ITask';
 import {Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material';
 
@@ -19,6 +18,7 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
     currentTask: ITask;
 
     public get task(): any {
+        console.log(this.currentTask);
         return this.currentTask;
     }
 
@@ -28,7 +28,7 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
         this.createAssigneeForm();
     }
 
-    currentDossier: any;
+    public currentDossier: any;
 
     public get dossier(): any {
         return this.currentDossier;
@@ -50,14 +50,11 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
         this.__action = val;
     }
 
-    categories: any;
-
-    public get categoriesList(): any {
-        return this.categories;
-    }
+    public categories: ICategory[];
 
     @Input()
     public set categoriesList(val: any) {
+        console.log(val);
         this.categories = val;
     }
 
@@ -74,16 +71,12 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
 
     processWorkflow: any;
 
-    public get workflow(): any {
-        return this.templateValue;
-    }
-
     @Input()
     public set workflow(val: any) {
         this.processWorkflow = val;
     }
 
-    @Output() assigneeEmitter = new EventEmitter<boolean>();
+    @Output() closeDialogEmitter = new EventEmitter<boolean>();
 
     public emailIsChecked = true;
     public closeDossierIsChecked = true;
@@ -103,13 +96,17 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
     public createAssigneeForm() {
         if (this.currentTask) {
             this.formStepThree = this.formBuilder.group({
-                category: this.formBuilder.control(this.task.messageCategoryId, Validators.compose([Validators.required])),
+                category: this.formBuilder.control(this.currentTask.messageCategory.id, Validators.compose([Validators.required])),
                 subject: this.formBuilder.control(this.task.subject, Validators.compose([Validators.required])),
                 body: this.formBuilder.control('', Validators.compose([Validators.required])),
             });
-            this.formStepThree.valueChanges.subscribe();
+            this.formStepThree.valueChanges.subscribe(data => this.onFormValueChange(data));
         }
     }
+
+    private onFormValueChange(data: any) {
+        }
+
 
     onSubmit2(formData: any) {
         this.assignTask(formData, this.currentTask);
@@ -128,13 +125,12 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
         };
         this.tasksService.assign(data).subscribe(() => {
             this.router.navigate(['dashboard']);
-            this.snackBar.open('Taak toegewezen', 'Sluiten', {
+            this.snackBar.open('Taak toegewezen', '', {
                 duration: 3000,
                 panelClass: 'snack-bar'
             });
         });
-        this.assigneeEmitter.emit(true);
-
+        this.closeDialogEmitter.emit(true);
     }
 
     public onSubmitResponse(test) {
@@ -180,10 +176,11 @@ export class TaskCreationStepThreeComponent implements OnInit, OnDestroy {
 
         this.tasksService.finalizeWorkflow(data).subscribe(() => {
                 this.router.navigate(['dashboard']);
-                this.snackBar.open('Antwoord verzonden', 'Sluiten', {
+                this.snackBar.open('Antwoord verzonden', '', {
                     duration: 3000,
                     panelClass: 'snack-bar'
                 });
+                this.closeDialogEmitter.emit(true);
             }
         );
     }

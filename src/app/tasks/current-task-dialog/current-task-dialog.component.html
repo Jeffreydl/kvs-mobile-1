@@ -21,7 +21,9 @@
                                         (templateEmitter)="getTemplate($event)"
                                         (processWorkflowEmitter)="getProcessWorkflow($event)"
                                         (clientEmitter)="openClient($event)"
-                                        [isSaved]="isSaved">
+                                        [isSaved]="isSaved"
+                                        (categoriesEmitter)="getCategories($event)"
+                                        (dossierEmitter)="getDossier($event)">
             </app-task-creation-step-two>
         </mat-step>
 
@@ -31,7 +33,9 @@
                                           [action]="action"
                                           [template]="template"
                                           [workflow]="processWorkFlow"
-                                          (assigneeEmitter)="dialogRef.close();">
+                                          (closeDialogEmitter)="dialogRef.close();"
+                                          [categoriesList]="categories"
+                                          [dossier]="dossier">
             </app-task-creation-step-three>
         </mat-step>
     </mat-vertical-stepper>

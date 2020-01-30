@@ -16,7 +16,6 @@ export class HeaderComponent implements OnInit {
   constructor(private dialog: MatDialog, public router: Router) { }
 
   ngOnInit() {
-      console.log(this.router.url);
   }
 
     public openProfile(): void {

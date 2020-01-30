@@ -132,7 +132,6 @@ export class TaskFilter {
                     messageCategoryId: {
                         inq: this.categoryIds
                     },
-                    // assigneeId: this.assigneeId
                 }]
             });
         }
@@ -264,14 +263,10 @@ export class TasksService {
     }
 
     public processWorkflow(message) {
-        const dossier = null;
-        const reply = {subject: 'RE: ' + message.subject};
-        const data = {message, reply, dossier};
         return this.http.post(url + 'Messages/processMessageWorkflow', message);
     }
 
     public finalizeWorkflow(data) {
-
         return this.http.post(url + 'Messages/finalizeMessageWorkflow', data);
     }
 }

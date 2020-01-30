@@ -6,7 +6,7 @@ import {SortByNameService} from '../../sort-by-name.service';
 import {CurrentClientDialogComponent} from './current-client-dialog/current-client-dialog.component';
 import {MatDialog} from '@angular/material';
 import {FormControl} from '@angular/forms';
-import {debounceTime, distinctUntilChanged, first, map, startWith} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {AddClientDialogComponent} from '../add-client-dialog/add-client-dialog.component';
 
 @AutoUnsubscribe()
@@ -18,7 +18,7 @@ import {AddClientDialogComponent} from '../add-client-dialog/add-client-dialog.c
 export class ClientListComponent implements OnInit, OnDestroy {
     public clients: ICustomer[];
     public alphabet = [];
-    public filteredFirstLetters: any[];
+    public filteredFirstLetters: string[];
     public autoCompleteFormControl = new FormControl();
     public isSearching = false;
     public filteredClients: ICustomer[];
@@ -41,6 +41,7 @@ export class ClientListComponent implements OnInit, OnDestroy {
             this.openDetailsDialog(state.client);
         }
     }
+
     ngOnDestroy(): void {
     }
 
@@ -52,15 +53,6 @@ export class ClientListComponent implements OnInit, OnDestroy {
         } else {
             this.isSearching = false;
         }
-    }
-
-    private getClients() {
-        this.customersService.getAll().subscribe((clients) => {
-            clients.sort(this.orderByNameService.dynamicSortMultiple('lastname', 'firstname'));
-            this.clients = clients;
-            this.alphabeticalList(clients);
-
-        });
     }
 
     public alphabeticalList(clients: ICustomer[]) {
@@ -89,6 +81,15 @@ export class ClientListComponent implements OnInit, OnDestroy {
             width: '100%',
             maxWidth: '100%',
             panelClass: 'client-dialog',
+        });
+    }
+
+    private getClients() {
+        this.customersService.getAll().subscribe((clients) => {
+            clients.sort(this.orderByNameService.dynamicSortMultiple('lastname', 'firstname'));
+            this.clients = clients;
+            this.alphabeticalList(clients);
+
         });
     }
 }

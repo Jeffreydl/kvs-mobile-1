@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TaskFilter, TasksService} from './tasks.service';
 import {AuthService} from '../auth/auth.service';
 import {ITask} from './ITask';
@@ -63,16 +63,9 @@ export class TasksComponent implements OnInit, OnDestroy {
             panelClass: 'task-dialog',
             data: {task}
         });
-        // dialogRef.afterClosed().subscribe(() => { this.reloadComponent(); });
         dialogRef.afterClosed().subscribe(() => {
             this.getTasks();
         });
-    }
-
-    public reloadComponent() {
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate(['/dashboard']);
     }
 
     getSla(slaDateTime, taskId) {

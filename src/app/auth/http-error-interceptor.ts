@@ -1,6 +1,6 @@
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {Observable, throwError} from 'rxjs';
+import {catchError, retry} from 'rxjs/operators';
 
 export class HttpErrorInterceptor implements HttpInterceptor {
 
@@ -17,7 +17,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                         // server-side error
                         errorMessage = `Error Code: ${err.status}\nMessage: ${err.message}`;
                     }
-                    console.log(errorMessage);
                     return throwError(errorMessage);
                 })
             );

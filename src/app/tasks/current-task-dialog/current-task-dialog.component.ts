@@ -1,19 +1,19 @@
-import {Component, OnInit, OnDestroy, ViewChild, Inject, ChangeDetectorRef, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {TasksService} from '../tasks.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
 import {CustomersService} from '../../customers/customers.service';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {ICustomer} from '../../customers/ICustomer';
 import {AuthService} from '../../auth/auth.service';
 import {MatStepper} from '@angular/material';
-import {DossierFilter, DossierService} from '../../dossiers/dossier.service';
-import {IDossier} from '../../dossiers/IDossier';
+import {DossierService} from '../../dossiers/dossier.service';
 import {Router} from '@angular/router';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {ITask} from '../ITask';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {ICategory, ITask} from '../ITask';
 import {TaskCreationStepOneComponent} from '../task-creation-step-one/task-creation-step-one.component';
 import {TaskCreationStepTwoComponent} from '../task-creation-step-two/task-creation-step-two.component';
 import {TaskCreationStepThreeComponent} from '../task-creation-step-three/task-creation-step-three.component';
+import {IDossier} from '../../dossiers/IDossier';
 
 @AutoUnsubscribe()
 @Component({
@@ -35,8 +35,8 @@ export class CurrentTaskDialogComponent implements OnInit, OnDestroy {
     public template: object;
     public processWorkFlow: any;
     public isSaved: boolean;
-
-
+    public categories: ICategory[];
+    public dossier: IDossier;
 
   constructor(
       public dialogRef: MatDialogRef<CurrentTaskDialogComponent>,
@@ -74,8 +74,17 @@ export class CurrentTaskDialogComponent implements OnInit, OnDestroy {
         this.task = task;
     }
 
+    public getCategories(categories: ICategory[]) {
+        this.categories = categories;
+        console.log(this.categories);
+    }
+
     getAction(action: string) {
         this.action = action;
+    }
+
+    public getDossier(dossier: IDossier) {
+        this.dossier = dossier;
     }
 
     public getTemplate(template: object) {

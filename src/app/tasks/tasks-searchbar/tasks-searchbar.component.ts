@@ -9,7 +9,7 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 })
 export class TasksSearchbarComponent implements OnInit, OnDestroy {
   @ViewChild('search', {static: true}) searchField: ElementRef;
-  @Output() filterEmitter = new EventEmitter<>();
+    @Output() filterEmitter = new EventEmitter<string>();
 
   constructor() { }
 

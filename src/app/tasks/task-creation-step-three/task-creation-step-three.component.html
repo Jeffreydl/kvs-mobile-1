@@ -2,10 +2,10 @@
 
 
     <form [formGroup]="formStepThree">
-        <mat-form-field floatLabel="always" class="form-field-100" *ngIf="categories">
+        <mat-form-field floatLabel="always" class="form-field-100">
             <mat-label>Categorie*</mat-label>
             <mat-select formControlName="category">
-                <mat-option *ngFor="let category of categories" [value]="category.name">
+                <mat-option *ngFor="let category of categories" [value]="category.id">
                     {{category.name}}
                 </mat-option>
             </mat-select>

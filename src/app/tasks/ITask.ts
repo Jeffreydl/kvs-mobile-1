@@ -161,3 +161,21 @@ export interface ICategory {
         deletedAt: string;
     };
 }
+
+export interface IContactReason {
+    name: string;
+    id: number;
+    parentId: number;
+    deletedAt: string;
+}
+
+export interface IMessageChannel {
+    name: string;
+    icon: string;
+    permanentName: string;
+    visibleForNewMessage: boolean;
+    sendEmail: boolean;
+    isSystem: boolean;
+    id: number;
+    deletedAt: string;
+}
