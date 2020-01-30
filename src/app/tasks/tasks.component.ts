@@ -100,7 +100,7 @@ export class TasksComponent implements OnInit, OnDestroy {
         }
     }
 
-    public getName(profile: any) {
+    public getFirstLetters(profile: any) {
         if (profile) {
             return profile.firstname.substring(0, 1) + profile.lastname.substring(0, 1);
         }

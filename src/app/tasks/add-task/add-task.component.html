@@ -20,7 +20,8 @@
                                             (typesEmitter)="getTypes($event)"
                                             (contactReasonEmitter)="getContactReason($event)"
                                             (templateEmitter)="getTemplate($event)"
-                                            (processWorkflowEmitter)="getProcessWorkflow($event)">
+                                            (processWorkflowEmitter)="getProcessWorkflow($event)"
+                                            [selectedClient]="selectedClient">
                 </app-task-creation-step-two>
             </mat-step>
 

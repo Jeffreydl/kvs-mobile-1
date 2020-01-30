@@ -13,6 +13,7 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
     styleUrls: ['./kennisbank-searchbar.component.scss']
 })
 export class KennisbankSearchbarComponent implements OnInit, OnDestroy {
+    public messageEmpty: string;
 
     constructor(private kennisbankService: KennisbankService) {
     }

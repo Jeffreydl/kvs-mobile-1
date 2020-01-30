@@ -5,6 +5,7 @@ import {IDossier} from '../../dossiers/IDossier';
 import {TaskCreationStepTwoComponent} from '../task-creation-step-two/task-creation-step-two.component';
 import {ICategory, ITask, IType} from '../ITask';
 import {TaskCreationStepThreeComponent} from '../task-creation-step-three/task-creation-step-three.component';
+import {ICustomer} from '../../customers/ICustomer';
 
 @AutoUnsubscribe()
 @Component({
@@ -28,7 +29,7 @@ export class AddTaskComponent implements OnInit, OnDestroy {
     public contactReason: string;
     public template: object;
     public processWorkFlow: any;
-    public selectedClient;
+    public selectedClient: ICustomer;
 
     constructor(private cdRef: ChangeDetectorRef) {}
 
@@ -75,7 +76,6 @@ export class AddTaskComponent implements OnInit, OnDestroy {
 
     public getCategories(categories: ICategory[]) {
         this.categories = categories;
-        console.log(this.categories);
     }
 
     public getTypes(types: IType[]) {

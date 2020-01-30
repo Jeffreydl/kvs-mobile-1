@@ -1,12 +1,12 @@
 <div class="container">
-    <app-header title="Taken lijst" (searchingEmitter)="getIsSearching($event)"></app-header>
+    <app-header title="Takenlijst" (searchingEmitter)="getIsSearching($event)"></app-header>
    <app-tasks-searchbar *ngIf="isSearching" (filterEmitter)="applyFilter($event)"></app-tasks-searchbar>
     <table mat-table [dataSource]="dataSourceTasks" class="mat-elevation-z8 table">
 
         <ng-container matColumnDef="werknemer">
             <th class="task-table-th" mat-header-cell *matHeaderCellDef> Werkn. </th>
             <td class="task-table-td" (click)="openCurrentTask(task)" mat-cell *matCellDef="let task">
-                <span *ngIf="task.assignee; else noAssignee" class="circle">{{getName(task?.assignee?.profile)}}</span>
+                <span *ngIf="task.assignee; else noAssignee" class="circle">{{getFirstLetters(task?.assignee?.profile)}}</span>
                 <ng-template #noAssignee>
                     <mat-icon aria-hidden="true" class="inbox" role="img">inbox</mat-icon>
                 </ng-template>

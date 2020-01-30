@@ -1,7 +1,7 @@
 
 <div class="search-bar" [formGroup]="formStepThree">
     <mat-form-field matInput class="form-field-100">
-        <input type="text" placeholder="Medewerker kiezen" matInput [formControl]="myControl" [matAutocomplete]="auto">
+        <input type="text" placeholder="Medewerker kiezen" matInput [formControl]="myControl" [matAutocomplete]="auto" autocomplete="off" inputmode="text">
         <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let employee of filteredEmployees | async" [value]="employee.email" (click)="selectEmployee(employee)">
                 {{employee.profile.fullname}} ({{employee?.email}})

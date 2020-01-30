@@ -4,6 +4,7 @@
                type="search"
                placeholder="Zoek klant"
                formControlName="relatieId"
+               autocomplete="off"
         />
     </mat-form-field>
     <div class="found-clients">
@@ -12,7 +13,7 @@
                 {{ client.initials }} ({{ client.firstname }}) {{ client.lastname }}<span *ngIf="client.dateofbirth">, {{ client.dateofbirth | date: 'dd-MM-yyyy' }} ({{ client.age }})</span>
                 <mat-divider></mat-divider>
             </mat-option>
-            <p *ngIf="clients?.length === 0">Geen klanten gevonden.</p>
+            <p class="not-found" *ngIf="clients?.length === 0">Geen klanten gevonden.</p>
         </ng-container>
     </div>
 </div>

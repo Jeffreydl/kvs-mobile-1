@@ -3,9 +3,10 @@
 
     <div class="search-bar">
         <input [formControl]="autoCompleteFormControl"
-               type="search"
+               type="text"
                placeholder="Zoek klant"
                class="search-client"
+               autocomplete="off"
         />
         <mat-icon class="md-default-theme-theme material-icons nav-icon add-icon" role="img" aria-hidden="true"
                   (click)="openNewClientDialog()">person_add
@@ -17,9 +18,8 @@
                     <span class="contacts">{{client.lastname}}, {{client.firstname}} {{client.middlename}}</span>
                     <mat-divider></mat-divider>
                 </mat-list-item>
-
-                <p *ngIf="filteredClients.length === 0">Geen klanten gevonden.</p>
             </mat-list>
+            <p class="not-found" *ngIf="filteredClients.length === 0">Geen klanten gevonden.</p>
         </div>
     </div>
 
