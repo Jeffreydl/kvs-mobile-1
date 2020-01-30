@@ -99,7 +99,7 @@ export class DossierService {
         return this.http.get<IDossier[]>(url + 'Dossiers?filter=' + filter);
     }
 
-    public new(formData: any) {
+    public new(formData: IDossier) {
         const data = {
             relatieId: formData.relatieId,
             dossierCategoryId: formData.messageCategoryId,

@@ -11,7 +11,7 @@ export interface IKennisbankSearchItem {
             };
 }
 
-export interface IKennisbankItems {
+export interface IKennisbankItem {
     id: string;
     externalIdentifier: string;
     title: string;
@@ -28,10 +28,10 @@ export interface IKennisbankItems {
     sorting: number;
     parentId: string;
     deletedAt?: null;
-    children?: IkennisbankItemsChildren[];
+    children?: IKennisbankItemChildren[];
 }
 
-export interface IkennisbankItemsChildren {
+export interface IKennisbankItemChildren {
     id: string;
     externalIdentifier: string;
     title: string;
@@ -48,4 +48,8 @@ export interface IkennisbankItemsChildren {
     sorting: number;
     parentId: string;
     deletedAt?: null;
+}
+
+export interface IKennisbankItemWrapper {
+    items: IKennisbankItem[];
 }

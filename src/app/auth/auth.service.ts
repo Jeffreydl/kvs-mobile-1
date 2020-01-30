@@ -89,7 +89,7 @@ export class AuthService {
 
     public checkPermission(): boolean {
         const tokenCreationTime = Number(localStorage.getItem('tokenCreationTime'));
-        const currentTime =  Number(new Date().getTime());
+        const currentTime = Number(new Date().getTime());
         const ttl = Number(this.getTokenTtl()) * 1000;
 
         this.hasPermission = JSON.parse(localStorage.getItem('hasPermission'));

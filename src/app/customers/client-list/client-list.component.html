@@ -1,4 +1,5 @@
 <div class="container">
+    <app-header title="Klantenlijst"></app-header>
 
     <div class="search-bar">
         <input [formControl]="autoCompleteFormControl"
@@ -6,7 +7,9 @@
                placeholder="Zoek klant"
                class="search-client"
         />
-        <mat-icon class="md-default-theme-theme material-icons nav-icon add-icon" role="img" aria-hidden="true" (click)="openNewClientDialog()">person_add</mat-icon>
+        <mat-icon class="md-default-theme-theme material-icons nav-icon add-icon" role="img" aria-hidden="true"
+                  (click)="openNewClientDialog()">person_add
+        </mat-icon>
 
         <div class="found-clients" *ngIf="isSearching">
             <mat-list class="found-clients-list">

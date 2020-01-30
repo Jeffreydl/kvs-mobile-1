@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="header">
+        <h3>Profiel</h3>
+        <mat-icon class="md-default-theme-theme material-icons close-dialog" role="img" aria-hidden="true" (click)="onNoClick()">close
+        </mat-icon>
+    </div>
+
+    <h3>Naam:</h3>
+    <p>{{profile?.user?.profile?.firstname}} {{profile?.user?.profile?.middlename}} {{profile?.user?.profile?.lastname}}</p>
+    <h3>Email:</h3>
+    <p>{{profile?.user?.email}}</p>
+
+    <!--<button (click)="logout()">Uitloggen</button>-->
+
+</div>

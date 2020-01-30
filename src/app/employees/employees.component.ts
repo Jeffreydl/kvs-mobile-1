@@ -1,27 +1,31 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {EmployeeFilter, EmployeesService} from './employees.service';
 import {IEmployee} from './IEmployee';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {map, startWith} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 
+@AutoUnsubscribe()
 @Component({
-  selector: 'app-employees',
-  templateUrl: './employees.component.html',
-  styleUrls: ['./employees.component.scss']
+    selector: 'app-employees',
+    templateUrl: './employees.component.html',
+    styleUrls: ['./employees.component.scss']
 })
-export class EmployeesComponent implements OnInit {
+export class EmployeesComponent implements OnInit, OnDestroy {
     public employees: IEmployee[];
     public myControl = new FormControl();
     public filteredEmployees: Observable<IEmployee[]>;
     @Input() formStepThree: FormGroup;
-    public selectedEmployee = '';
 
-  constructor(private employeesService: EmployeesService) { }
+    constructor(private employeesService: EmployeesService) { }
 
-  ngOnInit() {
-    this.getEmployees();
-  }
+    ngOnInit() {
+        this.getEmployees();
+    }
+
+    ngOnDestroy(): void {
+    }
 
     private filter(value: string): IEmployee[] {
         const filterValue = value.toLowerCase();
@@ -34,11 +38,11 @@ export class EmployeesComponent implements OnInit {
             .activeStatus()
         ).subscribe(
             (employees) => {
-              this.employees = employees;
-              this.filteredEmployees = this.myControl.valueChanges.pipe(
-                  startWith(''),
-                  map(value => this.filter(value))
-              );
+                this.employees = employees;
+                this.filteredEmployees = this.myControl.valueChanges.pipe(
+                    startWith(''),
+                    map(value => this.filter(value))
+                );
             }
         );
     }

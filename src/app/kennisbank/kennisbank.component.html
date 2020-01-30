@@ -1,7 +1,9 @@
-<app-kennisbank-searchbar (isActive)="searchBarStatus($event)"></app-kennisbank-searchbar>
+<div class="container">
+    <app-header title="Kennisbank" (searchingEmitter)="getIsSearching($event)"></app-header>
 
-<div class="container" *ngIf="!searching">
-    <mat-accordion multi="false">
+    <app-kennisbank-searchbar *ngIf="isSearching" (isActive)="getSearchStatus($event)"></app-kennisbank-searchbar>
+
+    <mat-accordion multi="false" *ngIf="!searching && !isSearching">
         <div class="items" *ngFor="let category of kennisbankItems">
             <h3>{{category.title}}</h3>
             <mat-expansion-panel *ngFor="let subject of category.children"

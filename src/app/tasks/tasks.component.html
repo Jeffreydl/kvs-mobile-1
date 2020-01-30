@@ -1,7 +1,6 @@
 <div class="container">
-    <mat-form-field floatLabel="never" class="task-filter">
-        <input matInput type="search" (keyup)="applyFilter($event.target.value)" placeholder="Zoeken in taken">
-    </mat-form-field>
+    <app-header title="Taken lijst" (searchingEmitter)="getIsSearching($event)"></app-header>
+   <app-tasks-searchbar *ngIf="isSearching" (filterEmitter)="applyFilter($event)"></app-tasks-searchbar>
     <table mat-table [dataSource]="dataSourceTasks" class="mat-elevation-z8 table">
 
         <ng-container matColumnDef="werknemer">

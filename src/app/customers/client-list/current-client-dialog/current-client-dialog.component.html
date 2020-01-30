@@ -1,8 +1,9 @@
 <div class="container">
 
     <div class="header">
-        <h3>{{client.fullname}}</h3>
-        <mat-icon class="md-default-theme-theme material-icons close-dialog" role="img" aria-hidden="true" (click)="onNoClick()">close
+        <h3>{{client?.fullname}}</h3>
+        <mat-icon class="md-default-theme-theme material-icons close-dialog" role="img" aria-hidden="true"
+                  (click)="onNoClick()">close
         </mat-icon>
     </div>
     <mat-list>
@@ -42,8 +43,12 @@
                 <h3>Telefoonnummers:</h3>
             </ng-template>
             <mat-list-item *ngFor="let phone of client.phonenumber" class="list-item">
-                <a [href]="call(phone?.number) | safeUrl"><mat-icon matListIcon class="action-icon">call</mat-icon></a>
-                <a [href]="sendSms(phone?.number) | safeUrl"><mat-icon matListIcon class="action-icon sms">sms</mat-icon></a>
+                <a [href]="call(phone?.number) | safeUrl">
+                    <mat-icon matListIcon class="action-icon">call</mat-icon>
+                </a>
+                <a [href]="sendSms(phone?.number) | safeUrl">
+                    <mat-icon matListIcon class="action-icon sms">sms</mat-icon>
+                </a>
                 <p matLine>
                     <span class="client-phonenumber">{{phone.number}}</span>
                 </p>
@@ -66,11 +71,13 @@
 
             <button class="no-button" mat-icon-button>
                 <mat-icon class="ng-binding md-default-theme-theme material-icons task-preset"
-                          role="img" aria-hidden="true" (click)="selectTaskType('telefoon')">phone</mat-icon>
+                          role="img" aria-hidden="true" (click)="selectTaskType('telefoon')">phone
+                </mat-icon>
             </button>
             <button class="no-button" mat-icon-button>
                 <mat-icon class="ng-binding md-default-theme-theme material-icons task-preset"
-                          role="img" (click)="selectTaskType('email')">email</mat-icon>
+                          role="img" (click)="selectTaskType('email')">email
+                </mat-icon>
             </button>
         </div>
     </mat-list>

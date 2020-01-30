@@ -4,6 +4,8 @@ export interface IDossier {
     changeDate: string;
     closedById: number;
     comments: string[];
+    messageCategoryId;
+    typeId;
     createdBy: {
         blockedUntil: string;
         createdById: number;
@@ -46,7 +48,6 @@ export interface IDossier {
     endDate: string;
     id: number;
     isDraft: boolean;
-    messages: [];
     relatieId: number;
     slaDate: string;
     startDate: string;

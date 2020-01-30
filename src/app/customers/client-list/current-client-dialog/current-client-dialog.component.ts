@@ -1,14 +1,14 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {ICustomer} from '../../ICustomer';
 import {Router} from '@angular/router';
 
 @AutoUnsubscribe()
 @Component({
-  selector: 'app-current-client-dialog',
-  templateUrl: './current-client-dialog.component.html',
-  styleUrls: ['./current-client-dialog.component.scss']
+    selector: 'app-current-client-dialog',
+    templateUrl: './current-client-dialog.component.html',
+    styleUrls: ['./current-client-dialog.component.scss']
 })
 export class CurrentClientDialogComponent implements OnInit, OnDestroy {
     public client: ICustomer;
@@ -40,6 +40,6 @@ export class CurrentClientDialogComponent implements OnInit, OnDestroy {
 
     public selectTaskType(action: string) {
         this.dialogRef.close();
-        this.router.navigate(['taak-aanmaken'], { state: {action, client: this.client}});
+        this.router.navigate(['taak-aanmaken'], {state: {action, client: this.client}});
     }
 }
